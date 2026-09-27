@@ -2,7 +2,7 @@
 
 **Live:** [rukawaanalytics.com](https://rukawaanalytics.com)
 
-Portfolio and client platform of **Till Oscar Jacob ("Rukawa")**, a Clash Royale esports analyst focused on Solo CRL player preparation. The site presents the analysis method, publishes case studies, shows live numbers from my analysis pipeline, and gives players and teams a private portal for their prep material.
+Portfolio of **Till Oscar Jacob ("Rukawa")**, a Clash Royale esports analyst focused on Solo CRL player preparation. The site presents the analysis method, publishes case studies, and shows live numbers from my analysis pipeline.
 
 > Short version: I turn a player's battle log into set decisions — and I built the tooling that does it.
 
@@ -13,8 +13,6 @@ Portfolio and client platform of **Till Oscar Jacob ("Rukawa")**, a Clash Royale
 | **Portfolio** (`/`) | Kinetic-typography hero with live pipeline numbers, scroll-driven walkthrough of the analysis system, approach, projects with real-data previews, experience, contact |
 | **Case studies** (`/work`, `/work/:slug`) | Written as Markdown in `src/content/case-studies/`, rendered in the app |
 | **Live stats** | Pulls aggregated, public numbers from my separate analysis pipeline (private repo) |
-| **Client portal** (`/portal`) | Players see their deck sets, teams see opponent analyses — access via personal login code |
-| **Admin panel** (`/admin`) | Manage clients, deck sets and analysis files |
 | **Contact** | Contact form (stored in Supabase) and optional call booking |
 | **Strompreis-Kompass** (`/strompreis`) | German electricity price dashboard built on official Bundesnetzagentur data, see [docs](docs/strompreis-kompass/README.md) |
 | **Race Strategy Lab** (`/race-strategy`) | Tyre strategy, tyre wear, race pace and pit stop analysis for every Grand Prix since 2023 (OpenF1 data), see [docs](docs/race-strategy-lab/README.md) |
@@ -29,10 +27,9 @@ Data case study (German): [Wann Strom am günstigsten ist](src/content/case-stud
 ```mermaid
 flowchart LR
     V[Visitor] --> S[React app<br/>hosted via Lovable]
-    S -->|contact form, portal login| DB[(Supabase Postgres<br/>EU · Frankfurt)]
+    S -->|contact form| DB[(Supabase Postgres<br/>EU · Frankfurt)]
     S -->|public stats| P[Analysis pipeline<br/>Supabase Edge Functions]
     P -->|battle logs| API[Clash Royale API]
-    C[Client] -->|login code| S
 ```
 
 - **Frontend:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Framer Motion, GSAP
@@ -42,9 +39,7 @@ flowchart LR
 
 ## Security & privacy decisions
 
-- Client data is only reachable through `SECURITY DEFINER` database functions (`*_secure`) with session tokens — no direct table access from the browser.
-- Portal logins and the contact form are rate-limited.
-- Personal data is deleted automatically after the retention periods stated in the privacy policy (daily `pg_cron` job, see [`20260923124846_privacy_retention_cleanup_job.sql`](supabase/migrations/20260923124846_privacy_retention_cleanup_job.sql)).
+- The contact form is rate-limited.
 - The key in `.env` is Supabase's **publishable (anon) key**, which is meant to be public; access control lives in RLS policies and the secure functions.
 - Fonts and map data are bundled with the site instead of loaded from third-party CDNs; the Cal.com scheduler only loads after a visitor clicks "Book a call".
 
