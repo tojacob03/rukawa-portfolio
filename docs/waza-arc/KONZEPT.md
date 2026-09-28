@@ -64,7 +64,7 @@ Die App hält alle Daten als JSON im Browser (`ArcData` in `src/arc/core/types.t
 records   user_id, kind, id, data (jsonb), deleted, rev, updated_at
   root      Profil, Charakter (Aussehen, Ausrüstung, Flagge, Schiffsname), Onboarding, Pausen, UI-Stand
   session   ein Training mit Roll-Karten, Quest und Notiz
-  comp      ein Turnier mit seinen Kämpfen
+  comp      ein Turnier mit seinen Divisionen und Kämpfen
   cross     eine Einheit Nebensport
   promo     eine Gürtel- oder Streifenprüfung (Schlüssel: Datum, Gürtel, Streifen)
 ```
@@ -324,11 +324,12 @@ Acht-Wochen-Staffeln, gezählt ab dem ersten Tag: Arc I „Erwachen“, II „Er
 
 ### 6.7 Turniere
 
-- **Eingabe** im Log über den Umschalter „BJJ-Training | Turnier | Nebensport“: Name, Datum, Veranstalter oder Regelwerk (IBJJF, AJP, ADCC, AGF, Grappling Industries, NAGA, Verband, Hausturnier), Gi oder No-Gi, Gewichtsklasse, die Kämpfe (Sieg, Niederlage, Unentschieden; Aufgabe mit Technik, Punkte, Vorteile, Kampfrichter, DQ, kampflos; Gürtel des Gegners) und die Platzierung.
+- **Eingabe** im Log über den Umschalter „BJJ-Training | Turnier | Nebensport“: Name, Datum, Veranstalter oder Regelwerk (IBJJF, AJP, ADCC, AGF, Grappling Industries, NAGA, Verband, Hausturnier), dann je Division Gi oder No-Gi, Gewichtsklasse, die Kämpfe (Sieg, Niederlage, Unentschieden; Aufgabe mit Technik, Punkte, Vorteile, Kampfrichter, DQ, kampflos; Gürtel des Gegners) und die Platzierung.
+- **Divisionen:** Ein Turnier hat eine bis vier Divisionen, jede mit eigenen Kämpfen und eigener Platzierung (Gewichtsklasse und Absolute, Gi und No-Gi am selben Turnier). „Weitere Division“ schlägt zuerst die Absolute vor, danach dieselbe Klasse im anderen Regelwerk. Gespeichert wird die erste Division in den Feldern des Turniers, die weiteren in `more`; Einträge von vorher bleiben so gültig (`core/divisions.ts`).
 - **Gewichtsklassen:** die IBJJF-Klassen als Auswahl und ein freies Feld für alles andere (z. B. „-77 kg“, „Open“, „Superfeder“). Eigene Klassen merkt sich der Steckbrief, die letzten acht erscheinen beim nächsten Turnier als Auswahl.
-- **Rechnung:** Jeder Kampf geht mit doppeltem K-Faktor ins Power Level (4.2). Ein Aufgabe-Sieg mit Technik zählt als Versuch und Treffer mit Gewicht 2 und als Treffer gegen Stärkere. Turniere zählen fürs Wochenziel. XP: 150 fürs Antreten, 50 pro Kampf, 40 pro Aufgabe-Sieg, 300/200/120 für Gold/Silber/Bronze.
-- **Belohnungen:** Siegel „Arena“ und „Podest“, Turniermedaillen in Bronze, Silber und Gold (Accessoire), Arena- und Finisher-Aufnäher, Champion-Rashguard.
-- **Kampfrekord** im Charakter: Bilanz, Aufgabe-Siege, Siegquote, Medaillen und die Liste aller Turniere.
+- **Rechnung:** Jeder Kampf geht mit doppeltem K-Faktor ins Power Level (4.2). Ein Aufgabe-Sieg mit Technik zählt als Versuch und Treffer mit Gewicht 2 und als Treffer gegen Stärkere. Ein Turnier zählt einmal fürs Wochenziel und einmal als Turnier, egal wie viele Divisionen. XP je Division, so viel wie ein eigener Eintrag: 150 fürs Antreten, 50 pro Kampf, 40 pro Aufgabe-Sieg, 300/200/120 für Gold/Silber/Bronze. Der Gi/No-Gi-Vergleich wählt Divisionen, nicht ganze Turniere.
+- **Belohnungen:** Siegel „Arena“ und „Podest“, Turniermedaillen in Bronze, Silber und Gold (Accessoire), Arena- und Finisher-Aufnäher, Champion-Rashguard. Jede Division mit Podest bringt eine eigene Medaille ins Regal, jede gewonnene einen Pokal.
+- **Kampfrekord** im Charakter: Bilanz, Aufgabe-Siege, Siegquote, Medaillen und die Liste aller Turniere; bei mehreren Divisionen steht jede mit Medaille, Bilanz und Kämpfen unter dem Turnier.
 
 ### 6.8 Scouter
 

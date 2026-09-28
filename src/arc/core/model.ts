@@ -15,6 +15,7 @@ import type {
   Competition,
   Control,
   CrossSession,
+  Division,
   NodeState,
   QuestKind,
   QuestOffer,
@@ -31,6 +32,7 @@ import { EPITHET, SEALS, STUCK } from "./lore.ts";
 import { CLASS, CLASSES, classXp } from "./classes.ts";
 import { BODY_W, CROSS_W, INTENSITY, SPORT } from "./sports.ts";
 import { fullyExplored } from "./voyage.ts";
+import { divisionsOf } from "./divisions.ts";
 
 export const BELT_R: Record<Belt, number> = { weiss: 1000, blau: 1150, lila: 1300, braun: 1420, schwarz: 1520 };
 
@@ -155,12 +157,16 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
   const compsAll = (data.competitions ?? [])
     .filter((c) => dayNum(c.date) <= asOf)
     .sort((a, b) => (a.date === b.date ? a.createdAt - b.createdAt : a.date < b.date ? -1 : 1));
-  const comps = opt.attire ? compsAll.filter((c) => c.attire === opt.attire) : compsAll;
+  // Each tournament with its divisions. The gi/no-gi filter picks divisions, so
+  // a tournament with both brackets counts on each side with its own.
+  const comps = compsAll
+    .map((c) => ({ c, divs: divisionsOf(c).filter((d) => !opt.attire || d.attire === opt.attire) }))
+    .filter((x) => x.divs.length > 0);
   const ruSeries = [{ d: onb ?? (sess[0] ? dayNum(sess[0].date) : asOf), r: ru }];
   // Rolls and competition matches in time order; competitions count after the trainings of the same day.
   const timeline = [
-    ...sess.map((s) => ({ day: dayNum(s.date), t: s.createdAt, s, c: null })),
-    ...comps.map((c) => ({ day: dayNum(c.date), t: c.createdAt + 1e15, s: null, c })),
+    ...sess.map((s) => ({ day: dayNum(s.date), t: s.createdAt, s, comp: null })),
+    ...comps.map((comp) => ({ day: dayNum(comp.c.date), t: comp.c.createdAt + 1e15, s: null, comp })),
   ].sort((a, b) => a.day - b.day || a.t - b.t);
   const der: { s: Session; day: number; rolls: { E: number; w: number; sf: number; sa: number; c: Control }[]; wbar: number }[] = [];
   for (const it of timeline) {
@@ -174,9 +180,9 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
       });
       ruSeries.push({ d: it.day, r: ru });
       der.push({ s, day: it.day, rolls, wbar: rolls.length ? mean(rolls.map((x) => x.w)) : 1 });
-    } else if (it.c) {
+    } else if (it.comp) {
       const own = rankAt(data, it.day).belt;
-      for (const m of it.c.matches) {
+      for (const m of it.comp.divs.flatMap((d) => d.matches)) {
         if (m.method === "wo") continue;
         const E = expected(ru, BELT_R[m.oppBelt ?? own]);
         ru += K_COMP * ((m.result === "win" ? 1 : m.result === "draw" ? 0.5 : 0) - E);
@@ -272,10 +278,10 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
   }
 
   // Competition submission wins: strong evidence against a resisting opponent.
-  for (const c of comps) {
+  for (const { c, divs } of comps) {
     const day = dayNum(c.date);
     const age = asOf - day;
-    for (const m of c.matches) {
+    for (const m of divs.flatMap((d) => d.matches)) {
       if (m.result !== "win" || m.method !== "sub" || !m.tech || !ev[m.tech]) continue;
       const e = ev[m.tech];
       const d = halfLife(age, 120);
@@ -404,8 +410,9 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
     const w = weekOf(day);
     wk.set(w, (wk.get(w) ?? 0) + 1);
   }
-  for (const c of comps) {
-    xp += compXp(c);
+  // Every division earns its XP; the tournament counts once for the weekly goal.
+  for (const { c, divs } of comps) {
+    xp += compXp(c, divs);
     const w = weekOf(dayNum(c.date));
     wk.set(w, (wk.get(w) ?? 0) + 1);
   }
@@ -547,9 +554,9 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
     arena: comps.length > 0,
     cross10: crossAll.length >= 10,
     entdecker: fullyExplored(data, asOfIso) >= 3,
-    podium: comps.some((c) => c.place >= 1 && c.place <= 3),
+    podium: comps.some(({ divs }) => divs.some((d) => d.place >= 1 && d.place <= 3)),
   };
-  const matches = comps.flatMap((c) => c.matches);
+  const matches = comps.flatMap(({ divs }) => divs.flatMap((d) => d.matches));
 
   const arcStart = onb ?? (der[0]?.day ?? asOf);
   const weeksIn = Math.max(0, weekOf(asOf) - weekOf(arcStart));
@@ -589,7 +596,7 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
       l: matches.filter((m) => m.result === "loss").length,
       d: matches.filter((m) => m.result === "draw").length,
       subs: matches.filter((m) => m.result === "win" && m.method === "sub").length,
-      medals: [1, 2, 3].map((p) => comps.filter((c) => c.place === p).length) as [number, number, number],
+      medals: [1, 2, 3].map((p) => comps.reduce((n, { divs }) => n + divs.filter((d) => d.place === p).length, 0)) as [number, number, number],
     },
   };
 }
@@ -600,11 +607,16 @@ export function crossXp(c: CrossSession) {
   return 15 + Math.min(45, Math.round(Math.max(0, c.minutes) / 3)) + (Math.max(1, Math.min(3, c.intensity)) - 1) * 5 + tried;
 }
 
-/** XP for a competition: showing up counts most. */
-export function compXp(c: Competition) {
-  const place = [0, 300, 200, 120][c.place] ?? 0;
-  const subs = c.matches.filter((m) => m.result === "win" && m.method === "sub").length;
-  return 150 + 50 * c.matches.length + place + 40 * subs;
+/** XP for one division: showing up counts most. */
+function divisionXp(d: Division) {
+  const place = [0, 300, 200, 120][d.place] ?? 0;
+  const subs = d.matches.filter((m) => m.result === "win" && m.method === "sub").length;
+  return 150 + 50 * d.matches.length + place + 40 * subs;
+}
+
+/** XP for a competition: each division as much as if it had been logged on its own. */
+export function compXp(c: Competition, divs: Division[] = divisionsOf(c)) {
+  return divs.reduce((s, d) => s + divisionXp(d), 0);
 }
 
 /** Belt and stripes on a given day, from the start rank and the promotions. */

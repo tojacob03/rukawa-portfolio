@@ -4,6 +4,7 @@
 
 import { Blossom } from "./components/Blossom.tsx";
 import type { ArcState, Competition } from "./core/types.ts";
+import { divisionsOf, matchesOf, medalsText, record } from "./core/divisions.ts";
 import type { Diff } from "./core/model.ts";
 import type { ChapterRow, ChapterWays } from "./components/ChapterEnd.tsx";
 import { SECTORS, TECH } from "./core/techniques.ts";
@@ -79,14 +80,15 @@ function common(D: Diff, after: ArcState): ChapterWays {
 export const trainingWays = (D: Diff, after: ArcState) => common(D, after);
 
 export function compWays(c: Competition, D: Diff, after: ArcState): ChapterWays {
-  const w = c.matches.filter((m) => m.result === "win").length;
-  const l = c.matches.filter((m) => m.result === "loss").length;
-  const subs = c.matches.filter((m) => m.result === "win" && m.method === "sub").length;
-  const place = ["", "Gold", "Silber", "Bronze"][c.place];
+  const matches = matchesOf(c);
+  const { w, l } = record(matches);
+  const subs = matches.filter((m) => m.result === "win" && m.method === "sub").length;
+  const n = divisionsOf(c).length;
+  const medals = medalsText(c);
   const ways = common(D, after);
   ways.effort.unshift({
     key: "rec",
-    text: `${c.name}: ${w} ${w === 1 ? "Sieg" : "Siege"}, ${l} ${l === 1 ? "Niederlage" : "Niederlagen"}${subs ? `, ${subs} per Aufgabe` : ""}${place ? `. ${place}!` : "."}`,
+    text: `${c.name}${n > 1 ? `, ${n} Divisionen` : ""}: ${w} ${w === 1 ? "Sieg" : "Siege"}, ${l} ${l === 1 ? "Niederlage" : "Niederlagen"}${subs ? `, ${subs} per Aufgabe` : ""}${medals ? `. ${medals}!` : "."}`,
   });
   return ways;
 }

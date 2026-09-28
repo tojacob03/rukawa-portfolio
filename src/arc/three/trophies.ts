@@ -1,6 +1,6 @@
 // The shelf of the fight record (b4): a keyaki board on the wall with a
 // metal medal hanging from a peg for every podium, and a cup standing on it
-// for every tournament won. Medals and cups are engraved with the name of
+// for every division won. Medals and cups are engraved with the name of
 // the tournament and its year; the metal mirrors a soft room.
 
 import * as THREE from "three";

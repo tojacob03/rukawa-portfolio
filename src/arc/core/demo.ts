@@ -180,7 +180,7 @@ export function buildDemo(todayIsoStr: string, seed = DEMO_SEED): ArcData {
   data.visits = [{ id: "demo-visit-1", gym: "Arte Suave Lisboa", city: "Lissabon", country: "PT", date: isoOf(monday0 - 240), createdAt: (monday0 - 240) * 1000 }];
   const away = data.sessions.find((s) => s.format === "open" && s.date >= isoOf(monday0 + 7 * 11));
   if (away) away.guest = { gym: "Tri-Force Amsterdam", city: "Amsterdam", country: "NL" };
-  // Two tournaments on Saturdays in past weeks.
+  // Two tournaments on Saturdays in past weeks, the second with the absolute as well.
   data.competitions = [
     {
       id: "demo-comp-1",
@@ -208,6 +208,18 @@ export function buildDemo(todayIsoStr: string, seed = DEMO_SEED): ArcData {
         { result: "win", method: "sub", tech: "s_triangle", oppBelt: "blau" },
         { result: "win", method: "points", oppBelt: "blau" },
         { result: "loss", method: "adv", oppBelt: "blau" },
+      ],
+      // The absolute the same afternoon: a second division with its own medal.
+      more: [
+        {
+          attire: "nogi",
+          weight: "Absolute",
+          place: 3,
+          matches: [
+            { result: "win", method: "points", oppBelt: "lila" },
+            { result: "loss", method: "points", oppBelt: "braun" },
+          ],
+        },
       ],
       createdAt: (monday0 + 7 * 16 + 5) * 1000,
     },

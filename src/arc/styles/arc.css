@@ -858,6 +858,9 @@ html.lenis, html.lenis body { height: auto; }
 .step legend b { min-width: 24px; color: var(--gold-ink); font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums lining-nums; }
 .step legend small { margin-left: auto; font-family: var(--f-b); font-size: 13px; font-weight: 500; color: var(--ink-2); }
 .note-line { margin: 0; font-size: 14px; color: var(--ink-2); }
+/* Under the last division of a tournament: add the absolute or the no-gi bracket. */
+.add-div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 16px 0 18px; border-top: 1px solid var(--ink-3); }
+.add-div small { font-size: 13px; }
 .rolls { display: grid; }
 .roll { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 16px; padding: 16px 0; border-top: 1px solid var(--ink-3); }
 .roll:first-child { border-top: 0; padding-top: 4px; }
@@ -1475,6 +1478,13 @@ button.item.locked:hover .lock { border-color: var(--ink-2); color: var(--ink-2)
 .bout-k.win { color: var(--asagi); }
 .bout-k.loss { color: var(--beni); }
 .bout-k.draw { color: var(--ink-2); }
+/* Several divisions at one tournament: each with its own medal and record. */
+.comp-div { display: grid; gap: 8px; }
+.comp-div + .comp-div { padding-top: 10px; border-top: 1px dotted var(--ink-3); }
+.comp-div-head { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 14.5px; }
+.comp-div-head .medal { width: 24px; height: 24px; font-size: 12px; }
+.comp-div-head b { font-weight: 600; }
+.comp-div-rec { margin-left: auto; font-family: var(--f-d); font-weight: 800; font-size: 17px; }
 .roll.match { align-items: flex-start; }
 .steckbrief { display: grid; gap: 26px; }
 .form-panel { gap: 16px; }
