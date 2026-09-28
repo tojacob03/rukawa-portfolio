@@ -12,6 +12,7 @@ import { PROLOG_LEVEL, compute, dayNum, isoOf } from "../core/model.ts";
 import { BELT, nf0, power, shortDate, signed } from "../format.ts";
 import { deleteCompetition, equip, markSeen, setLook, setMode, updateProfile } from "../actions.ts";
 import { METHOD_NAME } from "../compText.ts";
+import { bestPlace, divisionName, divisionsOf, matchesOf, record } from "../core/divisions.ts";
 import { go } from "../store.ts";
 import { useCompare } from "../useCompare.ts";
 import { useGear } from "../useGear.ts";
@@ -763,39 +764,59 @@ function CompTab({ data, st }: { data: ArcData; st: ArcState }) {
       {list.length ? (
         <ul className="comp-list">
           {list.map((x) => {
-            const w = x.matches.filter((m) => m.result === "win").length;
-            const l = x.matches.filter((m) => m.result === "loss").length;
+            const divs = divisionsOf(x);
+            const several = divs.length > 1;
+            const mixed = divs.some((d) => d.attire !== x.attire);
+            const best = bestPlace(x);
+            const { w, l } = record(matchesOf(x));
             return (
               <li key={x.id} className="panel comp">
                 <div className="comp-head">
-                  {x.place ? <span className={`medal m${x.place}`}>{x.place}</span> : <span className="medal none">–</span>}
+                  {best ? <span className={`medal m${best}`}>{best}</span> : <span className="medal none">–</span>}
                   <div className="grow">
                     <b>{x.name}</b>
                     <small className="comp-meta">
-                      Am {shortDate(x.date)} {x.date.slice(0, 4)} im {x.attire === "gi" ? "Gi" : "No-Gi"}
+                      Am {shortDate(x.date)} {x.date.slice(0, 4)}
+                      {mixed ? "" : ` im ${x.attire === "gi" ? "Gi" : "No-Gi"}`}
                       {x.org ? `, ${x.org}` : ""}
-                      {x.weight ? `, Klasse ${x.weight}` : ""}
+                      {several ? `, ${divs.length} Divisionen` : x.weight ? `, Klasse ${x.weight}` : ""}
                     </small>
                   </div>
                   <span className="comp-rec">
                     {w}-{l}
                   </span>
                 </div>
-                {/* The bouts as on a Japanese scoreboard: 勝 won, 負 lost, 分 drawn. */}
-                <ol className="bouts">
-                  {x.matches.map((m, i) => (
-                    <li key={i}>
-                      <span className={`bout-k ${m.result}`} aria-hidden="true">
-                        {m.result === "win" ? "勝" : m.result === "loss" ? "負" : "分"}
-                      </span>
-                      <span>
-                        <b>{m.result === "win" ? "Sieg" : m.result === "loss" ? "Niederlage" : "Unentschieden"}</b> durch {METHOD_NAME[m.method]}
-                        {m.tech && TECH[m.tech] ? ` (${TECH[m.tech].name})` : ""}
-                        {m.oppBelt ? <small>, gegen {BELT[m.oppBelt].name}gurt</small> : null}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
+                {divs.map((d, k) => {
+                  const r = record(d.matches);
+                  return (
+                    <div key={k} className="comp-div">
+                      {several ? (
+                        <p className="comp-div-head">
+                          {d.place ? <span className={`medal m${d.place}`}>{d.place}</span> : <span className="medal none">–</span>}
+                          <b>{divisionName(x, k)}</b>
+                          <span className="comp-div-rec">
+                            {r.w}-{r.l}
+                          </span>
+                        </p>
+                      ) : null}
+                      {/* The bouts as on a Japanese scoreboard: 勝 won, 負 lost, 分 drawn. */}
+                      <ol className="bouts">
+                        {d.matches.map((m, i) => (
+                          <li key={i}>
+                            <span className={`bout-k ${m.result}`} aria-hidden="true">
+                              {m.result === "win" ? "勝" : m.result === "loss" ? "負" : "分"}
+                            </span>
+                            <span>
+                              <b>{m.result === "win" ? "Sieg" : m.result === "loss" ? "Niederlage" : "Unentschieden"}</b> durch {METHOD_NAME[m.method]}
+                              {m.tech && TECH[m.tech] ? ` (${TECH[m.tech].name})` : ""}
+                              {m.oppBelt ? <small>, gegen {BELT[m.oppBelt].name}gurt</small> : null}
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  );
+                })}
                 <div className="row">
                   {confirm === x.id ? (
                     <>

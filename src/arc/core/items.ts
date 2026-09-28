@@ -19,6 +19,7 @@ import { dayNum, isoOf } from "./model.ts";
 import { reachedIsles } from "./voyage.ts";
 import { hatOf } from "./headwear.ts";
 import { visitedCountries } from "./visits.ts";
+import { divisionsOf, matchesOf } from "./divisions.ts";
 
 export type Source =
   | { t: "start" }
@@ -384,8 +385,8 @@ export function inventory(data: ArcData, st: ArcState): Map<string, Owned> {
         (s.what === "first"
           ? comps.length > 0
           : s.what === "subwin"
-            ? comps.some((c) => c.matches.some((m) => m.result === "win" && m.method === "sub"))
-            : comps.some((c) => c.place === s.n)));
+            ? comps.some((c) => matchesOf(c).some((m) => m.result === "win" && m.method === "sub"))
+            : comps.some((c) => divisionsOf(c).some((d) => d.place === s.n))));
     if (ok) owned.set(x.id, { id: x.id, via: unlockText(s, sea), date: s.t === "visit" ? visited.get(s.code) : undefined });
   }
 

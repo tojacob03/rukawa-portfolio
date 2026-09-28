@@ -24,6 +24,7 @@
 import type { Aboard, ArcData, Belt } from "./types.ts";
 import { DEFAULT_SEA, ISLAND, LOOP_START, ROUTE_LEN, landmarksOf, lapOf, rankIndex, route, stepIndex } from "./sea.ts";
 import type { Island } from "./sea.ts";
+import { medalsText } from "./divisions.ts";
 
 export const MILES = { session: 10, comp: 20, cross: 5, stripe: 25, belt: 50 };
 /** How much faster the ship sails in each wind. */
@@ -288,7 +289,6 @@ export interface LogEntry {
   island?: string;
 }
 
-const PLACE = ["", "Gold", "Silber", "Bronze"];
 const BELT_NAME: Record<Belt, string> = { weiss: "Weiß", blau: "Blau", lila: "Lila", braun: "Braun", schwarz: "Schwarz" };
 const MILESTONES = [10, 25, 50, 100, 150, 200, 300, 400, 500, 750, 1000];
 
@@ -347,7 +347,8 @@ export function logbook(data: ArcData, asOf: string): LogEntry[] {
   const isleOf = new Map(w.entries.filter((e) => e.kind === "comp" && e.id).map((e) => [e.id!, e.isle]));
   for (const c of (data.competitions ?? []).filter((x) => x.date <= asOf)) {
     const is = ISLAND[isleOf.get(c.id) ?? r[0].id];
-    out.push({ date: c.date, kind: "comp", text: `Turnier bei ${is.name}: ${c.name}${c.place ? `, ${PLACE[c.place]}` : ""}.`, island: is.id });
+    const medals = medalsText(c);
+    out.push({ date: c.date, kind: "comp", text: `Turnier bei ${is.name}: ${c.name}${medals ? `, ${medals}` : ""}.`, island: is.id });
   }
   for (const n of MILESTONES) if (dates[n - 1]) out.push({ date: dates[n - 1], kind: "milestone", text: `${n}. Training an Bord.` });
   const cross = (data.cross ?? [])

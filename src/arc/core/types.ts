@@ -190,18 +190,28 @@ export interface CompMatch {
   oppBelt?: Belt;
 }
 
-export interface Competition {
-  id: string;
-  date: string;
-  name: string;
-  /** Organiser or rule set, free text (e.g. IBJJF, ADCC, AJP, local). */
-  org?: string;
+/** One bracket at a tournament: a weight class or the absolute, in the gi or no-gi. */
+export interface Division {
   attire: Attire;
   /** Weight class as written on the bracket, e.g. "-76 kg" or "Absolute". */
   weight?: string;
   matches: CompMatch[];
   /** 1–3 podium, 0 no placement. */
   place: number;
+}
+
+/**
+ * A tournament. Its own division fields hold the first division, so entries
+ * from before there were several stay valid; the absolute or the no-gi
+ * bracket at the same event go into `more` (read them with core/divisions.ts).
+ */
+export interface Competition extends Division {
+  id: string;
+  date: string;
+  name: string;
+  /** Organiser or rule set, free text (e.g. IBJJF, ADCC, AJP, local). */
+  org?: string;
+  more?: Division[];
   createdAt: number;
   aboard?: Aboard;
 }

@@ -32,6 +32,7 @@ import { STUCK, rankOf } from "../core/lore.ts";
 import { TECHS } from "../core/techniques.ts";
 import { dayNum, rankAt } from "../core/model.ts";
 import { bounty } from "../core/bounty.ts";
+import { bestPlace, medalsText } from "../core/divisions.ts";
 import {
   MILES,
   SPEED,
@@ -417,7 +418,8 @@ function ChartView({
     if (!id) continue;
     const e = (comps[id] ??= { n: 0, best: 0, list: [] });
     e.n++;
-    if (c.place && (!e.best || c.place < e.best)) e.best = c.place;
+    const best = bestPlace(c);
+    if (best && (!e.best || best < e.best)) e.best = best;
     e.list.push(c);
   }
   const selected = arg && ISLAND[arg] ? arg : r[current].id;
@@ -733,16 +735,19 @@ function IslandCard({
       {comps.length ? (
         <div className="isle-items">
           <p className="k">Turniere hier</p>
-          {comps.map((c) => (
-            <span key={c.id} className="isle-item">
-              {c.place ? (
-                <span className={`medal m${c.place}`}>{c.place}</span>
-              ) : (
-                <Swords size={16} aria-hidden="true" />
-              )}
-              {c.name}, {PLACE_NAME[c.place]}
-            </span>
-          ))}
+          {comps.map((c) => {
+            const best = bestPlace(c);
+            return (
+              <span key={c.id} className="isle-item">
+                {best ? (
+                  <span className={`medal m${best}`}>{best}</span>
+                ) : (
+                  <Swords size={16} aria-hidden="true" />
+                )}
+                {c.name}, {medalsText(c) || PLACE_NAME[0]}
+              </span>
+            );
+          })}
         </div>
       ) : null}
     </section>

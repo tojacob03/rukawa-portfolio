@@ -1,9 +1,10 @@
 // The shelf above the fight record: a medal for every podium, a cup for every
-// tournament won (three/trophies.ts). Without WebGL, the counts below it say
+// division won (three/trophies.ts). Without WebGL, the counts below it say
 // the same.
 
 import { useMemo } from "react";
 import type { Competition } from "../core/types.ts";
+import { divisionsOf } from "../core/divisions.ts";
 import type { Award } from "../three/trophies.ts";
 import type { Mount } from "./Scene3D.tsx";
 import Scene3D from "./Scene3D.tsx";
@@ -12,9 +13,12 @@ const load = () => import("../three/trophies.ts").then((m) => m.mountShelf as un
 
 export default function TrophyShelf({ comps }: { comps: Competition[] }) {
   const awards = useMemo<Award[]>(() => {
-    const podium = [...comps].filter((c) => c.place >= 1 && c.place <= 3).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.createdAt - b.createdAt));
-    const cups = podium.filter((c) => c.place === 1).slice(-4).map((c): Award => ({ kind: "cup", place: 1, name: c.name, year: c.date.slice(0, 4) }));
-    const medals = podium.slice(-10).map((c): Award => ({ kind: "medal", place: c.place, name: c.name, year: c.date.slice(0, 4) }));
+    // One podium per division, so the weight class and the absolute of one day each bring their own.
+    const podium = [...comps]
+      .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.createdAt - b.createdAt))
+      .flatMap((c) => divisionsOf(c).filter((d) => d.place >= 1 && d.place <= 3).map((d) => ({ place: d.place, name: c.name, year: c.date.slice(0, 4) })));
+    const cups = podium.filter((x) => x.place === 1).slice(-4).map((x): Award => ({ kind: "cup", ...x }));
+    const medals = podium.slice(-10).map((x): Award => ({ kind: "medal", ...x }));
     return [...cups, ...medals];
   }, [comps]);
   if (!awards.length) return null;

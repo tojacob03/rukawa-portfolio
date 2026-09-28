@@ -8,6 +8,7 @@ import type { ArcData, ArcState, Attire, Belt, SectorId, Size, TechKind, Techniq
 import { BELT_R, FORM_WINDOW, K_COMP, K_ELO, SIZE_R, dayNum, expected, powerOf, rankAt, rollScore } from "./model.ts";
 import { SECTORS, TECH, TECHS } from "./techniques.ts";
 import { STUCK } from "./lore.ts";
+import { matchesOf } from "./divisions.ts";
 
 const TIERS: [number, string][] = [
   [1075, "Weißgurt-Niveau"],
@@ -61,7 +62,7 @@ export function matchesVs(data: ArcData, belt: Belt) {
   let d = 0;
   for (const c of data.competitions ?? []) {
     const own = rankAt(data, dayNum(c.date)).belt;
-    for (const m of c.matches) {
+    for (const m of matchesOf(c)) {
       if (m.method === "wo" || (m.oppBelt ?? own) !== belt) continue;
       if (m.result === "win") w++;
       else if (m.result === "loss") l++;
