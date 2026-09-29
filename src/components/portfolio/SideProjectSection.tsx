@@ -74,6 +74,102 @@ const StintPreview = () => (
   </figure>
 );
 
+// Prognosebuch backtest, 1 Oct 2025 - 28 Sep 2026: mean absolute error of the
+// day-ahead forecast per model, EUR/MWh per quarter-hour (README, backtest table).
+const FORECAST_MAE: [string, number][] = [
+  ["Gradient boosting", 19.3],
+  ["LEAR (Lasso)", 22.0],
+  ["Yesterday again", 30.2],
+  ["Similar day (reference)", 32.7],
+];
+
+const ForecastPreview = () => (
+  <figure>
+    <div className="space-y-2.5" aria-hidden>
+      {FORECAST_MAE.map(([model, mae], i) => (
+        // Phones: label above the bar, so the bars keep their width.
+        <div key={model} className="grid grid-cols-[1fr_2.5rem] items-center gap-x-3 gap-y-1 sm:grid-cols-[11rem_1fr_2.5rem]">
+          <span className="col-span-2 text-xs text-muted-foreground sm:col-span-1 sm:truncate">{model}</span>
+          <div className="relative h-3">
+            <motion.span
+              className="absolute inset-y-0 left-0 origin-left rounded-sm"
+              style={{ width: `${(mae / 35) * 100}%`, background: i === 0 ? "hsl(var(--clash-gold))" : "#5B6474" }}
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
+          <span className="text-right font-mono text-xs text-foreground">{mae.toFixed(1)}</span>
+        </div>
+      ))}
+    </div>
+    <figcaption className="mt-3 text-xs text-muted-foreground">
+      Day-ahead error per model, EUR/MWh (lower is better) · one-year backtest
+    </figcaption>
+  </figure>
+);
+
+// Two bars with a caption - for the share and count comparisons below.
+const Comparison = ({
+  rows,
+  max,
+  caption,
+}: {
+  rows: { label: string; value: number; display: string }[];
+  max: number;
+  caption: string;
+}) => (
+  <figure>
+    <div className="space-y-3" aria-hidden>
+      {rows.map((row, i) => (
+        <div key={row.label}>
+          <div className="flex items-baseline justify-between gap-3 text-xs">
+            <span className="text-muted-foreground">{row.label}</span>
+            <span className="font-mono text-foreground">{row.display}</span>
+          </div>
+          <div className="relative mt-1.5 h-3">
+            <motion.span
+              className="absolute inset-y-0 left-0 origin-left rounded-sm"
+              style={{ width: `${(row.value / max) * 100}%`, background: i === 0 ? "hsl(var(--clash-gold))" : "#5B6474" }}
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+    <figcaption className="mt-3 text-xs text-muted-foreground">{caption}</figcaption>
+  </figure>
+);
+
+// Letzte Bahn, Saarland pilot: people the median resident reaches by bus and
+// train within 45 minutes (README, key findings).
+const TransitPreview = () => (
+  <Comparison
+    max={27854}
+    rows={[
+      { label: "Weekday morning", value: 27854, display: "27,854" },
+      { label: "Sunday", value: 9839, display: "9,839" },
+    ]}
+    caption={"People reachable within 45 min by public transport, median resident, Saarland · 65\u00a0% fewer on Sundays"}
+  />
+);
+
+// Themenkompass, University of Oldenburg 2017-2026 (README, key findings).
+const ResearchPreview = () => (
+  <Comparison
+    max={100}
+    rows={[
+      { label: "Works with external co-authors", value: 74, display: "74 %" },
+      { label: "Works with international co-authors", value: 43, display: "43 %" },
+    ]}
+    caption="18,278 works of the University of Oldenburg, 2017–2026"
+  />
+);
+
 // Three screens of the app (Today, the skill branch, the character), taken
 // from its demo dōjō.
 const ArcPreview = () => (
@@ -94,32 +190,79 @@ const ArcPreview = () => (
 type Project = {
   title: string;
   href: string;
-  /** A separate app outside the portfolio's router (a full page load). */
+  /** Outside the portfolio's router: a separate app (/arc/) or another site. */
   external?: boolean;
+  /** Another site - opens in a new tab. */
+  offsite?: boolean;
+  /** Public repository with the code */
+  code?: string;
+  tags: string[];
   linkLabel: string;
   caseStudy: { href: string; label: string } | null;
   Chart: ComponentType;
-  /** Spans both columns (the biggest project). */
+  /** Spans both columns. */
   wide?: boolean;
+  /** Wide card with the preview beside the text instead of above it. */
+  split?: boolean;
   body: string;
   note: string | null;
   facts: { value: string; label: string }[];
 };
 
+// Order: the strongest data work first. The first and the last card span
+// both columns, so the four in between pair up without a gap.
 const projects: Project[] = [
   {
-    title: "Waza Arc",
-    href: "/arc/",
+    title: "Prognosebuch",
+    href: "https://tojacob03.github.io/Prognosebuch/",
     external: true,
+    offsite: true,
+    code: "https://github.com/tojacob03/Prognosebuch",
     wide: true,
-    linkLabel: "Open Waza Arc (German)",
+    split: true,
+    linkLabel: "Open Prognosebuch",
     caseStudy: null,
-    Chart: ArcPreview,
-    body: "A Brazilian jiu-jitsu training log that plays like an anime RPG. After class you log the session in about half a minute; during class you count one thing, your daily quest. From that the app estimates progress per technique, shows how sure it is, and turns it into a skill branch, a sea voyage with your crew and a 3D fighter you dress yourself.",
-    note: "The app is in German. The demo dōjō on its start page shows it with sample data, no account needed.",
+    Chart: ForecastPreview,
+    tags: ["Python", "Gradient boosting", "Quantile regression", "GitHub Actions"],
+    body: "A probabilistic forecast of German day-ahead electricity prices, published every morning at 09:00 before the auction: a median and an 80\u00a0% band for every quarter-hour of the next day. Each forecast is committed as an immutable file, scored automatically against the real prices and added to a public track record, misses included. It also says openly where it falls short: the bands are slightly too narrow, and the last 30 days of the backtest were weaker.",
+    note: "In German, with an English version. Not investment advice.",
     facts: [
-      { value: "193", label: "techniques in the skill branch" },
-      { value: "~30 s", label: "to log a session" },
+      { value: "Daily, 09:00", label: "forecast published before the auction" },
+      { value: "+0.41", label: "skill vs. the reference model, day-ahead backtest" },
+    ],
+  },
+  {
+    title: "Letzte Bahn",
+    href: "https://tojacob03.github.io/Letzte-Bahn/",
+    external: true,
+    offsite: true,
+    code: "https://github.com/tojacob03/Letzte-Bahn",
+    linkLabel: "Open Letzte Bahn",
+    caseStudy: null,
+    Chart: TransitPreview,
+    tags: ["Python", "r5py", "dbt", "DuckDB", "GitHub Actions"],
+    body: "An accessibility atlas for public transport: for every 500 m grid cell, the travel time by bus and train to doctors, pharmacies, supermarkets, schools and hospitals, on a weekday morning, a weekday evening and a Sunday. Built from the German timetable feed, OpenStreetMap and the 2022 census; piloted in Saarland and ready for the rest of Germany through configuration alone.",
+    note: null,
+    facts: [
+      { value: "3.7×", label: "longer than by car to a supermarket, median resident" },
+      { value: "Twice a month", label: "full pipeline run" },
+    ],
+  },
+  {
+    title: "Themenkompass",
+    href: "https://themenkompass.to-jacob.workers.dev",
+    external: true,
+    offsite: true,
+    code: "https://github.com/tojacob03/Themenkompass",
+    linkLabel: "Open Themenkompass",
+    caseStudy: null,
+    Chart: ResearchPreview,
+    tags: ["Python", "OpenAlex", "TypeScript", "Cytoscape"],
+    body: "Who researches what at a university, how actively and with whom: topic maps, full-text search, researcher profiles and co-author networks, built from open OpenAlex data. A static site without a server, with a page that shows its own data quality and known gaps.",
+    note: "In German and English.",
+    facts: [
+      { value: "18,278", label: "works mapped, University of Oldenburg" },
+      { value: "94 of 96", label: "sample works confirmed against ORCID" },
     ],
   },
   {
@@ -128,6 +271,7 @@ const projects: Project[] = [
     linkLabel: "Open Race Strategy Lab",
     caseStudy: { href: "/work/race-strategy-lab", label: "Read the case study" },
     Chart: StintPreview,
+    tags: ["SQL", "Postgres", "pg_cron", "React"],
     body: "Tyre strategy, tyre wear, race pace and pit stops for every Grand Prix since 2023. A database job pulls lap and pit data after each race, SQL cleans it (safety cars, in- and out-laps, fuel burn) and fits a regression of lap time against tyre age for every stint.",
     note: null,
     facts: [
@@ -141,11 +285,28 @@ const projects: Project[] = [
     linkLabel: "Open Strompreis-Kompass (German)",
     caseStudy: { href: "/work/strompreis-kompass", label: "Read the case study (German)" },
     Chart: PriceProfile,
+    tags: ["SQL", "Postgres", "pg_cron", "React"],
     body: "A live dashboard that shows when electricity is cheapest on the exchange, how wind and solar push prices down, and how often prices turn negative, built on official data from the German Federal Network Agency (Bundesnetzagentur).",
     note: "The project page is in German, because it covers German electricity prices and is written for people in Germany.",
     facts: [
       { value: "Every 3 h", label: "automatic data refresh" },
       { value: "15 min", label: "price resolution" },
+    ],
+  },
+  {
+    title: "Waza Arc",
+    href: "/arc/",
+    external: true,
+    wide: true,
+    linkLabel: "Open Waza Arc (German)",
+    caseStudy: null,
+    Chart: ArcPreview,
+    tags: ["React", "TypeScript", "three.js"],
+    body: "A Brazilian jiu-jitsu training log that plays like an anime RPG. After class you log the session in about half a minute; during class you count one thing, your daily quest. From that the app estimates progress per technique, shows how sure it is, and turns it into a skill branch, a sea voyage with your crew and a 3D fighter you dress yourself.",
+    note: "The app is in German. The demo dōjō on its start page shows it with sample data, no account needed.",
+    facts: [
+      { value: "193", label: "techniques in the skill branch" },
+      { value: "~30 s", label: "to log a session" },
     ],
   },
 ];
@@ -157,7 +318,7 @@ const SideProjectSection = () => {
         <SectionIntro
           eyebrow="Beyond esports"
           title="Other projects"
-          description="The same approach as my esports tooling, applied to other domains."
+          description="The same approach as my esports tooling – collect, clean, analyse, publish – applied to electricity prices, public transport, research and sport. Each one is live."
           titleClassName="text-3xl font-bold sm:text-4xl md:text-5xl"
           descriptionClassName="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
         />
@@ -168,52 +329,79 @@ const SideProjectSection = () => {
               key={p.title}
               className={`group gradient-card flex flex-col${p.wide ? " lg:col-span-2" : ""} border-border/50 p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-clash-gold/30 hover:shadow-glow sm:p-8`}
             >
-              <div className="mb-7 rounded-xl border border-border/50 bg-background/50 p-4">
-                <p.Chart />
-              </div>
-              <h3 className="text-2xl font-semibold text-foreground">{p.title}</h3>
-              <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{p.body}</p>
-              {p.note && <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">{p.note}</p>}
+              <div className={p.split ? "lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-10" : "contents"}>
+                <div
+                  className={`mb-7 rounded-xl border border-border/50 bg-background/50 p-4${
+                    p.split ? " lg:order-last lg:mb-0 lg:mt-1" : ""
+                  }`}
+                >
+                  <p.Chart />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-foreground">{p.title}</h3>
+                  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Built with">
+                    {p.tags.map((tag) => (
+                      <li key={tag} className="rounded-full border border-border/60 px-2.5 py-0.5 text-xs text-muted-foreground">
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{p.body}</p>
+                  {p.note && <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">{p.note}</p>}
 
-              <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border/50 pt-5">
-                {p.facts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt className="sr-only">{fact.label}</dt>
-                    <dd>
-                      <span className="block text-xl font-semibold text-foreground">{fact.value}</span>
-                      <span className="text-sm text-muted-foreground">{fact.label}</span>
-                    </dd>
+                  <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border/50 pt-5">
+                    {p.facts.map((fact) => (
+                      <div key={fact.label}>
+                        <dt className="sr-only">{fact.label}</dt>
+                        <dd>
+                          <span className="block text-xl font-semibold text-foreground">{fact.value}</span>
+                          <span className="text-sm text-muted-foreground">{fact.label}</span>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                    {p.external ? (
+                      <a
+                        href={p.href}
+                        {...(p.offsite ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+                      >
+                        {p.linkLabel}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    ) : (
+                      <Link
+                        to={p.href}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+                      >
+                        {p.linkLabel}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                    )}
+                    {p.code && (
+                      <a
+                        href={p.code}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        Code on GitHub
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    )}
+                    {p.caseStudy && (
+                      <Link
+                        to={p.caseStudy.href}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {p.caseStudy.label}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                    )}
                   </div>
-                ))}
-              </dl>
-
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-                {p.external ? (
-                  <a
-                    href={p.href}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
-                  >
-                    {p.linkLabel}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
-                ) : (
-                  <Link
-                    to={p.href}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
-                  >
-                    {p.linkLabel}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                )}
-                {p.caseStudy && (
-                  <Link
-                    to={p.caseStudy.href}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {p.caseStudy.label}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                )}
+                </div>
               </div>
             </Card>
           ))}
