@@ -290,6 +290,7 @@ html.lenis, html.lenis body { height: auto; }
 .linkish.strong { font-size: inherit; font-weight: 650; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.field input.org-other { margin-top: 8px; max-width: 320px; }
 .chip {
   display: inline-flex;
   align-items: center;

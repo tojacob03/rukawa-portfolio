@@ -69,7 +69,7 @@ function toComp(draft: Draft, id: string): Competition {
     id,
     date: draft.date,
     name: draft.name.trim() || "Turnier",
-    org: draft.org || undefined,
+    org: draft.org.trim() || undefined,
     ...first,
     ...(more.length ? { more } : {}),
     createdAt: Date.now(),
@@ -196,6 +196,17 @@ export default function Turnier({ data, st, today }: { data: ArcData; st: ArcSta
                   </button>
                 ))}
               </div>
+              {/* Not in the list: type it. Picking a chip clears this, typing
+                  here deselects the chips - there is only one organiser. */}
+              <input
+                id="arc-comp-org"
+                className="org-other"
+                value={ORGS.includes(draft.org) ? "" : draft.org}
+                maxLength={40}
+                placeholder="Nicht dabei? Selbst eintragen"
+                aria-label="Anderer Veranstalter oder Regelwerk"
+                onChange={(e) => set({ org: e.target.value })}
+              />
             </div>
           </fieldset>
 
