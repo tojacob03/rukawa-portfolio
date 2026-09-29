@@ -44,6 +44,13 @@ export const BELT_R: Record<Belt, number> = { weiss: 1000, blau: 1150, lila: 130
  */
 export const powerOf = (ru: number) => Math.round(1000 * Math.pow(2, (ru - 1000) / 100));
 export const SIZE_R: Record<Size, number> = { leichter: -60, gleich: 0, schwerer: 60 };
+/**
+ * Rating points a stripe adds to the start. Stripes mostly record time and
+ * attendance, which the Level already rewards, so they only nudge the
+ * Power Level: four stripes are worth a little more than one solid tournament
+ * win, not a fifth of the way to the next belt. Results decide the rest.
+ */
+export const STRIPE_R = 5;
 export const K_ELO = 12;
 /** Competition matches move the Power Level twice as much as a roll. */
 export const K_COMP = 24;
@@ -152,7 +159,7 @@ export function compute(data: ArcData, asOfIso: string, opt: ComputeOptions = {}
   // Power Level: an Elo rating over every roll card and competition match.
   const startBelt = profile?.startBelt ?? "weiss";
   const startStripes = profile?.startStripes ?? 0;
-  let ru = BELT_R[startBelt] + 20 * startStripes;
+  let ru = BELT_R[startBelt] + STRIPE_R * startStripes;
   const claims = data.onboarding?.claims ?? {};
   const compsAll = (data.competitions ?? [])
     .filter((c) => dayNum(c.date) <= asOf)

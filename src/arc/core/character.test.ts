@@ -7,7 +7,7 @@ import { CLASSES } from "./classes.ts";
 import { COUNTRIES } from "./countries.ts";
 import { ITEM, ITEMS, SLOTS, inventory, talismanBonus, unlockText } from "./items.ts";
 import { buildDemo } from "./demo.ts";
-import { compXp, compute, crossXp, dayNum, diff, prologXp, questShape, rankAt, xpParts } from "./model.ts";
+import { STRIPE_R, compXp, compute, crossXp, dayNum, diff, prologXp, questShape, rankAt, xpParts } from "./model.ts";
 import { CROSS_W } from "./sports.ts";
 import { formatSince, parseSince, yearsSince } from "./since.ts";
 import { ORGS } from "../compText.ts";
@@ -68,8 +68,35 @@ test("prologue: belt and stripes set the start level and Power Level", () => {
   assert.equal(prologXp("blau", 2), 3240);
   assert.equal(st.prologXp, 3240);
   assert.equal(st.lvl, 10);
-  assert.equal(st.ru, 1190);
+  assert.equal(st.ru, 1150 + 2 * STRIPE_R);
   assert.equal(compute({ ...d, profile: { ...d.profile!, startBelt: "weiss", startStripes: 0 } }, TODAY).lvl, 1);
+});
+
+test("stripes only nudge the Power Level: a white belt with results passes one with four stripes", () => {
+  const white = (stripes: number): ArcData => ({
+    ...base(),
+    profile: { name: "T", belt: "weiss", stripes, startBelt: "weiss", startStripes: stripes, weeklyGoal: 2, createdAt: "2026-06-01" },
+  });
+  const trainings = ["2026-09-01", "2026-09-08", "2026-09-15", "2026-09-22"].map((date) =>
+    sess(date, { rolls: Array.from({ length: 4 }, () => ({ belt: "weiss" as const, size: "gleich" as const, sf: 0, sa: 0, c: 0.5 as const })) }),
+  );
+  const striped = { ...white(4), sessions: trainings };
+  // Three tournaments against white belts, two wins and a loss in each.
+  const fights = [
+    { result: "win" as const, method: "points" as const, oppBelt: "weiss" as const },
+    { result: "win" as const, method: "points" as const, oppBelt: "weiss" as const },
+    { result: "loss" as const, method: "points" as const, oppBelt: "weiss" as const },
+  ];
+  const competitor = {
+    ...white(0),
+    sessions: trainings,
+    competitions: [1, 2, 3].map((i) => ({ id: `c${i}`, date: `2026-08-0${i}`, name: "Cup", attire: "gi" as const, place: 0, matches: fights, createdAt: i })),
+  };
+  const a = compute(striped, TODAY).ru;
+  const b = compute(competitor, TODAY).ru;
+  assert.ok(b > a, `competitor ${b} should pass the striped white belt ${a}`);
+  // A win against an equal is worth 12 points; four stripes must stay below two of them.
+  assert.ok(4 * STRIPE_R < 2 * 12, "four stripes stay below two tournament wins against equals");
 });
 
 test("classes: the data points to the leg-lock game, the chosen class boosts quest XP", () => {
