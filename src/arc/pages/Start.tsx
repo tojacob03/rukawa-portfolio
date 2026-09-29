@@ -8,7 +8,7 @@ import { DEFAULT_EQUIP, ITEM } from "../core/items.ts";
 import { CLASS } from "../core/classes.ts";
 import { SECTORS, TECH, TECHS } from "../core/techniques.ts";
 import { RINGS, rankOf } from "../core/lore.ts";
-import { BELT_R, PROLOG_LEVEL, prologXp } from "../core/model.ts";
+import { BELT_R, PROLOG_LEVEL, STRIPE_R, prologXp } from "../core/model.ts";
 import { BELT, BELTS, nf0, power } from "../format.ts";
 import { createProfile, loadDemo } from "../actions.ts";
 import { DEFAULT_LOOK } from "../avatarOptions.ts";
@@ -269,7 +269,7 @@ export default function Start({ today }: { today: string }) {
                 Du startest als <b>{rankOf(lvl)}</b> auf Level {lvl}.
               </p>
               <p className="muted small">
-                {nf0.format(prologXp(belt, stripes))} XP für die Zeit vor der App und ein Power Level von {power(BELT_R[belt] + 20 * stripes)} als {BELT[belt].name}gurt mit {stripes}{" "}
+                {nf0.format(prologXp(belt, stripes))} XP für die Zeit vor der App und ein Power Level von {power(BELT_R[belt] + STRIPE_R * stripes)} als {BELT[belt].name}gurt mit {stripes}{" "}
                 Streifen.
               </p>
             </div>
