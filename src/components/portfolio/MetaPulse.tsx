@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { usePublicStats } from "@/hooks/usePublicStats";
 
 type MetaCard = NonNullable<ReturnType<typeof usePublicStats>["data"]>["topMetaDeck"] extends infer Deck
@@ -57,13 +56,13 @@ const MetaPulse = () => {
     <div className="w-full bg-secondary/5 py-4 border-b border-border/40">
       <div className="max-w-5xl mx-auto px-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-mono">
-            Meta Pulse · {deck?.timeWindow ?? "7d"} window
+          <span className="text-[13px] font-medium text-muted-foreground">
+            Meta pulse, {deck?.timeWindow ?? "7d"} window
           </span>
 
           {deck && (
             <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-              <span className="font-semibold text-clash-gold">{deck.usageRate}% usage</span>
+              <span className="font-semibold text-foreground">{deck.usageRate}% usage</span>
               <span className="text-border">·</span>
               <span>{deck.winRate}% win rate</span>
               <span className="text-border">·</span>
@@ -86,12 +85,8 @@ const MetaPulse = () => {
             const presentation = getCardPresentation(card, i);
 
             return (
-              <motion.div
+              <div
                 key={`${card.id}-${i}`}
-                initial={{ opacity: 0, y: 6 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.04 }}
                 className="relative"
                 title={`${card.name}${presentation.label ? ` (${presentation.label})` : ""}`}
               >
@@ -105,9 +100,9 @@ const MetaPulse = () => {
                       img.src = presentation.fallback;
                     }
                   }}
-                  className="block w-full aspect-[3/4] rounded-md bg-background/60 object-contain shadow-sm transition-transform hover:-translate-y-1"
+                  className="block w-full aspect-[3/4] rounded-md bg-background/60 object-contain"
                 />
-              </motion.div>
+              </div>
             );
           })}
         </div>

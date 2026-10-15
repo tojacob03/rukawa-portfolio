@@ -1,9 +1,8 @@
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import { TESTIMONIALS, type Testimonial } from "@/data/testimonials";
-import { EASE } from "@/lib/motion";
 
 /**
  * A word of the quote - or, for the highlighted phrase, the whole phrase as
@@ -55,7 +54,7 @@ const Word = ({ token, progress, range }: { token: Token; progress: MotionValue<
         part.gold ? (
           <motion.span
             key={i}
-            className="text-clash-gold"
+            className="text-foreground"
             style={{
               backgroundImage: "linear-gradient(currentColor, currentColor)",
               backgroundRepeat: "no-repeat",
@@ -96,27 +95,19 @@ const Handle = ({ label }: { label: string }) => (
   </span>
 );
 
-const Quote = ({ t, index }: { t: Testimonial; index: number }) => {
+const Quote = ({ t }: { t: Testimonial }) => {
   const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
   const tokens = tokenize(t.quote, t.highlight);
   // Word by word from when the quote enters the lower screen until its end
   // passes the middle - read at scrolling speed, like the hero.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.55"] });
 
   return (
-    <motion.figure
-      ref={ref}
-      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: EASE }}
-      className="relative pt-10 sm:pt-14"
-    >
+    <figure ref={ref} className="relative pt-10 sm:pt-14">
       {/* Oversized quote mark behind the text */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -left-2 -top-6 select-none font-serif text-[9rem] leading-none text-clash-gold/15 sm:-left-6 sm:-top-10 sm:text-[13rem]"
+        className="pointer-events-none absolute -left-2 -top-6 select-none text-[9rem] leading-none text-foreground/10 sm:-left-6 sm:-top-10 sm:text-[13rem]"
       >
         &ldquo;
       </span>
@@ -138,12 +129,12 @@ const Quote = ({ t, index }: { t: Testimonial; index: number }) => {
             height={56}
             loading="lazy"
             decoding="async"
-            className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-clash-gold/60 ring-offset-2 ring-offset-background"
+            className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background"
           />
         ) : (
           <span
             aria-hidden="true"
-            className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-clash-gold/50 text-lg font-semibold text-clash-gold"
+            className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-border text-lg font-semibold text-foreground"
           >
             {t.name.charAt(0)}
           </span>
@@ -164,12 +155,12 @@ const Quote = ({ t, index }: { t: Testimonial; index: number }) => {
             )}
           </span>
           <span className="mt-0.5 block text-sm text-muted-foreground">{t.role}</span>
-          <span className="mt-2 inline-block rounded-full border border-clash-gold/40 px-2.5 py-0.5 text-xs text-clash-gold">
+          <span className="mt-2 inline-block rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
             {t.context}
           </span>
         </span>
       </figcaption>
-    </motion.figure>
+    </figure>
   );
 };
 
@@ -192,8 +183,8 @@ const TestimonialsSection = () => {
           </div>
         </div>
         <div className="space-y-24 lg:col-span-8">
-          {quotes.map((t, i) => (
-            <Quote key={t.name} t={t} index={i} />
+          {quotes.map((t) => (
+            <Quote key={t.name} t={t} />
           ))}
         </div>
       </div>

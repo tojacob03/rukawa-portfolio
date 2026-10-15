@@ -33,7 +33,7 @@ const ContactSection = () => {
       const cal = await getCalApi({ namespace: CAL_NAMESPACE });
       cal("ui", {
         theme: "dark",
-        styles: { branding: { brandColor: "#7539EF" } },
+        styles: { branding: { brandColor: "#FFCC33" } },
         hideEventTypeDetails: false,
         layout: "month_view",
       });
@@ -133,7 +133,7 @@ const ContactSection = () => {
             description="Player, team, recruiter or client – tell me what you are preparing for, or what you would like built."
           />
 
-          <div className="mt-10 rounded-2xl border border-clash-gold/25 bg-clash-gold/[0.04] p-6">
+          <div className="mt-10 rounded-2xl bg-card/60 p-6">
             <p className="font-semibold text-foreground">Prefer to just talk?</p>
             <p className="mt-1 text-sm text-muted-foreground">Pick a slot directly – no back-and-forth over email.</p>
             <Button className="mt-5 h-11 w-full sm:w-auto" onClick={openCal} disabled={calLoading}>
@@ -153,7 +153,7 @@ const ContactSection = () => {
             {contactMethods.map((m) => {
               const inner = (
                 <>
-                  <span className="label-caps w-20 shrink-0 text-muted-foreground">{m.label}</span>
+                  <span className="meta-label w-20 shrink-0 text-muted-foreground">{m.label}</span>
                   <span className="flex-1 truncate text-foreground">{m.value}</span>
                   {m.onClick ? (
                     <Copy className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-clash-gold" />

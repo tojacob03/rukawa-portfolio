@@ -1,6 +1,3 @@
-import { motion } from "framer-motion";
-import { EASE } from "@/lib/motion";
-
 type SectionIntroProps = {
   title: string;
   description?: string;
@@ -11,7 +8,8 @@ type SectionIntroProps = {
 
 // Heading and description only. No eyebrow or rule above the heading: every
 // section opening the same way made the page read like a template, and the
-// labels repeated what the heading and the nav already say.
+// labels repeated what the heading and the nav already say. No entrance
+// animation either: a fade-up on every section read as a template too.
 const SectionIntro = ({
   title,
   description,
@@ -24,44 +22,11 @@ const SectionIntro = ({
   const centered = align === "center";
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.45 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.08,
-          },
-        },
-      }}
-      className={centered ? "text-center" : ""}
-    >
-      <motion.h2
-        variants={{
-          hidden: { opacity: 0, y: 12 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        transition={{ duration: 0.6, ease: EASE }}
-        className={`${titleClassName} ${centered ? "mx-auto" : ""}`}
-      >
-        {title}
-      </motion.h2>
+    <div className={centered ? "text-center" : ""}>
+      <h2 className={`${titleClassName} ${centered ? "mx-auto" : ""}`}>{title}</h2>
 
-      {description && (
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 10 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className={`${descriptionClassName} ${centered ? "mx-auto" : ""}`}
-        >
-          {description}
-        </motion.p>
-      )}
-    </motion.div>
+      {description && <p className={`${descriptionClassName} ${centered ? "mx-auto" : ""}`}>{description}</p>}
+    </div>
   );
 };
 

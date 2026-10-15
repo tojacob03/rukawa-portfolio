@@ -52,7 +52,7 @@ const Countdown = () => {
           <div className="tabular-stat text-3xl font-semibold text-foreground sm:text-4xl">
             {i === 0 ? v : pad(v)}
           </div>
-          <div className="label-caps mt-1 text-muted-foreground">{label}</div>
+          <div className="meta-label mt-1 text-muted-foreground">{label}</div>
         </div>
       ))}
     </div>
@@ -67,13 +67,13 @@ const StatusCard = () => {
         {phase !== "done" && (
           <span className="h-2 w-2 animate-pulse rounded-full bg-clash-gold motion-reduce:animate-none" />
         )}
-        <span className="label-caps text-muted-foreground">
+        <span className="meta-label text-muted-foreground">
           {phase === "upcoming" ? "Countdown" : phase === "live" ? "Live now" : "Result"}
         </span>
       </div>
       <h3 className="text-xl font-semibold text-foreground sm:text-2xl">{WORLDS.name}</h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        <span className="font-medium text-clash-gold">{WORLDS.city}</span> · {WORLDS.dates} · {WORLDS.qualified} qualified
+        <span className="font-medium text-foreground">{WORLDS.city}</span> · {WORLDS.dates} · {WORLDS.qualified} qualified
       </p>
       <div className="mt-5">
         {phase === "upcoming" && <Countdown />}
@@ -122,7 +122,7 @@ const MilestoneList = ({
 // text stays readable (WCAG 1.4.3) while the road fills in.
 const MilestoneItem = ({ on, month, event, detail }: { on: boolean; month: string; event: string; detail: string }) => (
   <li className={`border-l py-2 pl-4 transition-colors duration-500 ${on ? "border-clash-gold" : "border-border"}`}>
-    <p className={`label-caps transition-colors duration-500 ${on ? "text-clash-gold" : "text-muted-foreground"}`}>{month}</p>
+    <p className={`meta-label transition-colors duration-500 ${on ? "text-clash-gold" : "text-muted-foreground"}`}>{month}</p>
     <p className="mt-1 text-sm text-muted-foreground">{event}</p>
     <p className={`mt-1 text-base font-semibold transition-colors duration-500 ${on ? "text-foreground" : "text-muted-foreground"}`}>
       {detail}
@@ -162,7 +162,7 @@ const MilestoneStepper = ({ reached }: { reached: number }) => {
               }`}
             />
             <span
-              className={`label-caps mt-2 block transition-colors duration-500 ${
+              className={`meta-label mt-2 block transition-colors duration-500 ${
                 i <= reached ? "text-clash-gold" : "text-muted-foreground"
               }`}
             >

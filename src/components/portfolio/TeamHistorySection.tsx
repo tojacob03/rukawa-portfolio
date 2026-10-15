@@ -45,7 +45,7 @@ const TeamHistorySection = () => (
       <div className="lg:col-span-4">
         <div className="lg:sticky lg:top-28">
           <SectionIntro
-            title="Seven years in competitive Clash Royale."
+            title="In competitive Clash Royale since 2019."
             description="From The Dark Empire in 2019 to Selección Colombia and Tier-1 Solo CRL prep."
           />
         </div>
@@ -59,21 +59,14 @@ const TeamHistorySection = () => (
           return (
             <li key={`${item.team}-${item.period}`} className="relative pb-12 pl-10 last:pb-0 sm:pb-14">
               <span
-                className={`absolute left-0 top-[0.2rem] h-[11px] w-[11px] rounded-full border-2 ${
+                className={`absolute left-0 top-3 h-[11px] w-[11px] rounded-full border-2 ${
                   current ? "border-clash-gold bg-clash-gold" : "border-muted-foreground/60 bg-background"
                 }`}
                 aria-hidden
               />
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="label-caps text-clash-gold">{item.period}</span>
-                {current && (
-                  <span className="label-caps rounded-full border border-clash-gold/40 px-2 py-0.5 text-clash-gold">
-                    Now
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{item.role}</h3>
+              <h3 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{item.role}</h3>
               <p className="mt-1 text-lg text-foreground/80">{item.team}</p>
+              <p className="meta-label mt-1 text-muted-foreground">{item.period}</p>
               {item.description && (
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">{item.description}</p>
               )}

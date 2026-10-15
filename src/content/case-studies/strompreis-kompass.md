@@ -40,7 +40,7 @@ Die ganze Datenpipeline läuft in der Datenbank (PostgreSQL bei Supabase in Fran
 3. **Rechnen:** Danach berechnet eine zweite Funktion alle Kennzahlen des Dashboards und legt sie als fertiges Ergebnis ab.
 4. **Anzeigen:** Die Website darf nur diese eine Funktion aufrufen. Die Rohdaten sind von außen nicht erreichbar.
 
-Gebaut habe ich das Projekt KI-gestützt: Fragestellung und Datenmodell sind von mir, den Code und die Auswertungsabfragen habe ich mit KI-Werkzeugen geschrieben. Damit das nachprüfbar bleibt, liegen das [komplette SQL](https://github.com/tojacob03/rukawa-clash-arena/blob/main/docs/strompreis-kompass/schema.sql) und [alle Abfragen hinter den Zahlen in diesem Text](https://github.com/tojacob03/rukawa-clash-arena/blob/main/docs/strompreis-kompass/analysis.sql) offen auf GitHub.
+Gebaut habe ich das Projekt KI-gestützt: Fragestellung und Datenmodell sind von mir, den Code und die Auswertungsabfragen habe ich mit KI-Werkzeugen geschrieben. Damit das nachprüfbar bleibt, liegen das [komplette SQL](https://github.com/tojacob03/rukawa-portfolio/blob/main/docs/strompreis-kompass/schema.sql) und [alle Abfragen hinter den Zahlen in diesem Text](https://github.com/tojacob03/rukawa-portfolio/blob/main/docs/strompreis-kompass/analysis.sql) offen auf GitHub.
 
 ## Erkenntnisse
 

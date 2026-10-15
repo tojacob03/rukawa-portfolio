@@ -4,8 +4,8 @@ import { scrollToSection, scrollToTop } from "@/lib/smoothScroll";
 
 const links = [
   { id: "work", label: "Work" },
-  { id: "projects", label: "Projects" },
   { id: "method", label: "Method" },
+  { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
@@ -76,7 +76,7 @@ const SiteNav = () => {
           <Link
             to="/off-the-clock"
             className={`text-sm transition-colors ${
-              location.pathname === "/off-the-clock" ? "text-clash-gold" : "text-muted-foreground hover:text-clash-gold"
+              location.pathname === "/off-the-clock" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
             }`}
           >
             Off the clock
@@ -107,7 +107,7 @@ const SiteNav = () => {
           <Link
             to="/off-the-clock"
             onClick={() => setOpen(false)}
-            className="flex min-h-11 items-center border-t border-border/50 text-sm text-clash-gold"
+            className="flex min-h-11 items-center border-t border-border/50 text-sm text-foreground"
           >
             Off the clock
           </Link>

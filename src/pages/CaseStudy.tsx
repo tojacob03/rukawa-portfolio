@@ -83,7 +83,7 @@ const CaseStudy = () => {
             {copy.back}
           </Link>
 
-          {study.eyebrow && <p className="mt-8 label-caps text-clash-gold">{study.eyebrow}</p>}
+          {study.eyebrow && <p className="mt-8 meta-label text-clash-gold">{study.eyebrow}</p>}
           <h1 className="mt-4 text-display-md font-semibold gradient-primary bg-clip-text text-transparent">
             {study.title}
           </h1>
@@ -123,7 +123,7 @@ const CaseStudy = () => {
                     i >= 2 ? "border-t border-border/50 sm:border-t-0" : ""
                   } ${i === 2 ? "border-l-0 sm:border-l" : ""}`}
                 >
-                  <dt className="label-caps text-muted-foreground">{item.label}</dt>
+                  <dt className="meta-label text-muted-foreground">{item.label}</dt>
                   <dd className="mt-1 text-sm text-foreground">{item.value}</dd>
                 </div>
               ))}

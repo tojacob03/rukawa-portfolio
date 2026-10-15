@@ -41,9 +41,6 @@ export default {
 				'display-lg': ['clamp(3rem, 8vw, 5.5rem)', { lineHeight: '1.02', letterSpacing: '-0.04em' }],
 				'display-xl': ['clamp(3.5rem, 12vw, 9rem)', { lineHeight: '0.95', letterSpacing: '-0.045em' }],
 			},
-			letterSpacing: {
-				label: '0.28em',
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

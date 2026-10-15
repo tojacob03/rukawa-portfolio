@@ -52,8 +52,8 @@ I designed the product, data model and analysis logic. The code is written by co
 Requires Node.js 18+.
 
 ```sh
-git clone https://github.com/tojacob03/rukawa-clash-arena.git
-cd rukawa-clash-arena
+git clone https://github.com/tojacob03/rukawa-portfolio.git
+cd rukawa-portfolio
 npm install
 npm run dev
 ```

@@ -271,11 +271,10 @@ html.lenis body {
     transition: var(--transition-smooth);
   }
 
-  /* Small uppercase label, used for eyebrows/technical captions.
-     Positive tracking - uppercase at small sizes needs opening up, the
-     opposite of what large display type needs. */
-  .label-caps {
-    @apply font-mono text-[10px] uppercase tracking-label;
+  /* Small label for dates, units and step names: sentence case in the
+     text face at a readable size, not tiny tracked monospace caps. */
+  .meta-label {
+    @apply text-[13px] font-medium;
   }
 
   /* Animations */

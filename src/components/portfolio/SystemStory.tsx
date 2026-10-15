@@ -61,8 +61,10 @@ const REMAINING = [
   ["Royal Recruits", 0.47],
 ] as const;
 
+// The panel depicts the tool's own interface, so it keeps the tool's
+// monospace and borders (data-ui marks it as such for design checks).
 const Panel = ({ step }: { step: number }) => (
-  <div className="relative h-[26rem] overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-6 font-mono text-sm shadow-card backdrop-blur sm:p-8">
+  <div data-ui className="relative h-[26rem] overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-6 font-mono text-sm sm:p-8">
     <div className="mb-6 flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
       <span>Player analysis · #········</span>
       <span className="text-clash-gold">{STEPS[step].tag}</span>
@@ -200,7 +202,7 @@ const SystemStory = () => {
                     }`}
                   >
                     <p
-                      className={`label-caps transition-colors duration-500 ${
+                      className={`meta-label transition-colors duration-500 ${
                         i === step ? "text-clash-gold" : "text-muted-foreground"
                       }`}
                     >
@@ -225,7 +227,7 @@ const SystemStory = () => {
               </ol>
               <Link
                 to="/work"
-                className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
               >
                 Read the case studies <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -249,7 +251,7 @@ const SystemStory = () => {
         <div className="mt-10 space-y-10">
           {STEPS.map((s, i) => (
             <div key={s.tag}>
-              <p className="label-caps text-clash-gold">{s.tag}</p>
+              <p className="meta-label text-clash-gold">{s.tag}</p>
               <p className="mt-1 text-xl font-semibold text-foreground">{s.title}</p>
               <p className="mb-4 mt-2 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
               <Panel step={i} />
@@ -258,7 +260,7 @@ const SystemStory = () => {
         </div>
         <Link
           to="/work"
-          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
         >
           Read the case studies <ArrowUpRight className="h-4 w-4" />
         </Link>
