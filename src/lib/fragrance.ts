@@ -89,6 +89,4 @@ export const isoWeekday = (isoDate: string) => {
 };
 
 const weekdayFmt = new Intl.DateTimeFormat("en-GB", { weekday: "long", timeZone: "UTC" });
-const shortFmt = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
 export const fmtWeekday = (isoDate: string) => weekdayFmt.format(new Date(`${isoDate}T12:00:00Z`));
-export const fmtShortDate = (isoDate: string) => shortFmt.format(new Date(`${isoDate}T12:00:00Z`));
