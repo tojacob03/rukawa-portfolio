@@ -138,16 +138,7 @@ const KineticHero = () => {
       </motion.div>
 
       <motion.div style={{ opacity: fade }} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="label-caps text-clash-gold"
-        >
-          Till Oscar Jacob, known as Rukawa
-        </motion.p>
-
-        <h1 className="mt-6 text-[clamp(3rem,9.5vw,9rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
+        <h1 className="text-[clamp(3rem,9.5vw,9rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
           <motion.span style={{ x: driftLeft }} className="block">
             <Line delay={0.1}>I turn</Line>
             <Line delay={0.2}>battle logs</Line>
@@ -187,8 +178,9 @@ const KineticHero = () => {
           className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
         >
           <p className="max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Clash Royale analyst for Solo CRL, currently helping to prepare two players for the CRL World Finals. I
-            build the data tooling behind it myself, and use the same approach beyond esports.
+            I&apos;m Till Oscar Jacob, known as Rukawa: Clash Royale analyst for Solo CRL, currently helping to
+            prepare two players for the CRL World Finals. I build the data tooling behind it myself, and use the same
+            approach beyond esports.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <button

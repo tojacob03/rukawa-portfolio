@@ -10,9 +10,8 @@ const OffTheClockTeaser = () => (
       className="group mx-auto flex max-w-7xl flex-col gap-4 rounded-2xl border border-border/60 bg-card/40 px-6 py-6 transition-colors hover:border-clash-gold/40 sm:flex-row sm:items-center sm:justify-between sm:px-8"
     >
       <div>
-        <p className="label-caps text-clash-gold">Off the clock</p>
-        <p className="mt-2 text-lg text-foreground sm:text-xl">
-          No-Gi grappling since {BJJ.since.split(" ")[1]} · espresso · {READING.author} · a
+        <p className="text-lg text-foreground sm:text-xl">
+          <span className="font-semibold text-clash-gold">Off the clock.</span> No-Gi grappling since {BJJ.since.split(" ")[1]} · espresso · {READING.author} · a
           different fragrance every morning
         </p>
       </div>

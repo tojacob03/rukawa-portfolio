@@ -407,7 +407,6 @@ const SideProjectSection = () => {
     <section id="projects" className="scroll-mt-14 px-5 py-14 sm:px-6 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionIntro
-          eyebrow="Beyond esports"
           title="Other projects"
           description="The same approach as my esports tooling – collect, clean, analyse, publish – applied to electricity prices, public transport, research and sport. Each one is live."
           titleClassName="text-3xl font-bold sm:text-4xl md:text-5xl"
@@ -420,7 +419,7 @@ const SideProjectSection = () => {
           ))}
         </div>
 
-        <h3 className="label-caps mt-14 text-muted-foreground">More projects</h3>
+        <h3 className="mt-16 text-xl font-semibold text-foreground">More projects</h3>
         {/* Below lg a swipe row (the next card peeks in), from lg three columns.
             The negative margin lets the row run to the screen edge. */}
         <div className="-mx-5 mt-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-3 pt-1 [scrollbar-width:none] sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:grid lg:snap-none lg:grid-cols-3 lg:overflow-visible lg:px-0 lg:pb-0 lg:pt-0 [&::-webkit-scrollbar]:hidden">

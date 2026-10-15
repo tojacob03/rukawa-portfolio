@@ -13,7 +13,7 @@ const results = [
 const AchievementsSection = () => (
   <section id="achievements" className="scroll-mt-14 px-5 py-20 sm:px-6 sm:py-28">
     <div className="mx-auto max-w-7xl">
-      <SectionIntro eyebrow="Results" title="What the work has produced." />
+      <SectionIntro title="What the work has produced." />
       <ol className="mt-12 border-t border-border/60">
         {results.map((r, i) => (
           <motion.li

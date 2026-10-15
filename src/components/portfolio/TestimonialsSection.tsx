@@ -187,7 +187,7 @@ const TestimonialsSection = () => {
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
-            <SectionIntro eyebrow="In their words" title="From the people the prep is for." />
+            <SectionIntro title="From the people the prep is for." />
           </div>
         </div>
         <div className="space-y-24 lg:col-span-8">

@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
 
 type SectionIntroProps = {
-  eyebrow: string;
   title: string;
   description?: string;
   align?: "left" | "center";
-  /** Optional editorial index, e.g. "01" - rendered small and dim beside the title. */
-  index?: string;
   titleClassName?: string;
   descriptionClassName?: string;
 };
@@ -14,12 +11,13 @@ type SectionIntroProps = {
 // Shared easing across the site's motion language (matches --ease-out-expo).
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+// Heading and description only. No eyebrow or rule above the heading: every
+// section opening the same way made the page read like a template, and the
+// labels repeated what the heading and the nav already say.
 const SectionIntro = ({
-  eyebrow,
   title,
   description,
   align = "left",
-  index,
   // Display scale carries its own tracking/leading - no font-bold here, the
   // display face at 600 reads stronger and cleaner than a faux-bolded 700.
   titleClassName = "text-display-md font-semibold",
@@ -42,42 +40,15 @@ const SectionIntro = ({
       }}
       className={centered ? "text-center" : ""}
     >
-      <motion.div
-        variants={{
-          hidden: { scaleX: 0, opacity: 0 },
-          visible: { scaleX: 1, opacity: 1 },
-        }}
-        transition={{ duration: 0.55, ease: EASE }}
-        className={`mb-4 h-px w-20 origin-left bg-clash-gold ${
-          centered ? "mx-auto origin-center" : ""
-        }`}
-      />
-
-      <motion.p
-        variants={{
-          hidden: { opacity: 0, y: 8 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        transition={{ duration: 0.35 }}
-        className="label-caps text-clash-gold"
-      >
-        {eyebrow}
-      </motion.p>
-
       <motion.h2
         variants={{
-          hidden: { opacity: 0, y: 14, filter: "blur(6px)" },
-          visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+          hidden: { opacity: 0, y: 12 },
+          visible: { opacity: 1, y: 0 },
         }}
-        transition={{ duration: 0.65, ease: EASE }}
-        className={`mt-3 ${titleClassName} ${centered ? "mx-auto" : ""} ${
-          index ? "flex items-baseline gap-4" : ""
-        } ${centered && index ? "justify-center" : ""}`}
+        transition={{ duration: 0.6, ease: EASE }}
+        className={`${titleClassName} ${centered ? "mx-auto" : ""}`}
       >
-        {index && (
-          <span className="font-mono text-sm font-normal tracking-normal text-muted-foreground/40">{index}</span>
-        )}
-        <span>{title}</span>
+        {title}
       </motion.h2>
 
       {description && (

@@ -166,6 +166,24 @@ html.lenis body {
     text-rendering: optimizeLegibility;
   }
 
+  /* Browser surfaces in the site's own colours: text selection, keyboard
+     focus, scrollbar, caret and native form controls. */
+  html {
+    scrollbar-color: hsl(var(--secondary)) hsl(var(--background));
+    caret-color: hsl(var(--clash-gold));
+    accent-color: hsl(var(--clash-gold));
+  }
+
+  ::selection {
+    background: hsl(var(--clash-gold));
+    color: hsl(var(--background));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--clash-gold));
+    outline-offset: 3px;
+  }
+
   /* Headings use the display face everywhere. */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;

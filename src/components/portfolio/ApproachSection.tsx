@@ -45,7 +45,6 @@ const ApproachSection = () => (
     <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-12">
       <div className="lg:col-span-5">
         <SectionIntro
-          eyebrow="Approach"
           title="Analysis only counts if it changes the next game."
           description="I turn scattered match history into a smaller, sharper set of decisions: what a player tends to do, what is already exposed, and what is still worth planning around."
         />
@@ -57,7 +56,7 @@ const ApproachSection = () => (
           transition={{ duration: 0.6, ease: EASE }}
           className="mt-10 rounded-2xl border border-clash-gold/25 bg-clash-gold/[0.04] p-6"
         >
-          <p className="label-caps text-clash-gold">How I build</p>
+          <h3 className="text-lg font-semibold text-foreground">How I build</h3>
           <p className="mt-3 leading-relaxed text-foreground/90">
             I decide what gets built and design the data model and the analysis logic. Coding agents write most of
             the code &ndash; first in Lovable, today mainly Claude Code. I review every change, and CI checks lint,
@@ -78,24 +77,19 @@ const ApproachSection = () => (
         </motion.div>
       </div>
 
-      <ol className="grid gap-px self-start overflow-hidden rounded-2xl border border-border/60 bg-border/60 sm:grid-cols-2 lg:col-span-7">
-        {METHOD.map((m, i) => (
-          <motion.li
+      {/* A plain list: the three steps above already tell the story, so these
+          read as a toolkit, not as numbered cards. */}
+      <ul className="self-start border-t border-border/60 lg:col-span-7">
+        {METHOD.map((m) => (
+          <li
             key={m.title}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-            className="group relative bg-background p-7 transition-colors duration-300 hover:bg-card sm:p-9"
+            className="grid gap-1 border-b border-border/60 py-6 sm:grid-cols-[13rem_1fr] sm:gap-8 sm:py-7"
           >
-            <span className="font-mono text-5xl font-semibold text-foreground/10 transition-colors duration-300 group-hover:text-clash-gold/60">
-              0{i + 1}
-            </span>
-            <h3 className="mt-6 text-xl font-semibold text-foreground">{m.title}</h3>
-            <p className="mt-2 leading-relaxed text-muted-foreground">{m.body}</p>
-          </motion.li>
+            <h3 className="text-lg font-semibold text-foreground">{m.title}</h3>
+            <p className="leading-relaxed text-muted-foreground">{m.body}</p>
+          </li>
         ))}
-      </ol>
+      </ul>
     </div>
   </section>
 );

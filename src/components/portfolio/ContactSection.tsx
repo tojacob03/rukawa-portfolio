@@ -128,7 +128,6 @@ const ContactSection = () => {
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <SectionIntro
-            eyebrow="Contact"
             title="Let’s talk about your next set."
             description="Player, team, recruiter or client – tell me what you are preparing for, or what you would like built."
           />

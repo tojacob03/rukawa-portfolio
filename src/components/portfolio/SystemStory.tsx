@@ -187,7 +187,6 @@ const SystemStory = () => {
           <div className="mx-auto grid w-full max-w-7xl grid-cols-12 items-center gap-12 px-8">
             <div className="col-span-5">
               <SectionIntro
-                eyebrow="Featured system"
                 title="From battle log to set decision"
                 description="The private tool behind my prep, in three steps. Example data is anonymized; the process is real."
               />
@@ -231,7 +230,6 @@ const SystemStory = () => {
       {/* Mobile and tablet: the same three steps, stacked */}
       <div className="px-5 py-14 sm:px-6 sm:py-20 lg:hidden">
         <SectionIntro
-          eyebrow="Featured system"
           title="From battle log to set decision"
           description="The private tool behind my prep, in three steps. Example data is anonymized; the process is real."
         />

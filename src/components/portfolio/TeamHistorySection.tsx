@@ -44,7 +44,6 @@ const stations = [...teamHistory].reverse();
 
 const Intro = () => (
   <SectionIntro
-    eyebrow="Experience"
     title="Seven years in competitive Clash Royale."
     description="From The Dark Empire in 2019 to Selección Colombia and Tier-1 Solo CRL prep – first station to today."
   />

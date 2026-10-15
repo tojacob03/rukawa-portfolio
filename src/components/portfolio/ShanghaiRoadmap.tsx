@@ -244,7 +244,6 @@ const ShanghaiRoadmap = () => {
   useMotionValueEvent(mobileProgress, "change", (p) => setReachedMobile(toReached(p)));
   const intro = (
     <SectionIntro
-      eyebrow="Road to Worlds"
       title="From Monthly Finals to the biggest stage."
       description={"I started preparing Morten and Viiper in May 2026. Both qualified for the World Finals in Shanghai."}
     />
