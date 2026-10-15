@@ -61,11 +61,9 @@ const MetaPulse = () => {
           </span>
 
           {deck && (
-            <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 text-xs text-muted-foreground">
               <span className="font-semibold text-foreground">{deck.usageRate}% usage</span>
-              <span className="text-border">·</span>
               <span>{deck.winRate}% win rate</span>
-              <span className="text-border">·</span>
               <span>{deck.games.toLocaleString("en-US")} games</span>
             </div>
           )}

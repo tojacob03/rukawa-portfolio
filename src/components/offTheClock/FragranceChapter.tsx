@@ -86,18 +86,18 @@ const FragranceChapter = () => {
   }
 
   const wornToday = data.latest.worn_on === data.today;
+  const when = wornToday ? "worn today" : `last worn on ${fmtWeekday(data.latest.worn_on)}`;
   const worn = data.collection.filter((f) => f.worn_recent > 0);
   const top = worn[0];
 
   return (
     <>
-      <p className="text-sm text-muted-foreground">
-        {wornToday ? "Today" : `Last worn on ${fmtWeekday(data.latest.worn_on)}`}
-      </p>
-      <h2 className="mt-2 text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-6xl">
+      <h2 className="text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-6xl">
         {data.latest.name}
       </h2>
-      {data.latest.house && <p className="mt-2 text-lg text-clash-gold">{data.latest.house}</p>}
+      <p className="mt-2 text-lg text-foreground/80">
+        {data.latest.house ? `${data.latest.house}, ${when}` : when.charAt(0).toUpperCase() + when.slice(1)}
+      </p>
       <Intro />
 
       {stats && stats.logged > 1 && (

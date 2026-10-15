@@ -112,7 +112,7 @@ const ForecastPreview = () => (
       ))}
     </div>
     <figcaption className="mt-3 text-xs text-muted-foreground">
-      Day-ahead error per model, EUR/MWh (lower is better) · one-year backtest
+      Day-ahead error per model, EUR/MWh (lower is better), one-year backtest
     </figcaption>
   </figure>
 );
@@ -161,7 +161,7 @@ const TransitPreview = () => (
       { label: "Weekday morning", value: 27854, display: "27,854" },
       { label: "Sunday", value: 9839, display: "9,839" },
     ]}
-    caption={"People reachable within 45 min by public transport, median resident, Saarland · 65\u00a0% fewer on Sundays"}
+    caption={"People reachable within 45 min by public transport, median resident, Saarland. 65\u00a0% fewer on Sundays"}
   />
 );
 
@@ -318,12 +318,11 @@ const ProjectLinks = ({ p }: { p: Project }) => (
         className={`${linkClass} text-foreground`}
       >
         {p.linkLabel}
-        <ArrowUpRight className="h-4 w-4" />
+        {p.offsite && <ArrowUpRight className="h-4 w-4" />}
       </a>
     ) : (
       <Link to={p.href} className={`${linkClass} text-foreground`}>
         {p.linkLabel}
-        <ArrowUpRight className="h-4 w-4" />
       </Link>
     )}
     {p.code && (
@@ -335,20 +334,13 @@ const ProjectLinks = ({ p }: { p: Project }) => (
     {p.caseStudy && (
       <Link to={p.caseStudy.href} className={`${linkClass} text-muted-foreground`}>
         {p.caseStudy.label}
-        <ArrowUpRight className="h-4 w-4" />
       </Link>
     )}
   </div>
 );
 
 const Tags = ({ tags }: { tags: string[] }) => (
-  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Built with">
-    {tags.map((tag) => (
-      <li key={tag} className="rounded-full border border-border/60 px-2.5 py-0.5 text-xs text-muted-foreground">
-        {tag}
-      </li>
-    ))}
-  </ul>
+  <p className="mt-2 text-sm text-muted-foreground">Built with {tags.join(", ")}</p>
 );
 
 // Flat surfaces: a tone step from the page, no border, gradient, shadow or hover lift.
@@ -410,7 +402,7 @@ const SideProjectSection = () => {
       <div className="mx-auto max-w-6xl">
         <SectionIntro
           title="Other projects"
-          description="The same approach as my esports tooling – collect, clean, analyse, publish – applied to electricity prices, public transport, research and sport. Each one is live."
+          description="The same approach as my esports tooling (collect, clean, analyse, publish), applied to electricity prices, public transport, research and sport. Each one is live."
         />
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">

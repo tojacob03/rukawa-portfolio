@@ -9,7 +9,6 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import { MILESTONES, WORLDS, worldsPhase, type Milestone } from "@/data/roadToWorlds";
 import { EASE } from "@/lib/motion";
@@ -73,7 +72,7 @@ const StatusCard = () => {
       </div>
       <h3 className="text-xl font-semibold text-foreground sm:text-2xl">{WORLDS.name}</h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        <span className="font-medium text-foreground">{WORLDS.city}</span> · {WORLDS.dates} · {WORLDS.qualified} qualified
+        <span className="font-medium text-foreground">{WORLDS.city}</span>, {WORLDS.dates}. {WORLDS.qualified} qualified.
       </p>
       <div className="mt-5">
         {phase === "upcoming" && <Countdown />}
@@ -86,7 +85,7 @@ const StatusCard = () => {
             to={WORLDS.caseStudy}
             className="pointer-events-auto mt-3 inline-flex items-center gap-2 text-sm font-medium text-clash-gold hover:text-foreground"
           >
-            How the prep worked <ArrowUpRight className="h-4 w-4" />
+            How the prep worked
           </Link>
         )}
       </div>
@@ -106,14 +105,14 @@ const MilestoneList = ({
         on={i <= reached}
         month={m.month}
         event={m.event}
-        detail={m.results.map((r) => `${r.player} ${r.place}`).join(" · ")}
+        detail={m.results.map((r) => `${r.player} ${r.place}`).join(", ")}
       />
     ))}
     <MilestoneItem
       on={reached >= MILESTONES.length}
       month="November 2026"
       event={WORLDS.name}
-      detail={`${WORLDS.city} · ${WORLDS.qualified} qualified`}
+      detail={`${WORLDS.city}, ${WORLDS.qualified} qualified`}
     />
   </ol>
 );
@@ -138,14 +137,14 @@ const STEPS = [
     short: m.month.slice(0, 3),
     label: m.month,
     event: m.event,
-    line: m.results.map((r) => `${r.player} ${r.place}`).join(" · "),
+    line: m.results.map((r) => `${r.player} ${r.place}`).join(", "),
   })),
   {
     key: "worlds",
     short: "Worlds",
     label: "November 2026",
     event: WORLDS.name,
-    line: `${WORLDS.city} · ${WORLDS.qualified} qualified`,
+    line: `${WORLDS.city}, ${WORLDS.qualified} qualified`,
   },
 ];
 
@@ -182,7 +181,7 @@ const MilestoneStepper = ({ reached }: { reached: number }) => {
             className="absolute inset-0"
           >
             <p className="text-sm text-muted-foreground">
-              {current.label} · {current.event}
+              {current.label}, {current.event}
             </p>
             <p className="mt-1 text-lg font-semibold leading-snug text-foreground">{current.line}</p>
           </motion.div>

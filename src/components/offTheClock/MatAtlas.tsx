@@ -55,7 +55,7 @@ const MatAtlas = () => {
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h3 className="text-lg font-semibold text-foreground">Mat passport</h3>
         <p className="text-sm text-muted-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
-          {BJJ.gyms.length} gyms in {countries} countries · drag the globe or pick a city
+          {BJJ.gyms.length} gyms in {countries} countries. Drag the globe or pick a city.
         </p>
       </div>
 
@@ -80,9 +80,6 @@ const MatAtlas = () => {
                     aria-pressed={on}
                     className="group flex w-full items-baseline gap-4 py-3.5 text-left"
                   >
-                    <span className="w-6 text-sm text-muted-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <span
                       className={`flex-1 text-lg font-semibold tracking-tight transition-colors ${
                         on ? "text-clash-gold" : "text-foreground/80 group-hover:text-foreground"
