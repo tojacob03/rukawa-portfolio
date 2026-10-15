@@ -19,10 +19,8 @@ const Index = () => {
   // Handles arriving here as /#section-id (e.g. from SiteNav on a case study
   // page). The section only exists once Index has mounted.
   //
-  // Order matters: the GSAP pin spacer in TeamHistorySection adds page
-  // height, which shifts every section below it (Contact included). So
-  // refresh ScrollTrigger FIRST, then measure and scroll - otherwise the
-  // jump lands on a stale position computed before the spacer existed.
+  // Refresh ScrollTrigger first, then measure and scroll, so the jump uses
+  // positions measured after the page has laid out.
   useEffect(() => {
     const hash = window.location.hash?.replace("#", "");
     if (!hash) return;
