@@ -13,13 +13,15 @@ import SectionIntro from "@/components/portfolio/SectionIntro";
 // Average day-ahead price by hour, Sep 2025 - Aug 2026 (docs/strompreis-kompass/analysis.sql, query 1).
 const HOURLY_PRICE = [103.4, 98.1, 94.6, 93.4, 94.4, 99.6, 112.5, 122.3, 116.1, 96.3, 76.7, 62.5,
   52.2, 47.0, 51.7, 65.7, 84.4, 110.3, 133.9, 150.7, 146.6, 133.5, 122.0, 108.3];
-// Tyre stints of the top 5, Spanish Grand Prix 2026 (57 laps).
+// Tyre stints of the top 5, Singapore Grand Prix 2026 (racing.stints,
+// session 11388).
+const RACE_LAPS = 62;
 const STINTS: [string, [string, number, number][]][] = [
-  ["ANT", [["MEDIUM", 1, 14], ["HARD", 15, 57]]],
-  ["VER", [["SOFT", 1, 14], ["HARD", 15, 57]]],
-  ["NOR", [["MEDIUM", 1, 15], ["HARD", 16, 57]]],
-  ["LEC", [["HARD", 1, 48], ["SOFT", 49, 57]]],
-  ["RUS", [["HARD", 1, 14], ["MEDIUM", 15, 28], ["HARD", 29, 57]]],
+  ["VER", [["SOFT", 1, 32], ["MEDIUM", 33, 62]]],
+  ["LEC", [["SOFT", 1, 24], ["MEDIUM", 25, 39], ["SOFT", 40, 62]]],
+  ["ANT", [["SOFT", 1, 23], ["MEDIUM", 24, 39], ["SOFT", 40, 62]]],
+  ["NOR", [["SOFT", 1, 32], ["MEDIUM", 33, 62]]],
+  ["PIA", [["SOFT", 1, 33], ["MEDIUM", 34, 41], ["SOFT", 42, 62]]],
 ];
 const COMPOUND: Record<string, string> = { SOFT: "#E8002D", MEDIUM: "#FFD12E", HARD: "#EDEDE8" };
 
@@ -59,7 +61,11 @@ const StintPreview = () => (
               <motion.span
                 key={a}
                 className="absolute inset-y-0 origin-left rounded-sm"
-                style={{ left: `${((a - 1) / 57) * 100}%`, width: `calc(${((b - a + 1) / 57) * 100}% - 2px)`, background: COMPOUND[c] }}
+                style={{
+                  left: `${((a - 1) / RACE_LAPS) * 100}%`,
+                  width: `calc(${((b - a + 1) / RACE_LAPS) * 100}% - 2px)`,
+                  background: COMPOUND[c],
+                }}
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true, amount: 0.6 }}
@@ -70,7 +76,7 @@ const StintPreview = () => (
         </div>
       ))}
     </div>
-    <figcaption className="mt-2 text-xs text-muted-foreground">Tyre stints of the top 5, Spanish Grand Prix 2026</figcaption>
+    <figcaption className="mt-2 text-xs text-muted-foreground">Tyre stints of the top 5, Singapore Grand Prix 2026</figcaption>
   </figure>
 );
 
@@ -200,18 +206,20 @@ type Project = {
   linkLabel: string;
   caseStudy: { href: string; label: string } | null;
   Chart: ComponentType;
-  /** Spans both columns. */
-  wide?: boolean;
-  /** Wide card with the preview beside the text instead of above it. */
-  split?: boolean;
   body: string;
+};
+
+type FeaturedProject = Project & {
+  /** Spans both columns, with the preview beside the text. */
+  wide?: boolean;
   note: string | null;
   facts: { value: string; label: string }[];
 };
 
-// Order: the strongest data work first. The first and the last card span
-// both columns, so the four in between pair up without a gap.
-const projects: Project[] = [
+// Two tiers, so the section stays short: the strongest data work as full
+// cards, everything else as compact cards (a swipe row below lg). The first
+// featured card spans both columns, so the other two pair up.
+const featured: FeaturedProject[] = [
   {
     title: "Prognosebuch",
     href: "https://tojacob03.github.io/Prognosebuch/",
@@ -219,13 +227,12 @@ const projects: Project[] = [
     offsite: true,
     code: "https://github.com/tojacob03/Prognosebuch",
     wide: true,
-    split: true,
     linkLabel: "Open Prognosebuch",
     caseStudy: null,
     Chart: ForecastPreview,
     tags: ["Python", "Gradient boosting", "Quantile regression", "GitHub Actions"],
-    body: "A probabilistic forecast of German day-ahead electricity prices, published every morning at 09:00 before the auction: a median and an 80\u00a0% band for every quarter-hour of the next day. Each forecast is committed as an immutable file, scored automatically against the real prices and added to a public track record, misses included. It also says openly where it falls short: the bands are slightly too narrow, and the last 30 days of the backtest were weaker.",
-    note: "In German, with an English version. Not investment advice.",
+    body: "A probabilistic forecast of German day-ahead electricity prices, published every morning before the auction: a median and an 80 % band for every quarter-hour of the next day. Each forecast is committed unchanged, scored automatically against the real prices and added to a public track record, misses and incidents included. It also says where it falls short: the bands are slightly too narrow.",
+    note: "Live since 30 September 2026. In German, with an English version. Not investment advice.",
     facts: [
       { value: "Daily, 09:00", label: "forecast published before the auction" },
       { value: "+0.41", label: "skill vs. the reference model, day-ahead backtest" },
@@ -241,11 +248,11 @@ const projects: Project[] = [
     caseStudy: null,
     Chart: TransitPreview,
     tags: ["Python", "r5py", "dbt", "DuckDB", "GitHub Actions"],
-    body: "An accessibility atlas for public transport: for every 500 m grid cell, the travel time by bus and train to doctors, pharmacies, supermarkets, schools and hospitals, on a weekday morning, a weekday evening and a Sunday. Built from the German timetable feed, OpenStreetMap and the 2022 census; piloted in Saarland and ready for the rest of Germany through configuration alone.",
+    body: "An accessibility atlas for public transport: for every inhabited 500 m square, the travel time by bus and train to everyday destinations, from the GP to the nearest station, on a weekday morning, a weekday evening and a Sunday. Built from the German timetable feed, OpenStreetMap and the 2022 census; piloted in Saarland and built to scale to all of Germany.",
     note: null,
     facts: [
       { value: "3.7×", label: "longer than by car to a supermarket, median resident" },
-      { value: "Twice a month", label: "full pipeline run" },
+      { value: "7", label: "everyday destinations per 500 m square" },
     ],
   },
   {
@@ -258,58 +265,142 @@ const projects: Project[] = [
     caseStudy: null,
     Chart: ResearchPreview,
     tags: ["Python", "OpenAlex", "TypeScript", "Cytoscape"],
-    body: "Who researches what at a university, how actively and with whom: topic maps, full-text search, researcher profiles and co-author networks, built from open OpenAlex data. A static site without a server, with a page that shows its own data quality and known gaps.",
+    body: "Who researches what at a university, how actively and with whom: topic maps, faculty and researcher profiles, full-text search and co-author networks, built from open OpenAlex data and refreshed every month. A static site without a server, with a page that shows its own data quality and known gaps.",
     note: "In German and English.",
     facts: [
       { value: "18,278", label: "works mapped, University of Oldenburg" },
       { value: "94 of 96", label: "sample works confirmed against ORCID" },
     ],
   },
+];
+
+const more: Project[] = [
   {
     title: "Race Strategy Lab",
     href: "/race-strategy",
     linkLabel: "Open Race Strategy Lab",
-    caseStudy: { href: "/work/race-strategy-lab", label: "Read the case study" },
+    caseStudy: { href: "/work/race-strategy-lab", label: "Case study" },
     Chart: StintPreview,
-    tags: ["SQL", "Postgres", "pg_cron", "React"],
-    body: "Tyre strategy, tyre wear, race pace and pit stops for every Grand Prix since 2023. A database job pulls lap and pit data after each race, SQL cleans it (safety cars, in- and out-laps, fuel burn) and fits a regression of lap time against tyre age for every stint.",
-    note: null,
-    facts: [
-      { value: "Since 2023", label: "every race analysed" },
-      { value: "Per stint", label: "tyre wear regression" },
-    ],
+    tags: ["SQL", "Postgres", "pg_cron"],
+    body: "Tyre strategy, tyre wear and race pace for every Grand Prix since 2023. A database job loads each race; SQL cleans the laps and fits tyre wear per stint.",
   },
   {
     title: "Strompreis-Kompass",
     href: "/strompreis",
     linkLabel: "Open Strompreis-Kompass (German)",
-    caseStudy: { href: "/work/strompreis-kompass", label: "Read the case study (German)" },
+    caseStudy: { href: "/work/strompreis-kompass", label: "Case study (German)" },
     Chart: PriceProfile,
-    tags: ["SQL", "Postgres", "pg_cron", "React"],
-    body: "A live dashboard that shows when electricity is cheapest on the exchange, how wind and solar push prices down, and how often prices turn negative, built on official data from the German Federal Network Agency (Bundesnetzagentur).",
-    note: "The project page is in German, because it covers German electricity prices and is written for people in Germany.",
-    facts: [
-      { value: "Every 3 h", label: "automatic data refresh" },
-      { value: "15 min", label: "price resolution" },
-    ],
+    tags: ["SQL", "Postgres", "pg_cron"],
+    body: "When electricity is cheapest on the exchange, how wind and solar push prices down and how often they turn negative, on official Bundesnetzagentur data refreshed every 3 hours.",
   },
   {
     title: "Waza Arc",
     href: "/arc/",
     external: true,
-    wide: true,
     linkLabel: "Open Waza Arc (German)",
     caseStudy: null,
     Chart: ArcPreview,
     tags: ["React", "TypeScript", "three.js"],
-    body: "A Brazilian jiu-jitsu training log that plays like an anime RPG. After class you log the session in about half a minute; during class you count one thing, your daily quest. From that the app estimates progress per technique, shows how sure it is, and turns it into a skill branch, a sea voyage with your crew and a 3D fighter you dress yourself.",
-    note: "The app is in German. The demo dōjō on its start page shows it with sample data, no account needed.",
-    facts: [
-      { value: "193", label: "techniques in the skill branch" },
-      { value: "~30 s", label: "to log a session" },
-    ],
+    body: "A Brazilian jiu-jitsu training log that plays like an anime RPG: log a session in about 30 seconds, and the app turns it into progress per technique, a skill branch and a 3D fighter. Try it in the demo dōjō, no account needed.",
   },
 ];
+
+const linkClass = "inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-foreground";
+
+const ProjectLinks = ({ p }: { p: Project }) => (
+  <div className="flex flex-wrap gap-x-6 gap-y-2">
+    {p.external ? (
+      <a
+        href={p.href}
+        {...(p.offsite ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        className={`${linkClass} text-clash-gold`}
+      >
+        {p.linkLabel}
+        <ArrowUpRight className="h-4 w-4" />
+      </a>
+    ) : (
+      <Link to={p.href} className={`${linkClass} text-clash-gold`}>
+        {p.linkLabel}
+        <ArrowUpRight className="h-4 w-4" />
+      </Link>
+    )}
+    {p.code && (
+      <a href={p.code} target="_blank" rel="noopener noreferrer" className={`${linkClass} text-muted-foreground`}>
+        Code on GitHub
+        <ArrowUpRight className="h-4 w-4" />
+      </a>
+    )}
+    {p.caseStudy && (
+      <Link to={p.caseStudy.href} className={`${linkClass} text-muted-foreground`}>
+        {p.caseStudy.label}
+        <ArrowUpRight className="h-4 w-4" />
+      </Link>
+    )}
+  </div>
+);
+
+const Tags = ({ tags }: { tags: string[] }) => (
+  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Built with">
+    {tags.map((tag) => (
+      <li key={tag} className="rounded-full border border-border/60 px-2.5 py-0.5 text-xs text-muted-foreground">
+        {tag}
+      </li>
+    ))}
+  </ul>
+);
+
+const cardClass =
+  "group gradient-card flex flex-col border-border/50 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-clash-gold/30 hover:shadow-glow";
+const previewClass = "rounded-xl border border-border/50 bg-background/50 p-4";
+
+const FeaturedCard = ({ p }: { p: FeaturedProject }) => (
+  <Card className={`${cardClass}${p.wide ? " lg:col-span-2" : ""} p-6 sm:p-8`}>
+    <div className={p.wide ? "lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-10" : "contents"}>
+      <div className={`mb-7 ${previewClass}${p.wide ? " lg:order-last lg:mb-0 lg:mt-1" : ""}`}>
+        <p.Chart />
+      </div>
+      <div>
+        <h3 className="text-2xl font-semibold text-foreground">{p.title}</h3>
+        <Tags tags={p.tags} />
+        <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{p.body}</p>
+        {p.note && <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">{p.note}</p>}
+
+        <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border/50 pt-5">
+          {p.facts.map((fact) => (
+            <div key={fact.label}>
+              <dt className="sr-only">{fact.label}</dt>
+              <dd>
+                <span className="block text-xl font-semibold text-foreground">{fact.value}</span>
+                <span className="text-sm text-muted-foreground">{fact.label}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-6">
+          <ProjectLinks p={p} />
+        </div>
+      </div>
+    </div>
+  </Card>
+);
+
+const CompactCard = ({ p }: { p: Project }) => (
+  <Card
+    className={`${cardClass} w-[85%] shrink-0 snap-start p-5 sm:w-[22rem] lg:w-auto lg:shrink`}
+  >
+    {/* Same height for every preview, so the titles line up. */}
+    <div className={`mb-5 flex min-h-60 flex-col justify-center ${previewClass}`}>
+      <p.Chart />
+    </div>
+    <h4 className="text-xl font-semibold text-foreground">{p.title}</h4>
+    <Tags tags={p.tags} />
+    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+    <div className="mt-5">
+      <ProjectLinks p={p} />
+    </div>
+  </Card>
+);
 
 const SideProjectSection = () => {
   return (
@@ -324,86 +415,17 @@ const SideProjectSection = () => {
         />
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
-          {projects.map((p) => (
-            <Card
-              key={p.title}
-              className={`group gradient-card flex flex-col${p.wide ? " lg:col-span-2" : ""} border-border/50 p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-clash-gold/30 hover:shadow-glow sm:p-8`}
-            >
-              <div className={p.split ? "lg:grid lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-10" : "contents"}>
-                <div
-                  className={`mb-7 rounded-xl border border-border/50 bg-background/50 p-4${
-                    p.split ? " lg:order-last lg:mb-0 lg:mt-1" : ""
-                  }`}
-                >
-                  <p.Chart />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-foreground">{p.title}</h3>
-                  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Built with">
-                    {p.tags.map((tag) => (
-                      <li key={tag} className="rounded-full border border-border/60 px-2.5 py-0.5 text-xs text-muted-foreground">
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{p.body}</p>
-                  {p.note && <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">{p.note}</p>}
+          {featured.map((p) => (
+            <FeaturedCard key={p.title} p={p} />
+          ))}
+        </div>
 
-                  <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-border/50 pt-5">
-                    {p.facts.map((fact) => (
-                      <div key={fact.label}>
-                        <dt className="sr-only">{fact.label}</dt>
-                        <dd>
-                          <span className="block text-xl font-semibold text-foreground">{fact.value}</span>
-                          <span className="text-sm text-muted-foreground">{fact.label}</span>
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-
-                  <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-                    {p.external ? (
-                      <a
-                        href={p.href}
-                        {...(p.offsite ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
-                      >
-                        {p.linkLabel}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                    ) : (
-                      <Link
-                        to={p.href}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
-                      >
-                        {p.linkLabel}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                    )}
-                    {p.code && (
-                      <a
-                        href={p.code}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        Code on GitHub
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                    )}
-                    {p.caseStudy && (
-                      <Link
-                        to={p.caseStudy.href}
-                        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {p.caseStudy.label}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Card>
+        <h3 className="label-caps mt-14 text-muted-foreground">More projects</h3>
+        {/* Below lg a swipe row (the next card peeks in), from lg three columns.
+            The negative margin lets the row run to the screen edge. */}
+        <div className="-mx-5 mt-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-3 pt-1 [scrollbar-width:none] sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:grid lg:snap-none lg:grid-cols-3 lg:overflow-visible lg:px-0 lg:pb-0 lg:pt-0 [&::-webkit-scrollbar]:hidden">
+          {more.map((p) => (
+            <CompactCard key={p.title} p={p} />
           ))}
         </div>
       </div>

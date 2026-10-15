@@ -33,6 +33,8 @@ const STACK = [
   "pg_cron",
   "SQL",
   "Python (Pandas)",
+  "Claude Code",
+  "GitHub Actions",
   "Tailwind",
   "Framer Motion",
   "GSAP",
@@ -57,8 +59,10 @@ const ApproachSection = () => (
         >
           <p className="label-caps text-clash-gold">How I build</p>
           <p className="mt-3 leading-relaxed text-foreground/90">
-            I design the product, the data model and the analysis logic. The code is written AI-assisted, and I
-            operate the system myself: scheduled data jobs, database migrations, privacy retention.
+            I decide what gets built and design the data model and the analysis logic. Coding agents write most of
+            the code &ndash; first in Lovable, today mainly Claude Code. I review every change, and CI checks lint,
+            types and the build before anything ships. I run the systems myself: scheduled data jobs, database
+            migrations, access rules, privacy retention.
           </p>
           <ul className="mt-5 flex flex-wrap gap-2">
             {STACK.map((item) => (
