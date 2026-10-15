@@ -1,11 +1,10 @@
-import { motion } from "framer-motion";
 import SectionIntro from "@/components/portfolio/SectionIntro";
-import { EASE } from "@/lib/motion";
+import { MONTHLY_FINALS_RESULT } from "@/data/results";
 
 // Result first, then the event - one line each, no icon tiles or repeated
 // rank pills.
 const results = [
-  { result: "Top 2, 3, 3 & 4", event: "CRL Monthly Finals", context: "Players I prepared · CRL 2025 & 2026" },
+  { result: MONTHLY_FINALS_RESULT, event: "CRL Monthly Finals", context: "Players I prepared · CRL 2025 & 2026" },
   { result: "Top 6", event: "Supremacy League Copa América", context: "Selección Colombia · 2025" },
   { result: "Champion", event: "Amazon University Esports Masters", context: "As analyst · Season 4 · Germany" },
   { result: "4th place", event: "GGtoor x Haneki Cup", context: "As analyst · Season 1" },
@@ -16,13 +15,9 @@ const AchievementsSection = () => (
     <div className="mx-auto max-w-7xl">
       <SectionIntro title="What the work has produced." />
       <ol className="mt-12 border-t border-border/60">
-        {results.map((r, i) => (
-          <motion.li
+        {results.map((r) => (
+          <li
             key={r.event}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.5, delay: i * 0.06, ease: EASE }}
             className="grid gap-1 border-b border-border/60 py-6 sm:grid-cols-12 sm:items-baseline sm:gap-6"
           >
             <span className="text-3xl font-semibold tracking-tight text-clash-gold sm:col-span-4 sm:text-4xl">
@@ -30,7 +25,7 @@ const AchievementsSection = () => (
             </span>
             <span className="text-lg font-medium text-foreground sm:col-span-5">{r.event}</span>
             <span className="text-sm text-muted-foreground sm:col-span-3 sm:text-right">{r.context}</span>
-          </motion.li>
+          </li>
         ))}
       </ol>
     </div>

@@ -81,7 +81,7 @@ const ContributionGraph = () => {
   return (
     <div ref={ref} className="mt-6 border-t border-border/60 pt-5">
       <div className="flex items-baseline justify-between gap-3">
-        <p className="label-caps text-muted-foreground">Shipping, week by week</p>
+        <p className="meta-label text-muted-foreground">Shipping, week by week</p>
         <a
           href={`https://github.com/${data?.login}`}
           target="_blank"

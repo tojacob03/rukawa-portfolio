@@ -58,7 +58,7 @@ const Footer = () => {
               Discord
             </button>
             <a
-              href="https://github.com/tojacob03/rukawa-clash-arena"
+              href="https://github.com/tojacob03/rukawa-portfolio"
               rel="noopener noreferrer"
               className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold"
             >

@@ -25,7 +25,7 @@ const NotFound = () => {
     <div className="min-h-screen bg-background">
       <SiteNav />
       <main id="main" tabIndex={-1} className="outline-none mx-auto flex min-h-[calc(100svh-3.5rem)] max-w-7xl flex-col justify-center px-5 py-20 sm:px-8">
-        <p className="label-caps text-clash-gold">Error 404</p>
+        <p className="meta-label text-clash-gold">Error 404</p>
         <h1 className="mt-6 text-[clamp(3rem,9vw,8rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
           This page
           <br />

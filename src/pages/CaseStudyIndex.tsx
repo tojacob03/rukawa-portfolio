@@ -31,7 +31,7 @@ const CaseStudyIndex = () => {
       <SiteNav />
       <main id="main" tabIndex={-1} className="px-5 py-14 outline-none sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <p className="label-caps text-clash-gold">Case studies</p>
+          <p className="meta-label text-clash-gold">Case studies</p>
           <h1 className="mt-4 text-display-md font-semibold gradient-primary bg-clip-text text-transparent">
             Behind the systems
           </h1>
@@ -49,7 +49,7 @@ const CaseStudyIndex = () => {
                         <span className="font-mono text-xs text-muted-foreground/40">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        {study.eyebrow && <p className="label-caps text-clash-gold">{study.eyebrow}</p>}
+                        {study.eyebrow && <p className="meta-label text-clash-gold">{study.eyebrow}</p>}
                       </div>
 
                       <h2 className="mt-3 text-xl font-semibold text-foreground transition-colors group-hover:text-clash-gold sm:text-2xl">

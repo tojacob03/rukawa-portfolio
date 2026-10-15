@@ -60,8 +60,8 @@ async function runCommand(raw: string): Promise<Line[]> {
     }
 
     case "source":
-      window.open("https://github.com/tojacob03/rukawa-clash-arena", "_blank", "noopener,noreferrer");
-      return [{ type: "output", text: "opening github.com/tojacob03/rukawa-clash-arena…" }];
+      window.open("https://github.com/tojacob03/rukawa-portfolio", "_blank", "noopener,noreferrer");
+      return [{ type: "output", text: "opening github.com/tojacob03/rukawa-portfolio…" }];
 
     case "whoami":
       return [

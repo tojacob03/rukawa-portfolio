@@ -1,7 +1,5 @@
-import { motion } from "framer-motion";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import ContributionGraph from "@/components/portfolio/ContributionGraph";
-import { EASE } from "@/lib/motion";
 
 // Replaces the former About, Method and Stack sections, which told the same
 // story three times.
@@ -48,13 +46,7 @@ const ApproachSection = () => (
           description="I turn scattered match history into a smaller, sharper set of decisions: what a player tends to do, what is already exposed, and what is still worth planning around."
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="mt-10 rounded-2xl border border-clash-gold/25 bg-clash-gold/[0.04] p-6"
-        >
+        <div className="mt-10 rounded-2xl bg-card/60 p-6">
           <h3 className="text-lg font-semibold text-foreground">How I build</h3>
           <p className="mt-3 leading-relaxed text-foreground/90">
             I decide what gets built and design the data model and the analysis logic. Coding agents write most of
@@ -73,7 +65,7 @@ const ApproachSection = () => (
             ))}
           </ul>
           <ContributionGraph />
-        </motion.div>
+        </div>
       </div>
 
       {/* A plain list: the three steps above already tell the story, so these

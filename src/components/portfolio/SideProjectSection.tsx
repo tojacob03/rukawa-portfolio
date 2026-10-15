@@ -315,13 +315,13 @@ const ProjectLinks = ({ p }: { p: Project }) => (
       <a
         href={p.href}
         {...(p.offsite ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className={`${linkClass} text-clash-gold`}
+        className={`${linkClass} text-foreground`}
       >
         {p.linkLabel}
         <ArrowUpRight className="h-4 w-4" />
       </a>
     ) : (
-      <Link to={p.href} className={`${linkClass} text-clash-gold`}>
+      <Link to={p.href} className={`${linkClass} text-foreground`}>
         {p.linkLabel}
         <ArrowUpRight className="h-4 w-4" />
       </Link>
@@ -351,9 +351,9 @@ const Tags = ({ tags }: { tags: string[] }) => (
   </ul>
 );
 
-const cardClass =
-  "group gradient-card flex flex-col border-border/50 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-clash-gold/30 hover:shadow-glow";
-const previewClass = "rounded-xl border border-border/50 bg-background/50 p-4";
+// Flat surfaces: a tone step from the page, no border, gradient, shadow or hover lift.
+const cardClass = "group flex flex-col border-0 bg-card/60 shadow-none";
+const previewClass = "rounded-xl bg-background/60 p-4";
 
 const FeaturedCard = ({ p }: { p: FeaturedProject }) => (
   <Card className={`${cardClass}${p.wide ? " lg:col-span-2" : ""} p-6 sm:p-8`}>
@@ -411,8 +411,6 @@ const SideProjectSection = () => {
         <SectionIntro
           title="Other projects"
           description="The same approach as my esports tooling – collect, clean, analyse, publish – applied to electricity prices, public transport, research and sport. Each one is live."
-          titleClassName="text-3xl font-bold sm:text-4xl md:text-5xl"
-          descriptionClassName="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
         />
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
