@@ -4,8 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import SmoothScroll from "@/components/SmoothScroll";
 import { resetScroll } from "@/lib/smoothScroll";
@@ -49,12 +48,6 @@ const AnimatedRoutes = () => {
     if (!location.hash) {
       resetScroll();
     }
-
-    // Pinned GSAP sections measure page height on creation. After a route
-    // swap the document height has changed, so their trigger positions are
-    // stale until refreshed.
-    const timer = setTimeout(() => ScrollTrigger.refresh(), 320);
-    return () => clearTimeout(timer);
   }, [location.pathname, location.hash]);
 
   return (
@@ -64,12 +57,11 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/*
           The homepage is deliberately NOT wrapped in PageTransition (and
-          not lazy-loaded). It hosts the GSAP-pinned Experience section,
-          which relies on `position: fixed` resolving against the
-          viewport. Any wrapper framer-motion animates (and the
-          will-change / compositing hints it leaves behind) can re-root
-          that, which rendered the pinned section as an empty black area.
-          Scroll integrity on the main page beats a fade on it.
+          not lazy-loaded). Its sticky scroll story relies on
+          `position: sticky` resolving against the viewport, and any
+          wrapper framer-motion animates (with the compositing hints it
+          leaves behind) can re-root that. Scroll integrity on the main
+          page beats a fade on it.
         */}
         <Route path="/" element={<Index />} />
         <Route
@@ -180,9 +172,13 @@ const App = () => (
       <Toaster />
       <Sonner />
       <SmoothScroll />
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
+      {/* With "Reduce motion" set in the OS, framer-motion drops transform
+          and layout animation site-wide; fades and state changes remain. */}
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter>
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </MotionConfig>
     </TooltipProvider>
   </QueryClientProvider>
 );

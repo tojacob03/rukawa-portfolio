@@ -29,7 +29,7 @@ const CaseStudyIndex = () => {
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
-      <div className="px-5 py-14 sm:px-6 sm:py-20">
+      <main id="main" tabIndex={-1} className="px-5 py-14 outline-none sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl">
           <p className="label-caps text-clash-gold">Case studies</p>
           <h1 className="mt-4 text-display-md font-semibold gradient-primary bg-clip-text text-transparent">
@@ -105,7 +105,7 @@ const CaseStudyIndex = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

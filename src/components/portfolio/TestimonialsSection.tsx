@@ -3,8 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } f
 import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import { TESTIMONIALS, type Testimonial } from "@/data/testimonials";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * A word of the quote - or, for the highlighted phrase, the whole phrase as
@@ -46,7 +45,9 @@ const tokenize = (quote: string, highlight?: string): Token[] => {
  * also draws a gold underline as it is reached.
  */
 const Word = ({ token, progress, range }: { token: Token; progress: MotionValue<number>; range: [number, number] }) => {
-  const opacity = useTransform(progress, range, [0.16, 1]);
+  // Unread words stay at 0.35, faint but still legible for anyone who
+  // stops scrolling mid-quote.
+  const opacity = useTransform(progress, range, [0.35, 1]);
   const underline = useTransform(progress, [range[0], Math.min(1, range[1] + 0.08)], ["0% 2px", "100% 2px"]);
   return (
     <motion.span style={{ opacity }}>
@@ -155,7 +156,7 @@ const Quote = ({ t, index }: { t: Testimonial; index: number }) => {
                 href={t.profile.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-clash-gold"
+                className="-my-3 inline-flex items-center gap-1 py-3 text-sm text-muted-foreground transition-colors hover:text-clash-gold"
               >
                 <Handle label={t.profile.label} />
                 <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -187,7 +188,7 @@ const TestimonialsSection = () => {
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
-            <SectionIntro eyebrow="In their words" title="From the people the prep is for." />
+            <SectionIntro title="From the people the prep is for." />
           </div>
         </div>
         <div className="space-y-24 lg:col-span-8">

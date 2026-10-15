@@ -8,7 +8,6 @@ import SectionIntro from "@/components/portfolio/SectionIntro";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { getCalApi } from "@calcom/embed-react";
 import { errorMessage } from "@/lib/errors";
 
@@ -60,6 +59,8 @@ const ContactSection = () => {
       const ipResponse = await fetch("https://api.ipify.org?format=json").catch(() => null);
       const ipData = ipResponse ? await ipResponse.json() : null;
 
+      // Loaded on demand, like the contribution graph does.
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.rpc("submit_contact_form_secure", {
         name_param: formData.name,
         email_param: formData.email,
@@ -121,14 +122,13 @@ const ContactSection = () => {
     { label: "X", value: "@RukawaAnalyst", href: "https://twitter.com/RukawaAnalyst" },
   ];
 
-  const inputClass = "border-border bg-background/60 focus-visible:ring-clash-gold";
+  const inputClass = "h-11 border-border bg-background/60 focus-visible:ring-clash-gold";
 
   return (
     <section id="contact" className="scroll-mt-14 px-5 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <SectionIntro
-            eyebrow="Contact"
             title="Let’s talk about your next set."
             description="Player, team, recruiter or client – tell me what you are preparing for, or what you would like built."
           />
@@ -136,11 +136,11 @@ const ContactSection = () => {
           <div className="mt-10 rounded-2xl border border-clash-gold/25 bg-clash-gold/[0.04] p-6">
             <p className="font-semibold text-foreground">Prefer to just talk?</p>
             <p className="mt-1 text-sm text-muted-foreground">Pick a slot directly – no back-and-forth over email.</p>
-            <Button className="mt-5 w-full sm:w-auto" onClick={openCal} disabled={calLoading}>
+            <Button className="mt-5 h-11 w-full sm:w-auto" onClick={openCal} disabled={calLoading}>
               {calLoading ? "Loading…" : "Book a call"}
               <CalendarDays className="ml-2 h-4 w-4" />
             </Button>
-            <p className="mt-3 text-xs text-muted-foreground/70">
+            <p className="mt-3 text-xs text-muted-foreground">
               Opens the Cal.com scheduler (third-party service, see{" "}
               <Link to="/datenschutz" className="underline underline-offset-2 hover:text-foreground">
                 privacy policy
@@ -219,7 +219,7 @@ const ContactSection = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="h-11 w-full" disabled={isSubmitting}>
               {isSubmitting ? "Sending…" : "Send message"}
               <Send className="ml-2 h-4 w-4" />
             </Button>

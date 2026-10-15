@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 // All numbers below are an anonymized example of what the private tool
 // shows - the process is real, the player isn't identifiable.
@@ -88,14 +87,14 @@ const Panel = ({ step }: { step: number }) => (
               >
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-muted-foreground">{set.mode}</span>
-                  <span className={set.result.startsWith("W") ? "text-green-400" : "text-red-400"}>{set.result}</span>
+                  <span className={set.result.startsWith("W") ? "text-positive" : "text-negative"}>{set.result}</span>
                 </div>
                 <ul className="mt-1.5 space-y-1">
                   {set.games.map(([deck, crowns], g) => (
                     <li key={g} className="grid grid-cols-[2rem_1fr_2.5rem] gap-2 text-xs">
-                      <span className="text-muted-foreground/60">{set.games.length > 1 ? `G${g + 1}` : ""}</span>
+                      <span className="text-muted-foreground">{set.games.length > 1 ? `G${g + 1}` : ""}</span>
                       <span className="truncate text-foreground">{deck}</span>
-                      <span className={`text-right ${crowns.startsWith("1") ? "text-green-400" : "text-red-400"}`}>
+                      <span className={`text-right ${crowns.startsWith("1") ? "text-positive" : "text-negative"}`}>
                         {crowns}
                       </span>
                     </li>
@@ -135,7 +134,7 @@ const Panel = ({ step }: { step: number }) => (
             <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Burned this set</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {["Hog Rider", "Miner", "Poison"].map((card) => (
-                <span key={card} className="rounded-full border border-red-400/40 px-3 py-1 text-xs text-red-300 line-through">
+                <span key={card} className="rounded-full border border-negative/40 px-3 py-1 text-xs text-negative line-through">
                   {card}
                 </span>
               ))}
@@ -187,7 +186,6 @@ const SystemStory = () => {
           <div className="mx-auto grid w-full max-w-7xl grid-cols-12 items-center gap-12 px-8">
             <div className="col-span-5">
               <SectionIntro
-                eyebrow="Featured system"
                 title="From battle log to set decision"
                 description="The private tool behind my prep, in three steps. Example data is anonymized; the process is real."
               />
@@ -195,12 +193,26 @@ const SystemStory = () => {
                 {STEPS.map((s, i) => (
                   <li
                     key={s.tag}
-                    className={`rounded-xl border-l-2 py-3 pl-5 transition-all duration-500 ${
-                      i === step ? "border-clash-gold opacity-100" : "border-border opacity-40"
+                    // Inactive steps step back in colour, not in opacity, so
+                    // their text keeps a readable contrast (WCAG 1.4.3).
+                    className={`border-l py-3 pl-5 transition-colors duration-500 ${
+                      i === step ? "border-clash-gold" : "border-border"
                     }`}
                   >
-                    <p className="label-caps text-clash-gold">{s.tag}</p>
-                    <p className="mt-1 text-xl font-semibold text-foreground">{s.title}</p>
+                    <p
+                      className={`label-caps transition-colors duration-500 ${
+                        i === step ? "text-clash-gold" : "text-muted-foreground"
+                      }`}
+                    >
+                      {s.tag}
+                    </p>
+                    <p
+                      className={`mt-1 text-xl font-semibold transition-colors duration-500 ${
+                        i === step ? "text-foreground" : "text-muted-foreground"
+                      }`}
+                    >
+                      {s.title}
+                    </p>
                     <p
                       className={`overflow-hidden text-sm leading-relaxed text-muted-foreground transition-all duration-500 ${
                         i === step ? "mt-2 max-h-32" : "max-h-0"
@@ -213,7 +225,7 @@ const SystemStory = () => {
               </ol>
               <Link
                 to="/work"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
               >
                 Read the case studies <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -231,7 +243,6 @@ const SystemStory = () => {
       {/* Mobile and tablet: the same three steps, stacked */}
       <div className="px-5 py-14 sm:px-6 sm:py-20 lg:hidden">
         <SectionIntro
-          eyebrow="Featured system"
           title="From battle log to set decision"
           description="The private tool behind my prep, in three steps. Example data is anonymized; the process is real."
         />
@@ -247,7 +258,7 @@ const SystemStory = () => {
         </div>
         <Link
           to="/work"
-          className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
+          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-clash-gold transition-colors hover:text-foreground"
         >
           Read the case studies <ArrowUpRight className="h-4 w-4" />
         </Link>

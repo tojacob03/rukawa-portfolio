@@ -45,7 +45,7 @@ flowchart LR
 
 ## How it was built
 
-I designed the product, data model and analysis logic; the code was written AI-assisted using [Lovable](https://lovable.dev) and other AI tools. I operate and maintain the system myself. Changes made in Lovable are committed to this repo automatically.
+I designed the product, data model and analysis logic. The code is written by coding agents: the first versions in [Lovable](https://lovable.dev), most changes today with Claude Code. I review every change, and CI runs lint, typecheck and build on every push (`.github/workflows/ci.yml`). I operate and maintain the system myself. Changes made in Lovable are still committed to this repo automatically.
 
 ### Run locally
 

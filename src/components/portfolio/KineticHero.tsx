@@ -3,9 +3,7 @@ import { AnimatePresence, animate, motion, useInView, useReducedMotion, useScrol
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { scrollToSection } from "@/lib/smoothScroll";
 import { usePublicStats } from "@/hooks/usePublicStats";
-
-// Same curve as --ease-out-expo in index.css.
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 // The last word of the headline cycles through what the analysis produces.
 const OUTCOMES = ["set decisions.", "Game 1 reads.", "deck orders.", "Game 3 calls."];
@@ -100,7 +98,7 @@ const KineticHero = () => {
     <section
       ref={ref}
       onPointerMove={onPointerMove}
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pb-16 pt-28 sm:pt-32"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pb-12 pt-24"
       style={{ ["--spot-x" as string]: "70%", ["--spot-y" as string]: "30%" }}
     >
       {/* Background: no artwork and no purple - a quiet grid and a faint
@@ -138,16 +136,7 @@ const KineticHero = () => {
       </motion.div>
 
       <motion.div style={{ opacity: fade }} className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="label-caps text-clash-gold"
-        >
-          Till Oscar Jacob, known as Rukawa
-        </motion.p>
-
-        <h1 className="mt-6 text-[clamp(3rem,9.5vw,9rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
+        <h1 className="text-[clamp(3rem,min(9.5vw,13svh),9rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
           <motion.span style={{ x: driftLeft }} className="block">
             <Line delay={0.1}>I turn</Line>
             <Line delay={0.2}>battle logs</Line>
@@ -184,11 +173,12 @@ const KineticHero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
-          className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
+          className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
         >
           <p className="max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Clash Royale analyst for Solo CRL, currently helping to prepare two players for the CRL World Finals. I
-            build the data tooling behind it myself, and use the same approach beyond esports.
+            I&apos;m Till Oscar Jacob, known as Rukawa: Clash Royale analyst for Solo CRL, currently helping to
+            prepare two players for the CRL World Finals. I build the data tooling behind it myself, and use the same
+            approach beyond esports.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
@@ -214,14 +204,14 @@ const KineticHero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="mt-14 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-border/60 pt-6 md:grid-cols-4"
+          className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-border/60 pt-6 md:grid-cols-4"
         >
           {battles > 0 && (
             <div className="flex flex-col">
               <dt className="mt-2 flex max-w-[16rem] items-start gap-2 text-sm leading-relaxed text-muted-foreground">
                 <span className="relative mt-[0.6em] flex h-1.5 w-1.5 shrink-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 motion-reduce:animate-none" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-positive opacity-75 motion-reduce:animate-none" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-positive" />
                 </span>
                 battles parsed by my pipeline, last 30 days
               </dt>

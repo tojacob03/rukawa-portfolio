@@ -28,7 +28,7 @@ export const getLenis = () => instance;
  */
 export function scrollToSection(id: string) {
   let el = document.getElementById(id);
-  // Sections with separate mobile markup (e.g. Experience) hide the desktop
+  // Sections with separate mobile markup hide the desktop
   // element below their breakpoint; jump to the visible "<id>-mobile" then.
   if (el && el.getClientRects().length === 0) el = document.getElementById(`${id}-mobile`) ?? el;
   if (!el) return;

@@ -1,9 +1,6 @@
 import { type ReactNode } from "react";
 import { motion } from "framer-motion";
-
-// Same curve as --ease-out-expo in index.css, so page transitions and
-// section reveals share one motion language.
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 /**
  * Wraps a route's content so it cross-fades on navigation. Paired with
@@ -12,12 +9,10 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  *
  * DELIBERATELY OPACITY-ONLY - do not add transform/filter/blur here.
  * Any element with a `transform` or `filter` becomes the containing block
- * for `position: fixed` descendants, which is exactly what GSAP
- * ScrollTrigger uses to pin sections (TeamHistorySection's horizontal
- * scroll). And framer-motion leaves `filter: blur(0px)` on the node after
- * the animation settles - still a filter value, still a containing block -
- * so the pin stays broken, not just during the transition. That rendered
- * the pinned section as an empty black area.
+ * for `position: fixed` descendants and can break `position: sticky`
+ * (the nav, the scroll story). And framer-motion leaves `filter: blur(0px)`
+ * on the node after the animation settles - still a filter value, still a
+ * containing block - so the breakage outlives the transition.
  *
  * `opacity` creates a stacking context but NOT a containing block for
  * fixed positioning, so it is safe to animate here.

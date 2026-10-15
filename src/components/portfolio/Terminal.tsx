@@ -2,11 +2,10 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SquareTerminal, X } from "lucide-react";
 import { BJJ, COFFEE, READING } from "@/data/offTheClock";
+import { EASE } from "@/lib/motion";
 
 const STATS_URL = "https://rudopohqygznwhudyohf.supabase.co/functions/v1/public-stats";
 const PROMPT = "rukawa@portfolio:~$";
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 type Line = { type: "input" | "output" | "error"; text: string };
 
 const HELP_LINES = [
@@ -140,7 +139,7 @@ const Terminal = () => {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="group mx-auto flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+        className="group mx-auto -my-3 flex items-center gap-2 py-3 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
       >
         <SquareTerminal className="h-3.5 w-3.5" />
         <span className="text-clash-gold/80 transition-colors group-hover:text-clash-gold">rukawa@portfolio</span>
@@ -188,7 +187,7 @@ const Terminal = () => {
                       line.type === "input"
                         ? "text-foreground"
                         : line.type === "error"
-                        ? "text-red-400"
+                        ? "text-negative"
                         : "text-clash-purple/90"
                     }
                   >

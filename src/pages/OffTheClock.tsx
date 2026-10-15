@@ -9,8 +9,7 @@ import MatAtlas from "@/components/offTheClock/MatAtlas";
 import CoffeeJourney from "@/components/offTheClock/CoffeeJourney";
 import Book3D from "@/components/offTheClock/Book3D";
 import { BJJ, COFFEE, READING } from "@/data/offTheClock";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 const reveal = {
   initial: { opacity: 0, y: 20 },
@@ -23,7 +22,7 @@ const Chapter = ({ index, label, children }: { index: string; label: string; chi
   <motion.section {...reveal} className="border-t border-border/60 py-16 sm:py-20">
     <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
       <p className="flex items-baseline gap-3 lg:col-span-3 lg:block">
-        <span className="text-sm text-muted-foreground/60" style={{ fontVariantNumeric: "tabular-nums" }}>
+        <span className="text-sm text-muted-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
           {index}
         </span>
         <span className="text-sm font-medium text-clash-gold lg:mt-1 lg:block">{label}</span>
@@ -52,7 +51,7 @@ const OffTheClock = () => {
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
-      <main className="mx-auto max-w-7xl px-5 sm:px-8">
+      <main id="main" tabIndex={-1} className="outline-none mx-auto max-w-7xl px-5 sm:px-8">
         <header className="pb-16 pt-16 sm:pb-24 sm:pt-24">
           <Link
             to="/"

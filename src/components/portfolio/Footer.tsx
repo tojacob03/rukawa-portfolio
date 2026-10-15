@@ -30,28 +30,29 @@ const Footer = () => {
             <p className="text-lg font-semibold text-foreground">Rukawa</p>
             <p className="text-sm text-muted-foreground">Till Oscar Jacob · Clash Royale analyst · Solo CRL</p>
           </div>
-          <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            <a href="mailto:to_jacob@me.com" className="text-muted-foreground transition-colors hover:text-clash-gold">
+          {/* Links get a 44px tap area; the padding reaches into the gaps. */}
+          <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-6 text-sm">
+            <a href="mailto:to_jacob@me.com" className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold">
               Email
             </a>
             <a
               href="https://www.linkedin.com/in/till-oscar-jacob-846403358"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-clash-gold"
+              className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold"
             >
               LinkedIn
             </a>
             <a
               href="https://twitter.com/RukawaAnalyst"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-clash-gold"
+              className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold"
             >
               X
             </a>
             <button
               type="button"
               onClick={() => handleCopyDiscord("rukawa03")}
-              className="text-muted-foreground transition-colors hover:text-clash-gold"
+              className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold"
               title="Copy Discord username"
             >
               Discord
@@ -59,7 +60,7 @@ const Footer = () => {
             <a
               href="https://github.com/tojacob03/rukawa-clash-arena"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-clash-gold"
+              className="-mx-3 inline-flex min-h-11 items-center px-3 text-muted-foreground transition-colors hover:text-clash-gold"
             >
               Source
             </a>
