@@ -89,6 +89,8 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				positive: 'hsl(var(--positive))',
+				negative: 'hsl(var(--negative))',
 				clash: {
 					gold: 'hsl(var(--clash-gold))',
 					purple: 'hsl(var(--clash-purple))',

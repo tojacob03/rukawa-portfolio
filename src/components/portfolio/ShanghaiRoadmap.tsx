@@ -12,6 +12,7 @@ import {
 import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import { MILESTONES, WORLDS, worldsPhase, type Milestone } from "@/data/roadToWorlds";
+import { EASE } from "@/lib/motion";
 
 // The map (world topology + d3-geo) is the heaviest thing on the homepage,
 // so it is its own chunk and only loads when the section is about a screen
@@ -100,31 +101,33 @@ const MilestoneList = ({
 }) => (
   <ol className="space-y-3">
     {MILESTONES.map((m: Milestone, i) => (
-      <li
+      <MilestoneItem
         key={m.month}
-        className={`border-l-2 py-2 pl-4 transition-all duration-500 ${
-          i <= reached ? "border-clash-gold opacity-100" : "border-border opacity-40"
-        }`}
-      >
-        <p className="label-caps text-clash-gold">{m.month}</p>
-        <p className="mt-1 text-sm text-muted-foreground">{m.event}</p>
-        <p className="mt-1 text-base font-semibold text-foreground">
-          {m.results.map((r) => `${r.player} ${r.place}`).join(" · ")}
-        </p>
-      </li>
+        on={i <= reached}
+        month={m.month}
+        event={m.event}
+        detail={m.results.map((r) => `${r.player} ${r.place}`).join(" · ")}
+      />
     ))}
-    <li
-      className={`border-l-2 py-2 pl-4 transition-all duration-500 ${
-        reached >= MILESTONES.length ? "border-clash-gold opacity-100" : "border-border opacity-40"
-      }`}
-    >
-      <p className="label-caps text-clash-gold">November 2026</p>
-      <p className="mt-1 text-sm text-muted-foreground">{WORLDS.name}</p>
-      <p className="mt-1 text-base font-semibold text-foreground">
-        {WORLDS.city} · {WORLDS.qualified} qualified
-      </p>
-    </li>
+    <MilestoneItem
+      on={reached >= MILESTONES.length}
+      month="November 2026"
+      event={WORLDS.name}
+      detail={`${WORLDS.city} · ${WORLDS.qualified} qualified`}
+    />
   </ol>
+);
+
+// A milestone not reached yet steps back in colour, not in opacity, so its
+// text stays readable (WCAG 1.4.3) while the road fills in.
+const MilestoneItem = ({ on, month, event, detail }: { on: boolean; month: string; event: string; detail: string }) => (
+  <li className={`border-l py-2 pl-4 transition-colors duration-500 ${on ? "border-clash-gold" : "border-border"}`}>
+    <p className={`label-caps transition-colors duration-500 ${on ? "text-clash-gold" : "text-muted-foreground"}`}>{month}</p>
+    <p className="mt-1 text-sm text-muted-foreground">{event}</p>
+    <p className={`mt-1 text-base font-semibold transition-colors duration-500 ${on ? "text-foreground" : "text-muted-foreground"}`}>
+      {detail}
+    </p>
+  </li>
 );
 
 // Phones: one milestone at a time under the pinned map, with a stepper
@@ -160,7 +163,7 @@ const MilestoneStepper = ({ reached }: { reached: number }) => {
             />
             <span
               className={`label-caps mt-2 block transition-colors duration-500 ${
-                i <= reached ? "text-clash-gold" : "text-muted-foreground/60"
+                i <= reached ? "text-clash-gold" : "text-muted-foreground"
               }`}
             >
               {step.short}
@@ -175,7 +178,7 @@ const MilestoneStepper = ({ reached }: { reached: number }) => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: reached < 0 ? 0.45 : 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.3, ease: EASE }}
             className="absolute inset-0"
           >
             <p className="text-sm text-muted-foreground">

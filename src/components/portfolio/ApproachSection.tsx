@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import ContributionGraph from "@/components/portfolio/ContributionGraph";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 // Replaces the former About, Method and Stack sections, which told the same
 // story three times.

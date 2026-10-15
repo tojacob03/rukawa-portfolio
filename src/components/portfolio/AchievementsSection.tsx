@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SectionIntro from "@/components/portfolio/SectionIntro";
+import { EASE } from "@/lib/motion";
 
 // Result first, then the event - one line each, no icon tiles or repeated
 // rank pills.
@@ -21,7 +22,7 @@ const AchievementsSection = () => (
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, delay: i * 0.06, ease: EASE }}
             className="grid gap-1 border-b border-border/60 py-6 sm:grid-cols-12 sm:items-baseline sm:gap-6"
           >
             <span className="text-3xl font-semibold tracking-tight text-clash-gold sm:col-span-4 sm:text-4xl">

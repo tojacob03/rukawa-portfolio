@@ -33,6 +33,7 @@ const LegalPage = ({ page }: LegalPageProps) => {
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
+      <main id="main" tabIndex={-1} className="outline-none">
       <article lang="de" className="px-5 py-14 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-3xl">
           <Link
@@ -51,6 +52,7 @@ const LegalPage = ({ page }: LegalPageProps) => {
           />
         </div>
       </article>
+      </main>
       <Footer />
     </div>
   );

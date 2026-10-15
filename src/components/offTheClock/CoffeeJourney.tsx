@@ -1,10 +1,9 @@
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { COFFEE } from "@/data/offTheClock";
+import { EASE } from "@/lib/motion";
 
 const GOLD = "#F5C542";
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 type Leg = { place: string; detail: string; coords: [number, number] };
 
 // Grown -> roasted -> in the cup. The route of the bag in the grinder.

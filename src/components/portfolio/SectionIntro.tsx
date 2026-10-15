@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 type SectionIntroProps = {
   title: string;
@@ -7,9 +8,6 @@ type SectionIntroProps = {
   titleClassName?: string;
   descriptionClassName?: string;
 };
-
-// Shared easing across the site's motion language (matches --ease-out-expo).
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 // Heading and description only. No eyebrow or rule above the heading: every
 // section opening the same way made the page read like a template, and the

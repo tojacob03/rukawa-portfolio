@@ -44,8 +44,21 @@ const SiteNav = () => {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/90 backdrop-blur-md">
+      {/* First stop for keyboard users: past the nav, straight to the page's
+          <main id="main">. Hidden until focused. */}
+      <a
+        href="#main"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("main")?.focus({ preventScroll: true });
+          scrollToSection("main");
+        }}
+        className="sr-only rounded-full bg-foreground text-sm font-semibold text-background focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-[60] focus:px-4 focus:py-2.5"
+      >
+        Skip to content
+      </a>
       <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 h-14 flex items-center justify-between gap-4">
-        <button type="button" onClick={goHome} className="text-lg font-bold text-foreground">
+        <button type="button" onClick={goHome} className="-mx-2 flex h-11 items-center px-2 text-lg font-bold text-foreground">
           Rukawa
         </button>
         <div className="hidden sm:flex items-center gap-6">
@@ -71,7 +84,7 @@ const SiteNav = () => {
         </div>
         <button
           type="button"
-          className="sm:hidden text-sm text-muted-foreground"
+          className="-mr-3 flex h-11 min-w-11 items-center justify-center px-3 text-sm text-muted-foreground sm:hidden"
           aria-expanded={open}
           aria-label="Menu"
           onClick={() => setOpen((v) => !v)}
@@ -80,13 +93,13 @@ const SiteNav = () => {
         </button>
       </div>
       {open && (
-        <div className="sm:hidden border-t border-border/50 px-5 py-3 flex flex-col gap-3 bg-background">
+        <div className="sm:hidden border-t border-border/50 px-5 py-1 flex flex-col bg-background">
           {links.map((link) => (
             <button
               key={link.id}
               type="button"
               onClick={() => goToSection(link.id)}
-              className="text-left text-sm text-muted-foreground"
+              className="flex min-h-11 items-center text-left text-sm text-muted-foreground"
             >
               {link.label}
             </button>
@@ -94,7 +107,7 @@ const SiteNav = () => {
           <Link
             to="/off-the-clock"
             onClick={() => setOpen(false)}
-            className="border-t border-border/50 pt-3 text-sm text-clash-gold"
+            className="flex min-h-11 items-center border-t border-border/50 text-sm text-clash-gold"
           >
             Off the clock
           </Link>

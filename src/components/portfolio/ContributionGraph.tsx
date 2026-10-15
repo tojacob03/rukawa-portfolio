@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { motion, useInView } from "framer-motion";
 
 // GitHub contributions, cached once a day by the database job
 // github.refresh() (supabase/migrations/20260924094756_github_contributions.sql).
@@ -19,10 +18,14 @@ const WEEKS = 26;
 // Leading weeks without any activity are trimmed, but never below this.
 const MIN_WEEKS = 12;
 
-const useContributions = () =>
+const useContributions = (enabled: boolean) =>
   useQuery({
+    enabled,
     queryKey: ["github-contributions"],
     queryFn: async () => {
+      // Loaded on demand: the Supabase client stays out of the homepage's
+      // first download.
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await (supabase.rpc as unknown as UntypedRpc).call(supabase, "github_contributions");
       if (error) throw new Error(error.message);
       return data as ContributionPayload | null;
@@ -35,7 +38,10 @@ const fmtDay = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 
 const ContributionGraph = () => {
-  const { data } = useContributions();
+  // Fetch only when the graph is about to scroll into view.
+  const ref = useRef<HTMLDivElement>(null);
+  const near = useInView(ref, { once: true, margin: "600px" });
+  const { data } = useContributions(near);
   const [hover, setHover] = useState<[string, number] | null>(null);
 
   const view = useMemo(() => {
@@ -67,13 +73,13 @@ const ContributionGraph = () => {
     return { columns, steps, total, activeDays, since: shown[0][0] };
   }, [data]);
 
-  if (!view) return null;
+  if (!view) return <div ref={ref} aria-hidden />;
 
   const level = (c: number) => (c === 0 ? 0 : c <= view.steps[0] ? 1 : c <= view.steps[1] ? 2 : c <= view.steps[2] ? 3 : 4);
   const shade = ["hsl(var(--secondary))", "hsl(45 100% 60% / 0.3)", "hsl(45 100% 60% / 0.55)", "hsl(45 100% 60% / 0.8)", "hsl(45 100% 60%)"];
 
   return (
-    <div className="mt-6 border-t border-border/60 pt-5">
+    <div ref={ref} className="mt-6 border-t border-border/60 pt-5">
       <div className="flex items-baseline justify-between gap-3">
         <p className="label-caps text-muted-foreground">Shipping, week by week</p>
         <a

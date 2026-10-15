@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scrollToSection } from "@/lib/smoothScroll";
 import SiteNav from "@/components/portfolio/SiteNav";
 import KineticHero from "@/components/portfolio/KineticHero";
@@ -18,33 +17,30 @@ import Footer from "@/components/portfolio/Footer";
 const Index = () => {
   // Handles arriving here as /#section-id (e.g. from SiteNav on a case study
   // page). The section only exists once Index has mounted.
-  //
-  // Refresh ScrollTrigger first, then measure and scroll, so the jump uses
-  // positions measured after the page has laid out.
+  // The short delay lets the page lay out before the jump is measured.
   useEffect(() => {
     const hash = window.location.hash?.replace("#", "");
     if (!hash) return;
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-      scrollToSection(hash);
-    }, 350);
+    const timer = setTimeout(() => scrollToSection(hash), 350);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
-      <KineticHero />
-      <MetaPulse />
-      <SystemStory />
-      <ApproachSection />
-      <SideProjectSection />
-      <TeamHistorySection />
-      <AchievementsSection />
-      <ShanghaiRoadmap />
-      <TestimonialsSection />
-      <OffTheClockTeaser />
-      <ContactSection />
+      <main id="main" tabIndex={-1} className="outline-none">
+        <KineticHero />
+        <MetaPulse />
+        <SystemStory />
+        <ApproachSection />
+        <SideProjectSection />
+        <TeamHistorySection />
+        <AchievementsSection />
+        <ShanghaiRoadmap />
+        <TestimonialsSection />
+        <OffTheClockTeaser />
+        <ContactSection />
+      </main>
       <Footer />
     </div>
   );

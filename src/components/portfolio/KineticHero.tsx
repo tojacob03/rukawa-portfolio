@@ -3,9 +3,7 @@ import { AnimatePresence, animate, motion, useInView, useReducedMotion, useScrol
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { scrollToSection } from "@/lib/smoothScroll";
 import { usePublicStats } from "@/hooks/usePublicStats";
-
-// Same curve as --ease-out-expo in index.css.
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { EASE } from "@/lib/motion";
 
 // The last word of the headline cycles through what the analysis produces.
 const OUTCOMES = ["set decisions.", "Game 1 reads.", "deck orders.", "Game 3 calls."];
@@ -212,8 +210,8 @@ const KineticHero = () => {
             <div className="flex flex-col">
               <dt className="mt-2 flex max-w-[16rem] items-start gap-2 text-sm leading-relaxed text-muted-foreground">
                 <span className="relative mt-[0.6em] flex h-1.5 w-1.5 shrink-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75 motion-reduce:animate-none" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-positive opacity-75 motion-reduce:animate-none" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-positive" />
                 </span>
                 battles parsed by my pipeline, last 30 days
               </dt>

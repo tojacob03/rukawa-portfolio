@@ -49,6 +49,11 @@ All colors MUST be HSL.
     --clash-blue: 220 85% 65%;
     --clash-silver: 210 10% 70%;
 
+    /* Outcome colours for data: a win, a live signal / a loss, an error,
+       a burned card. Only for meaning, never decoration. */
+    --positive: 142 69% 58%;
+    --negative: 0 91% 71%;
+
     /* Gradients */
     /* Kept as tokens so existing classes keep working, but flat: no purple. */
     --gradient-primary: linear-gradient(hsl(var(--primary)), hsl(var(--primary)));

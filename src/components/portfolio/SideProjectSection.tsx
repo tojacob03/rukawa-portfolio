@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import SectionIntro from "@/components/portfolio/SectionIntro";
+import { EASE } from "@/lib/motion";
 
 // Non-esports projects: the same pipeline pattern as my esports tooling
 // (collect -> clean -> analyse -> decide), applied to other domains.
@@ -40,7 +41,7 @@ const PriceProfile = () => (
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, delay: h * 0.02, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: h * 0.02, ease: EASE }}
         />
       ))}
     </div>
@@ -69,7 +70,7 @@ const StintPreview = () => (
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true, amount: 0.6 }}
-                transition={{ duration: 0.6, delay: row * 0.06 + a * 0.004, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.6, delay: row * 0.06 + a * 0.004, ease: EASE }}
               />
             ))}
           </div>
@@ -103,7 +104,7 @@ const ForecastPreview = () => (
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: EASE }}
             />
           </div>
           <span className="text-right font-mono text-xs text-foreground">{mae.toFixed(1)}</span>
@@ -141,7 +142,7 @@ const Comparison = ({
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
             />
           </div>
         </div>
@@ -305,10 +306,11 @@ const more: Project[] = [
   },
 ];
 
-const linkClass = "inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-foreground";
+// min-h-11: a 44px tap target on phones; the rows sit closer to make up for it.
+const linkClass = "inline-flex min-h-11 items-center gap-2 text-sm font-medium transition-colors hover:text-foreground";
 
 const ProjectLinks = ({ p }: { p: Project }) => (
-  <div className="flex flex-wrap gap-x-6 gap-y-2">
+  <div className="flex flex-wrap gap-x-6">
     {p.external ? (
       <a
         href={p.href}
@@ -377,7 +379,7 @@ const FeaturedCard = ({ p }: { p: FeaturedProject }) => (
           ))}
         </dl>
 
-        <div className="mt-6">
+        <div className="mt-4">
           <ProjectLinks p={p} />
         </div>
       </div>
@@ -396,7 +398,7 @@ const CompactCard = ({ p }: { p: Project }) => (
     <h4 className="text-xl font-semibold text-foreground">{p.title}</h4>
     <Tags tags={p.tags} />
     <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
-    <div className="mt-5">
+    <div className="mt-3">
       <ProjectLinks p={p} />
     </div>
   </Card>

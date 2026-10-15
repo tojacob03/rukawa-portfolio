@@ -1,11 +1,11 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { BJJ, MAT_STOPS, type MatStop } from "@/data/offTheClock";
+import { EASE } from "@/lib/motion";
 
 // World topology + d3-geo: its own chunk, fetched with this page.
 const GymGlobe = lazy(() => import("./GymGlobe"));
 
-const EASE = [0.16, 1, 0.3, 1] as const;
 const TOUR_MS = 4500;
 const TOUR_MS_PHOTOS = 7000;
 
@@ -80,7 +80,7 @@ const MatAtlas = () => {
                     aria-pressed={on}
                     className="group flex w-full items-baseline gap-4 py-3.5 text-left"
                   >
-                    <span className="w-6 text-sm text-muted-foreground/60" style={{ fontVariantNumeric: "tabular-nums" }}>
+                    <span className="w-6 text-sm text-muted-foreground" style={{ fontVariantNumeric: "tabular-nums" }}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span

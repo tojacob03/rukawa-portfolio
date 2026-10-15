@@ -22,6 +22,10 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    // Never inline font files as base64: the small subsets (Cyrillic, Greek,
+    // Vietnamese) would ride along in the main stylesheet for every visitor,
+    // although a browser only fetches the subsets a page actually uses.
+    assetsInlineLimit: (filePath: string) => (/\.woff2?$/.test(filePath) ? false : undefined),
     rollupOptions: {
       // Two entry points: the portfolio and Waza Arc (/arc/), a separate
       // app with its own bundle, styles and head. See docs/waza-arc/.

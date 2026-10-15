@@ -193,7 +193,7 @@ const RaceStrategy = () => {
   return (
     <div className="min-h-screen bg-background">
       <SiteNav />
-      <main lang="en" className="mx-auto max-w-6xl px-5 sm:px-6">
+      <main id="main" tabIndex={-1} lang="en" className="outline-none mx-auto max-w-6xl px-5 sm:px-6">
         <header className="pt-12 sm:pt-16">
           <h1 className="text-base font-semibold text-foreground">Race Strategy Lab</h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">
