@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { scrollToSection } from "@/lib/smoothScroll";
 import { usePublicStats } from "@/hooks/usePublicStats";
 import { MONTHLY_FINALS_RESULT } from "@/data/results";
@@ -111,18 +110,16 @@ const KineticHero = () => {
             <button
               type="button"
               onClick={() => scrollToSection("work")}
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-7 py-4 text-sm font-semibold text-background transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-md bg-foreground px-7 py-4 text-sm font-semibold text-background transition-colors hover:bg-foreground/90"
             >
               See the system
-              <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("contact")}
-              className="group inline-flex items-center justify-center gap-2 rounded-full border border-foreground/25 px-7 py-4 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
+              className="inline-flex items-center justify-center rounded-md border border-foreground/25 px-7 py-4 text-sm font-semibold text-foreground transition-colors hover:border-foreground/60"
             >
               Work together
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </button>
           </div>
         </motion.div>

@@ -101,10 +101,14 @@ export const BJJ = {
 export const COFFEE = {
   method: "Espresso",
   bean: "Jamaican Blue Mountain",
-  origin: "Jamaica",
   roaster: "Fa-Kafë",
   from: "Prishtina, Kosovo",
-  note: "Jamaican beans, roasted locally by Fa-Kafë in Prishtina and brought back from a trip.",
+  // Grown -> roasted -> in the cup: the transit page of the passport. [longitude, latitude]
+  route: [
+    { place: "Blue Mountains", country: "Jamaica", step: "Grown", coords: [-76.58, 18.05] },
+    { place: "Prishtina", country: "Kosovo", step: "Roasted by Fa-Kafë", coords: [21.1655, 42.6629] },
+    { place: "Oldenburg", country: "Germany", step: "Pulled as espresso", coords: [8.2146, 53.1435] },
+  ] as { place: string; country: string; step: string; coords: [number, number] }[],
 };
 
 export const READING = {

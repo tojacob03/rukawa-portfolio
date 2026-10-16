@@ -28,7 +28,7 @@ const Footer = () => {
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-lg font-semibold text-foreground">Rukawa</p>
-            <p className="text-sm text-muted-foreground">Till Oscar Jacob · Clash Royale analyst · Solo CRL</p>
+            <p className="text-sm text-muted-foreground">Till Oscar Jacob, Clash Royale analyst for Solo CRL</p>
           </div>
           {/* Links get a 44px tap area; the padding reaches into the gaps. */}
           <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-6 text-sm">
@@ -69,7 +69,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-6 border-t border-border/40 space-y-2 text-center md:text-left">
           <p className="text-xs text-muted-foreground">
-            Languages: German (native) · English C2 · Spanish B1 · Russian A2 · Arabic A2
+            Languages: German (native), English C2, Spanish B1, Russian A2, Arabic A2
           </p>
           <p className="text-xs leading-relaxed text-muted-foreground">
             This material is unofficial and is not endorsed by Supercell. For more information see{" "}
@@ -83,13 +83,11 @@ const Footer = () => {
             </a>
             .
           </p>
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} Till Oscar Jacob
-            <span className="mx-2 text-muted-foreground/50">·</span>
+          <p className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground md:justify-start">
+            <span>© {currentYear} Till Oscar Jacob</span>
             <Link to="/impressum" className="underline underline-offset-2 hover:text-foreground">
               Impressum
             </Link>
-            <span className="mx-2 text-muted-foreground/50">·</span>
             <Link to="/datenschutz" className="underline underline-offset-2 hover:text-foreground">
               Datenschutz / Privacy
             </Link>

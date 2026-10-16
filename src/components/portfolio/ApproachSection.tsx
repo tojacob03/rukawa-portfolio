@@ -14,7 +14,7 @@ const METHOD = [
   },
   {
     title: "Remaining-deck support",
-    body: "Score what a player still has after burned cards – mid-set, under time pressure.",
+    body: "Score what a player still has after burned cards, mid-set and under time pressure.",
   },
   {
     title: "Prep hub",
@@ -50,20 +50,11 @@ const ApproachSection = () => (
           <h3 className="text-lg font-semibold text-foreground">How I build</h3>
           <p className="mt-3 leading-relaxed text-foreground/90">
             I decide what gets built and design the data model and the analysis logic. Coding agents write most of
-            the code &ndash; first in Lovable, today mainly Claude Code. I review every change, and CI checks lint,
+            the code, first in Lovable and today mainly Claude Code. I review every change, and CI checks lint,
             types and the build before anything ships. I run the systems myself: scheduled data jobs, database
             migrations, access rules, privacy retention.
           </p>
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {STACK.map((item) => (
-              <li
-                key={item}
-                className="rounded-full border border-border/70 bg-background/40 px-3 py-1 text-xs text-muted-foreground"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">Stack: {STACK.join(", ")}</p>
           <ContributionGraph />
         </div>
       </div>

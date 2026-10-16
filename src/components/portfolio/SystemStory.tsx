@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import SectionIntro from "@/components/portfolio/SectionIntro";
 import { EASE } from "@/lib/motion";
 
@@ -9,17 +8,17 @@ import { EASE } from "@/lib/motion";
 // shows - the process is real, the player isn't identifiable.
 const STEPS = [
   {
-    tag: "01 · Ingest",
+    tag: "1. Ingest",
     title: "Player tag → battle log",
     body: "Profiles, alternate accounts, recent battles and friendly sets arrive in one place, instead of being assembled by hand before every session.",
   },
   {
-    tag: "02 · Profile",
+    tag: "2. Profile",
     title: "Habits per game slot",
-    body: "Decks and cards are split by Game 1, 2 and 3, filtered by mode and season – repeatable habits instead of one-off results.",
+    body: "Decks and cards are split by Game 1, 2 and 3, filtered by mode and season. What comes out are repeatable habits, not one-off results.",
   },
   {
-    tag: "03 · Decision",
+    tag: "3. Decision",
     title: "Remaining decks after burned cards",
     body: "In a duel no card can be played twice across the Bo3 or Bo5. After each game, a ranking shows which decks the opponent can still build from the cards they have left.",
   },
@@ -229,7 +228,7 @@ const SystemStory = () => {
                 to="/work"
                 className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
               >
-                Read the case studies <ArrowUpRight className="h-4 w-4" />
+                Read the case studies
               </Link>
             </div>
             <div className="col-span-7">
@@ -262,7 +261,7 @@ const SystemStory = () => {
           to="/work"
           className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
         >
-          Read the case studies <ArrowUpRight className="h-4 w-4" />
+          Read the case studies
         </Link>
       </div>
     </section>

@@ -155,7 +155,7 @@ const Quote = ({ t }: { t: Testimonial }) => {
             )}
           </span>
           <span className="mt-0.5 block text-sm text-muted-foreground">{t.role}</span>
-          <span className="mt-2 inline-block rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
+          <span className="mt-1 block text-sm text-muted-foreground">
             {t.context}
           </span>
         </span>

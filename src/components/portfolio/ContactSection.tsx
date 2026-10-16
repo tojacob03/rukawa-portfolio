@@ -74,7 +74,7 @@ const ContactSection = () => {
 
       toast({
         title: "Message sent",
-        description: "Thanks – I’ll get back to you soon.",
+        description: "Thanks, I’ll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
     } catch (error: unknown) {
@@ -130,12 +130,12 @@ const ContactSection = () => {
         <div className="lg:col-span-5">
           <SectionIntro
             title="Let’s talk about your next set."
-            description="Player, team, recruiter or client – tell me what you are preparing for, or what you would like built."
+            description="Whether you are a player, a team, a recruiter or a client, tell me what you are preparing for, or what you would like built."
           />
 
           <div className="mt-10 rounded-2xl bg-card/60 p-6">
             <p className="font-semibold text-foreground">Prefer to just talk?</p>
-            <p className="mt-1 text-sm text-muted-foreground">Pick a slot directly – no back-and-forth over email.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Pick a slot directly, without back-and-forth over email.</p>
             <Button className="mt-5 h-11 w-full sm:w-auto" onClick={openCal} disabled={calLoading}>
               {calLoading ? "Loading…" : "Book a call"}
               <CalendarDays className="ml-2 h-4 w-4" />

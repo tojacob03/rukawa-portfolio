@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
 import { BJJ, READING } from "@/data/offTheClock";
 
 // One clickable row, not another section: the details live on /off-the-clock.
@@ -11,13 +10,12 @@ const OffTheClockTeaser = () => (
     >
       <div>
         <p className="text-lg text-foreground sm:text-xl">
-          <span className="font-semibold">Off the clock.</span> No-Gi grappling since {BJJ.since.split(" ")[1]} · espresso · {READING.author} · a
-          different fragrance every morning
+          <span className="font-semibold">Off the clock.</span> No-Gi grappling since {BJJ.since.split(" ")[1]}, espresso,{" "}
+          {READING.author} and a different fragrance every morning.
         </p>
       </div>
       <span className="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors group-hover:text-foreground">
         The person behind the work
-        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </span>
     </Link>
   </div>
