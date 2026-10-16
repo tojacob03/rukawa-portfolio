@@ -58,15 +58,18 @@ export const StampArt = ({ shape, ink, top, main, sub = [], bottom }: StampArtPr
         <g filter="url(#pp-ink)" fill={ink} stroke={ink}>
           <circle r={56} fill="none" strokeWidth={3} />
           <circle r={44} fill="none" strokeWidth={1.1} />
-          <path id={`${id}t`} d="M -50 0 A 50 50 0 0 1 50 0" fill="none" stroke="none" />
-          <path id={`${id}b`} d="M -50 0 A 50 50 0 0 0 50 0" fill="none" stroke="none" />
+          {/* Capitals grow away from their baseline: outwards on the top arc, inwards on the
+              bottom one. So the top baseline sits near the inner ring and the bottom one near
+              the outer ring, and both lines of text stay between the rings. */}
+          <path id={`${id}t`} d="M -46.5 0 A 46.5 46.5 0 0 1 46.5 0" fill="none" stroke="none" />
+          <path id={`${id}b`} d="M -52 0 A 52 52 0 0 0 52 0" fill="none" stroke="none" />
           <g stroke="none" fontFamily={FONT}>
-            <text fontSize={9} fontWeight={600} letterSpacing={2} dominantBaseline="middle">
+            <text fontSize={8.5} fontWeight={600} letterSpacing={1.8}>
               <textPath href={`#${id}t`} startOffset="50%" textAnchor="middle">
                 {top}
               </textPath>
             </text>
-            <text fontSize={8.5} fontWeight={600} letterSpacing={1.6} dominantBaseline="middle">
+            <text fontSize={8} fontWeight={600} letterSpacing={1.5}>
               <textPath href={`#${id}b`} startOffset="50%" textAnchor="middle">
                 {bottom}
               </textPath>
