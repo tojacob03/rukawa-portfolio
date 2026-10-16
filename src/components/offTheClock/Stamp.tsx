@@ -12,33 +12,40 @@ const fit = (text: string, size: number, width: number) =>
   text.length * size * 0.6 > width ? { textLength: width, lengthAdjust: "spacingAndGlyphs" as const } : {};
 
 type Row = { text: string; size: number; weight: number; spacing?: number };
+type Line = Row & { y: number };
 
-/** Centred lines stacked around `centerY`. */
-const Stack = ({ rows, width, centerY = 0 }: { rows: Row[]; width: number; centerY?: number }) => {
+/** Centred lines stacked around `centerY`, each with the baseline it sits on. */
+const stack = (rows: Row[], centerY = 0): Line[] => {
   const heights = rows.map((r) => r.size * 1.25);
   let y = centerY - heights.reduce((a, b) => a + b, 0) / 2;
-  return (
-    <>
-      {rows.map((r, i) => {
-        y += heights[i];
-        return (
-          <text
-            key={i}
-            x={0}
-            y={y - r.size * 0.28}
-            textAnchor="middle"
-            fontSize={r.size}
-            fontWeight={r.weight}
-            letterSpacing={r.spacing ?? 0}
-            {...fit(r.text, r.size + (r.spacing ?? 0), width)}
-          >
-            {r.text}
-          </text>
-        );
-      })}
-    </>
-  );
+  return rows.map((r, i) => {
+    y += heights[i];
+    return { ...r, y: y - r.size * 0.28 };
+  });
 };
+
+const Lines = ({ lines, width }: { lines: Line[]; width: number }) => (
+  <>
+    {lines.map((r) => (
+      <text
+        key={r.y}
+        x={0}
+        y={r.y}
+        textAnchor="middle"
+        fontSize={r.size}
+        fontWeight={r.weight}
+        letterSpacing={r.spacing ?? 0}
+        {...fit(r.text, r.size + (r.spacing ?? 0), width)}
+      >
+        {r.text}
+      </text>
+    ))}
+  </>
+);
+
+/** Small print (gym names, coffee steps) takes the finer ink, so it stays legible. */
+const SUB = { size: 10, weight: 600 };
+const ROUND_SUB = { size: 9.5, weight: 600 };
 
 type StampArtProps = {
   shape: StampShape;
@@ -53,6 +60,7 @@ export const StampArt = ({ shape, ink, top, main, sub = [], bottom }: StampArtPr
   const id = useId().replace(/:/g, "");
 
   if (shape === "round") {
+    const lines = stack([{ text: main, size: 15, weight: 700 }, ...sub.map((text) => ({ text, ...ROUND_SUB }))]);
     return (
       <svg viewBox="-60 -60 120 120" aria-hidden="true">
         <g filter="url(#pp-ink)" fill={ink} stroke={ink}>
@@ -74,11 +82,11 @@ export const StampArt = ({ shape, ink, top, main, sub = [], bottom }: StampArtPr
                 {bottom}
               </textPath>
             </text>
-            <Stack
-              width={76}
-              rows={[{ text: main, size: 15, weight: 700 }, ...sub.map((text) => ({ text, size: 7.4, weight: 500 }))]}
-            />
+            <Lines lines={lines.slice(0, 1)} width={76} />
           </g>
+        </g>
+        <g filter="url(#pp-ink-fine)" fill={ink} fontFamily={FONT}>
+          <Lines lines={lines.slice(1)} width={76} />
         </g>
       </svg>
     );
@@ -102,21 +110,25 @@ export const StampArt = ({ shape, ink, top, main, sub = [], bottom }: StampArtPr
       </>
     );
 
+  const width = shape === "oval" ? 112 : 128;
+  const lines = stack([
+    { text: top, size: 8.5, weight: 600, spacing: 1.6 },
+    { text: main, size: 17, weight: 700 },
+    ...sub.map((text) => ({ text, ...SUB })),
+    { text: bottom, size: 8.5, weight: 600, spacing: 1.4 },
+  ]);
+  const fine = lines.slice(2, 2 + sub.length);
+
   return (
     <svg viewBox="-80 -50 160 100" aria-hidden="true">
       <g filter="url(#pp-ink)" fill={ink} stroke={ink}>
         {frame}
         <g stroke="none" fontFamily={FONT}>
-          <Stack
-            width={shape === "oval" ? 112 : 128}
-            rows={[
-              { text: top, size: 8.5, weight: 600, spacing: 1.6 },
-              { text: main, size: 17, weight: 700 },
-              ...sub.map((text) => ({ text, size: 8, weight: 500 })),
-              { text: bottom, size: 8.5, weight: 600, spacing: 1.4 },
-            ]}
-          />
+          <Lines lines={lines.filter((l) => !fine.includes(l))} width={width} />
         </g>
+      </g>
+      <g filter="url(#pp-ink-fine)" fill={ink} fontFamily={FONT}>
+        <Lines lines={fine} width={width} />
       </g>
     </svg>
   );
@@ -177,6 +189,16 @@ export const PassportDefs = () => (
         <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves={1} seed={2} result="patch" />
         <feComponentTransfer in="patch" result="holes">
           <feFuncA type="discrete" tableValues="1 1 1 1 0.4 1 1 1 1 0.6" />
+        </feComponentTransfer>
+        <feComposite in="rough" in2="holes" operator="in" />
+      </filter>
+      {/* The same ink, pressed lighter: for small print that the full roughness would break up. */}
+      <filter id="pp-ink-fine" x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={7} result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale={0.6} xChannelSelector="R" yChannelSelector="G" result="rough" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves={1} seed={2} result="patch" />
+        <feComponentTransfer in="patch" result="holes">
+          <feFuncA type="discrete" tableValues="1 1 1 1 0.75 1 1 1 1 0.85" />
         </feComponentTransfer>
         <feComposite in="rough" in2="holes" operator="in" />
       </filter>

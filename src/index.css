@@ -431,9 +431,10 @@ html.lenis body {
 }
 
 /* Transit */
-.pp-route { flex: 1; min-height: 0; display: grid; grid-template-rows: 1fr auto 1fr auto 1fr; align-items: center; justify-items: center; }
-.pp-leg { display: flex; align-items: center; gap: 0.7em; color: var(--pp-ink-burgundy); font-size: 0.9em; font-weight: 600; }
-.pp-leg::before { content: ""; width: 2px; height: 1.3em; background: repeating-linear-gradient(var(--pp-ink-burgundy) 0 4px, transparent 4px 8px); }
+.pp-route { flex: 1; min-height: 0; display: grid; grid-template-rows: auto 1fr auto 1fr auto; justify-items: center; }
+/* One dashed line from stamp to stamp; the leg's distance sits beside it. */
+.pp-leg { position: relative; width: 2px; min-height: 2.4em; margin-block: 0.2em; background: repeating-linear-gradient(var(--pp-ink-burgundy) 0 5px, transparent 5px 9px); }
+.pp-leg > span { position: absolute; top: 50%; left: 0.8em; transform: translateY(-50%); white-space: nowrap; color: var(--pp-ink-burgundy); font-size: 0.9em; font-weight: 600; }
 
 /* Nightstand */
 .pp-card { display: grid; gap: 0.25em; padding: 1.1em 1.1em 0.8em; border: 1px solid var(--pp-rule); border-radius: 0.3em; background: rgb(255 255 255 / 0.35); }
