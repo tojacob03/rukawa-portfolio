@@ -221,7 +221,11 @@ export const TransitPage = ({ inked, onSelect }: PageProps) => (
     <div className="pp-route">
       {COFFEE.route.map((stop, i) => (
         <div key={stop.place} className="contents">
-          {i > 0 && <span className="pp-leg">{nf.format(COFFEE_LEGS[i - 1])} km</span>}
+          {i > 0 && (
+            <span className="pp-leg">
+              <span>{nf.format(COFFEE_LEGS[i - 1])} km</span>
+            </span>
+          )}
           <StampButton
             label={`${stop.place}, ${stop.country}: ${stop.step}`}
             onSelect={() => onSelect({ kind: "coffee", step: i })}
