@@ -125,7 +125,7 @@ export const DayStampArt = ({ ink, day, today }: { ink: string; day: number; tod
     <g filter="url(#pp-ink)">
       <circle r={25} fill="none" stroke={ink} strokeWidth={today ? 4 : 2.6} />
       <circle r={19} fill="none" stroke={ink} strokeWidth={1} />
-      <text y={6} textAnchor="middle" fontSize={16} fontWeight={700} fill="hsl(var(--foreground))" fontFamily={FONT}>
+      <text y={6} textAnchor="middle" fontSize={16} fontWeight={700} fill="var(--pp-ink)" fontFamily={FONT}>
         {day}
       </text>
     </g>
@@ -164,23 +164,29 @@ export const StampButton = ({
   </button>
 );
 
-/** Shared SVG definitions: the ink filter and the security print on every page. */
+/** Shared SVG definitions: the ink filter, the security print on every page and the cover's foil. */
 export const PassportDefs = () => (
   <svg width="0" height="0" className="absolute" aria-hidden="true">
     <defs>
       <filter id="pp-ink" x="-8%" y="-8%" width="116%" height="116%">
         <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={7} result="noise" />
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale={1.8} xChannelSelector="R" yChannelSelector="G" result="rough" />
-        <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves={1} seed={2} result="patch" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale={1.6} xChannelSelector="R" yChannelSelector="G" result="rough" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves={1} seed={2} result="patch" />
         <feComponentTransfer in="patch" result="holes">
-          <feFuncA type="discrete" tableValues="1 1 1 1 0.35 1 1 1 1 0.55" />
+          <feFuncA type="discrete" tableValues="1 1 1 1 0.4 1 1 1 1 0.6" />
         </feComponentTransfer>
         <feComposite in="rough" in2="holes" operator="in" />
       </filter>
-      <pattern id="pp-guilloche" width="64" height="24" patternUnits="userSpaceOnUse">
-        <path d="M0 12 C 16 0, 32 24, 48 12 S 64 0, 80 12" fill="none" stroke="var(--pp-guilloche)" strokeWidth={1} />
-        <path d="M0 18 C 16 6, 32 30, 48 18 S 64 6, 80 18" fill="none" stroke="var(--pp-guilloche)" strokeWidth={0.6} />
+      <pattern id="pp-guilloche" width="72" height="26" patternUnits="userSpaceOnUse">
+        <path d="M0 13 C 18 0, 36 26, 54 13 S 72 0, 90 13" fill="none" stroke="var(--pp-guilloche)" strokeWidth={0.8} />
+        <path d="M0 20 C 18 7, 36 33, 54 20 S 72 7, 90 20" fill="none" stroke="var(--pp-guilloche)" strokeWidth={0.5} />
       </pattern>
+      <linearGradient id="pp-foil" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stopColor="#A8823A" />
+        <stop offset="0.4" stopColor="#EBD28C" />
+        <stop offset="0.6" stopColor="#C49A4A" />
+        <stop offset="1" stopColor="#E8CF88" />
+      </linearGradient>
     </defs>
   </svg>
 );
