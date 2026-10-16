@@ -25,7 +25,7 @@ import {
  */
 
 const PAPER = [HolderPage, MatsPage, MatsContinuedPage, TransitPage, NightstandPage, DailyStampsPage, DeclarationPage, BackPage];
-const NAMES = ["Cover", "Holder", "Mat stamps", "Mat stamps, continued", "Transit", "On the nightstand", "Daily stamps", "Declaration", "Back page", "Back cover"];
+const NAMES = ["Cover", "Holder", "Mat stamps", "Mat stamps, continued", "Coffee", "Reading", "Fragrance", "Fragrance shelf", "Back page", "Back cover"];
 const PAGE_COUNT = NAMES.length;
 const JUMPS: [string, number][] = [
   ["Holder", 1],
@@ -33,7 +33,7 @@ const JUMPS: [string, number][] = [
   ["Coffee", 4],
   ["Reading", 5],
   ["Fragrance", 6],
-  ["Declaration", 7],
+  ["Shelf", 7],
 ];
 
 /** The pages in view: one in portrait, a spread in landscape (the covers stand alone). */
@@ -127,7 +127,7 @@ const Passport = () => {
   const deskClass = `pp-desk${alone && first === 0 ? " is-closed" : ""}${alone && first === PAGE_COUNT - 1 ? " is-back" : ""}`;
 
   return (
-    <div className="pp" ref={hostRef}>
+    <div className={`pp${reduce ? "" : " can-ink"}`} ref={hostRef}>
       <PassportDefs />
 
       <div className={deskClass}>
