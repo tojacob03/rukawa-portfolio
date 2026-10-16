@@ -213,10 +213,10 @@ const ROUTE_STAMPS: { shape: StampShape; ink: string; bottom: string; rotate: nu
 
 export const TransitPage = ({ inked, onSelect }: PageProps) => (
   <Sheet n={4} inked={inked}>
-    <h2 className="pp-h">Transit</h2>
+    <h2 className="pp-h">Coffee</h2>
     <p className="pp-sub">
-      {COFFEE.bean}, roasted in {COFFEE.route[1].place} and brought back from a trip. About {nf.format(COFFEE_TOTAL)} km
-      from the tree to the cup.
+      The beans in my grinder: {COFFEE.bean}, roasted by {COFFEE.roaster} in {COFFEE.route[1].place} and brought home from a
+      trip. About {nf.format(COFFEE_TOTAL)} km from the tree to the cup.
     </p>
     <div className="pp-route">
       {COFFEE.route.map((stop, i) => (
@@ -248,7 +248,8 @@ export const TransitPage = ({ inked, onSelect }: PageProps) => (
 
 export const NightstandPage = ({ inked, onSelect }: PageProps) => (
   <Sheet n={5} inked={inked}>
-    <h2 className="pp-h">On the nightstand</h2>
+    <h2 className="pp-h">Reading</h2>
+    <p className="pp-sub">The book on my nightstand right now.</p>
     <div className="pp-card">
       <span className="pp-card-title">{READING.title}</span>
       <span className="pp-card-by">
@@ -304,7 +305,7 @@ export const DailyStampsPage = ({ inked, onSelect, fragrance }: PageProps) => {
   if (!status) {
     return (
       <Sheet n={6} inked={false}>
-        <h2 className="pp-h">Daily stamps</h2>
+        <h2 className="pp-h">Fragrance</h2>
         <FragranceState fragrance={fragrance} />
       </Sheet>
     );
@@ -363,11 +364,15 @@ export const DailyStampsPage = ({ inked, onSelect, fragrance }: PageProps) => {
 
   return (
     <Sheet n={6} inked={inked}>
-      <h2 className="pp-h">Daily stamps</h2>
+      <h2 className="pp-h">Fragrance</h2>
       <p className="pp-sub">
-        {latest && (wornToday ? `Today: ${latest.name}${latest.house ? `, ${latest.house}` : ""}. ` : `Last worn: ${latest.name}, on ${fmtWeekday(latest.worn_on)}. `)}
-        {status.days_logged} days logged.{" "}
-        {run.days > 1 ? `Longest run: ${run.days} days of ${byId.get(run.id ?? -1)?.name ?? "one scent"}.` : "No scent worn twice in a row."}
+        A different one most mornings, logged with one tap. One stamp per day; its colour is the scent.
+      </p>
+      <p className="pp-sub">
+        {latest &&
+          `${wornToday ? "Today" : `Last worn, on ${fmtWeekday(latest.worn_on)}`}: ${latest.name}${latest.house ? ` by ${latest.house}` : ""}. `}
+        {status.days_logged} days logged,{" "}
+        {run.days > 1 ? `longest run ${run.days} days of ${byId.get(run.id ?? -1)?.name ?? "one scent"}.` : "no scent worn twice in a row."}
       </p>
       {cells.length ? (
         <div className="pp-cal">
@@ -409,7 +414,7 @@ export const DeclarationPage = ({ inked, onSelect, fragrance }: PageProps) => {
   if (!status) {
     return (
       <Sheet n={7} inked={false}>
-        <h2 className="pp-h">Declaration</h2>
+        <h2 className="pp-h">Fragrance shelf</h2>
         <FragranceState fragrance={fragrance} />
       </Sheet>
     );
@@ -424,9 +429,9 @@ export const DeclarationPage = ({ inked, onSelect, fragrance }: PageProps) => {
 
   return (
     <Sheet n={7} inked={inked}>
-      <h2 className="pp-h">Declaration</h2>
+      <h2 className="pp-h">Fragrance shelf</h2>
       <p className="pp-sub">
-        {shelf.length} bottles from {houses} houses on the shelf at home. {everWorn} of them worn since logging started.
+        {shelf.length} bottles from {houses} houses at home, {everWorn} of them worn since I started logging. By type:
       </p>
       <dl className="pp-decl">
         {rows.map(([type, n]) => (
