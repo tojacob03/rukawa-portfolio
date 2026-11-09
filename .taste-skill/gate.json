@@ -1,0 +1,427 @@
+{
+ "start": "2026-11-08T09:58:37.110Z",
+ "round": 2,
+ "idle": 0,
+ "errors": 0,
+ "status": "pass",
+ "history": [
+  {
+   "at": "2026-11-09T16:09:15.342Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 5,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-09T16:13:03.771Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 1,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-09T16:16:08.637Z",
+   "mode": "manual",
+   "status": "pass",
+   "fails": 0,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": "dist/index.html",
+  "url": null,
+  "root": "dist",
+  "kind": "service",
+  "category": "Clash Royale player analysis",
+  "primary": "Book a call",
+  "rounds": 3,
+  "start": "2026-11-08T09:58:37.110Z",
+  "by": "gate.mjs --start"
+ },
+ "manual": true,
+ "roundKey": "54e01e4172abe0f6:30ef4db1",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "3c17726375548236",
+ "page": "dist/index.html",
+ "found": {
+  "fails": [
+   {
+    "check": "effect-kind",
+    "where": "(the page)",
+    "msg": "a service page (--type) moves with the scroll: scroll libraries or timelines (Lenis): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+    "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "effect-kind"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "overlap-text",
+    "where": "div.stage.stage--fade-b > div.at-corner.to-edge > div.ui.ui-doc > aside.ui-doc__note.ui-panel \"Habit Same opener in all three Monthly F\"",
+    "msg": "inside div.ui.ui-doc, a box sits on the mock's own text and hides it mid-line (\"After a loss they move to X-Bo\")",
+    "fix": "move the box off the text (or the text off the box)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(6) > span.ui-win__sub \"RG Fisherman\"",
+    "msg": "shortened with an ellipsis",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "main#top > section.section.statement > div.wrap > p.mo-wh__text \"Analysis only counts when it changes the\"",
+    "msg": "starts \"color\" (0.2 s) the moment it is scrolled into view (an IntersectionObserver) on span.mo-w:nth-of-type(1) (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "section#method \"My method, from tag to deck plan Battle \"",
+    "msg": "starts \"border-left-color\" (0.3 s) the moment it is scrolled into view (an IntersectionObserver) on li.mo-pc__step:nth-of-type(1) (inside a dealt moment's section, [data-moment]: an enter moment is expected on every kind; its still is judged under reduced motion)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "pinned",
+    "where": "section#method > div.wrap.mo-pc__grid \"My method, from tag to deck plan Battle \"",
+    "msg": "held on screen for 1 screen of scroll (position: sticky) while the page moves on (inside a dealt moment's section, [data-moment]: expected on every kind, two moments at most, house rule; its still is judged under reduced motion)",
+    "fix": "let the section scroll with the page",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "no-visual",
+    "where": "main#top > section.hero.hero--split \"Clash Royale player analysis for Solo CR\"",
+    "msg": "pictures, effects and mocks cover 20% of this section; a feature section needs a visual (about 25% or more)",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-headings",
+    "where": "div.grid > a.tile.span-4:nth-of-type(3) > div.tile__head > h3 \"Logs jiu-jitsu training\"",
+    "msg": "\"Logs jiu-jitsu training\" names no product, part, place or section (the one brand line a page may have)",
+    "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-contrast",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(1) > span.ui-win__age \"31x\"",
+    "msg": "8 lines of text in drawn mocks read under 4.5:1 (1 colour pair), the worst \"31x\" in #5975b6 on #fffef3 at 4.46:1",
+    "fix": "lift the mocks' muted text (labels, meta, initials) to 4.5:1 on their own panel, or set it larger",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#services / section#method",
+    "msg": "uneven space at the edge of a band: 73px outside its edge, 114px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#method / section#results",
+    "msg": "uneven space at the edge of a band: 114px outside its edge, 72px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "links",
+    "where": "div.closing__links > div.footer__legal > span:nth-of-type(1) > a:nth-of-type(1) \"Impressum\"",
+    "msg": "\"Impressum\" goes to /impressum, which does not exist here",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "links",
+    "where": "div.closing__links > div.footer__legal > span:nth-of-type(1) > a:nth-of-type(2) \"Datenschutz\"",
+    "msg": "\"Datenschutz\" goes to /datenschutz, which does not exist here",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-set",
+    "where": "div.grid > a.tile.span-4:nth-of-type(2) > div.tile__media > img \"letzte-bahn-480.jpg\"",
+    "msg": "6 photographs in more than one look: lightness from 0.13 to 0.89; warm and cool photographs mixed (b* -8 to +5); the odd one out is letzte-bahn-480.jpg",
+    "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "header.nav.nav--centre > div.wrap.nav__bar > a.nav__logo \"Rukawa\"",
+    "msg": "\"Rukawa\" opens a section headed \"Clash Royale player analysis for Solo CRL\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(5) > span.ui-win__sub \"Miner WB\"",
+    "msg": "3 lines of div.ui.ui-panel fade out under its edge (\"Miner WB\", \"G3\", \"Game 3\"): drawn at a fraction of #3253a4 on #fffef3, half-erased",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.ui.ui-panel > ul.ui-checks__list > li.ui-check:nth-of-type(1) > span.ui-check__label \"Hog Rider, Earthquake\"",
+    "msg": "a line of div.ui.ui-panel fades out under its edge (\"Hog Rider, Earthquake\"): drawn at a fraction of #aab0bc on #062b8a, half-erased (inside a held section or scroll scene, whose motion --quick does not check)",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-current",
+    "where": "header.nav.nav--centre",
+    "msg": "the nav stays on screen with 4 links to the page's sections, but never marks the one you are in (no link changes as the page scrolls)",
+    "fix": "mark the link of the section on screen (a colour, a weight or a line under it) as the visitor scrolls",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "visual-caption",
+    "where": "div.ui.ui-panel > ul.ui-checks__list > li.ui-check:nth-of-type(5) > span.ui-check__label \"Miner, Wall Breakers\"",
+    "msg": "a muted 13px line of 1 row sits 0px under the drawing (svg): it reads as a caption: \"Miner, Wall Breakers\"; no caption or description under any image, render or visual (house rule)",
+    "fix": "take the line away: no caption or description under, over or on any image, render or visual; a licence credit goes in one footer line",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "empty-area",
+    "where": "section#results \"Results of the players I prepare\"",
+    "msg": "40% of the section is empty: 40% beside content that covers under half the container, in its 720px of rows (WARN over 35%, FAIL over 50%)",
+    "fix": "fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "action-repeat",
+    "where": "header.nav.nav--centre > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"book a call\"",
+    "msg": "\"book a call\" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it",
+    "fix": "show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "container-edges",
+    "where": "div.wrap.mo-pc__grid > div.mo-pc__text > ol.mo-pc__steps > li.mo-pc__step:nth-of-type(1) \"Battle logs from one player tag Every re\"",
+    "msg": "3 text blocks start on a left line at x 106, 26px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (also \"Sort decks by game slot Their de\", \"Plan the remaining decks After e\") (it is in a scroll scene: told as a WARN) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(4) > span.ui-win__who \"Game 2\"",
+    "msg": "cut 13px at the bottom by the overflow of div#hero-ui: a fragment run out through its panel's edge",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cta",
+    "where": "section#services \"Opponent analysis before every match\"",
+    "msg": "a section over 1.5 screens long with no link or button in it",
+    "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cta",
+    "where": "section#results \"Results of the players I prepare\"",
+    "msg": "a section over 1.5 screens long with no link or button in it",
+    "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cta",
+    "where": "section#experience \"Experience with teams since 2019\"",
+    "msg": "a section over 1.5 screens long with no link or button in it",
+    "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "heading-scale",
+    "where": "section#results > div.wrap.grid > figure.quote.span-6 > blockquote \"This season Lorenzo picked our decks bas\"",
+    "msg": "1 line of plain text set larger than the section headings (36px against h2 30px)",
+    "fix": "size headings by level: the h1 largest, one size per level, each level below the one above",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-contrast",
+    "where": "div.ui-win__main > ul.ui-win__rows > li.ui-win__row:nth-of-type(5) > span.ui-win__st \"Left over\"",
+    "msg": "2 lines of text in drawn mocks read under 4.5:1 (1 colour pair), the worst \"Left over\" in #5975b6 on #e6dbc7 at 3.3:1",
+    "fix": "lift the mocks' muted text (labels, meta, initials) to 4.5:1 on their own panel, or set it larger",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#top > section.hero.hero--split / section#services",
+    "msg": "118px between these sections, -42% against the median 205px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "hole",
+    "where": "section#projects \"Data projects outside Clash Royale\"",
+    "msg": "an empty hole 224x224px inside the section (27% of the screen's height), with content above and below it",
+    "fix": "close the empty space: move the content together, or give the space the visual it lacks",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fade-cut",
+    "where": "div.ui.ui-panel > ul.ui-search__list > li.ui-search__row:nth-of-type(1) > span.ui-search__m \"112\"",
+    "msg": "a line of div.ui.ui-panel fades out under its edge (\"112\"): drawn at a fraction of #aab0bc on #153a90, half-erased (inside a held section or scroll scene, whose motion --quick does not check)",
+    "fix": "fit the mock's rows inside its panel (fewer rows, a taller panel), or end the fade below the last whole row: no row half-erased",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "visual-caption",
+    "where": "div.ui.ui-panel > div.ui-stat__chart > div.ui-stat__axis > span:nth-of-type(1) \"Aug\"",
+    "msg": "a muted 13px line of 1 row sits 8px under the drawing (svg): it reads as a caption: \"Aug\"; no caption or description under any image, render or visual (house rule)",
+    "fix": "take the line away: no caption or description under, over or on any image, render or visual; a licence credit goes in one footer line",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "empty-area",
+    "where": "footer#contact \"Book a call about next season\"",
+    "msg": "39% of the section is empty: 544px of empty rows between its content, 3% beside content that covers under half the container, in its 1491px of rows (WARN over 35%, FAIL over 50%)",
+    "fix": "fill the section: a picture or a second column beside the words, or more of its own content; the section stays one or two screens tall (T-height)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 124,
+   "layout": 3
+  }
+ },
+ "open": [],
+ "waived": [
+  {
+   "check": "effect-kind",
+   "where": "(the page)",
+   "msg": "a service page (--type) moves with the scroll: scroll libraries or timelines (Lenis): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+   "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "effect-kind"
+   ],
+   "wheres": [
+    "(the page)"
+   ],
+   "reason": "Lenis sits in the React app chunk, which src/boot.ts imports only on paths other than /. The static scan follows that import(), but on / the browser loads only the 765-byte boot entry: checked in Chrome on the built page, no Lenis or app chunk request and window.lenis undefined."
+  }
+ ],
+ "warnCount": 32,
+ "at": "2026-11-09T16:16:08.637Z"
+}

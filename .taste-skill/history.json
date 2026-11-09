@@ -1,0 +1,25 @@
+{
+ "palettes": [
+  "cobalt-on-sand"
+ ],
+ "types": [
+  "hanken"
+ ],
+ "dealt": [
+  "hanken",
+  "literata",
+  "schibsted"
+ ],
+ "moments": [
+  {
+   "id": "pinned-chapters",
+   "at": "2026-11-08T09:59:59.295Z",
+   "seed": "20e519ef"
+  },
+  {
+   "id": "word-highlight",
+   "at": "2026-11-08T09:59:59.295Z",
+   "seed": "20e519ef"
+  }
+ ]
+}
