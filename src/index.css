@@ -512,5 +512,6 @@ html.lenis body {
 }
 
 @layer base {
-  h1, h2 { font-family: "Boska", Georgia, serif; }
+  /* Small labels set as h1 (text-base) stay in Geist: Boska's hairlines break up at that size. */
+  h1:not(.text-base), h2 { font-family: "Boska", Georgia, serif; }
 }
