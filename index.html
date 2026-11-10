@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-type="service" data-radius="soft" data-buttons="block" data-motion>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,18 +8,16 @@
      never flashes on those paths. -->
 <script>if (!/^\/(index\.html)?$/.test(location.pathname)) document.documentElement.classList.add('is-app')</script>
 <style>html.is-app body > :not(#root) { display: none !important; }</style>
-<title>Rukawa: Clash Royale player analysis for Solo CRL</title>
-<meta name="description" content="Opponent reports from the battle log for Clash Royale League solo players: Game 1 habits, deck swaps and the decks left once cards are burned.">
-<meta name="author" content="Rukawa">
-<meta name="site-kind" content="other">
-<meta name="page-type" content="service">
+<title>Rukawa: esports analyst, opponent reports from match data</title>
+<meta name="description" content="Till Oscar Jacob (Rukawa), esports analyst. Opponent reports from raw match logs; the players he prepared finished Top 4 and Top 8 at the CRL World Finals 2026. Open for League of Legends and Brawl Stars teams in 2027.">
+<meta name="author" content="Till Oscar Jacob">
 <link rel="canonical" href="https://rukawaanalytics.com/">
 <link rel="alternate" type="application/rss+xml" title="Rukawa Analytics: case studies" href="/rss.xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rukawa Analytics">
 <meta property="og:url" content="https://rukawaanalytics.com/">
-<meta property="og:title" content="Rukawa: Clash Royale player analysis for Solo CRL">
-<meta property="og:description" content="Opponent reports from the battle log, for players and coaches in the Clash Royale League.">
+<meta property="og:title" content="Rukawa: esports analyst, opponent reports from match data">
+<meta property="og:description" content="Players he prepared: Top 4 and Top 8 at the CRL World Finals 2026. Open for League of Legends and Brawl Stars teams in 2027.">
 <meta property="og:image" content="https://rukawaanalytics.com/og/default.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -27,98 +25,263 @@
 <meta name="twitter:site" content="@RukawaAnalyst">
 <meta name="twitter:image" content="https://rukawaanalytics.com/og/default.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#e6dbc7">
-<!-- Hanken Grotesk, self-hosted (SIL OFL): no visitor IP goes to Google for a font -->
-<link rel="preload" href="/home/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin data-home>
+<meta name="theme-color" content="#161c1a">
+<!-- Boska (Indian Type Foundry, Fontshare free licence), self-hosted: no visitor IP goes to a font CDN -->
+<link rel="preload" href="/home/fonts/boska-400.woff2" as="font" type="font/woff2" crossorigin data-home>
 <style data-home>
-@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url(/home/fonts/hanken-grotesk-latin-ext.woff2) format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 400 700; font-display: swap;
-  src: url(/home/fonts/hanken-grotesk-latin.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-</style>
-<link rel="stylesheet" href="/assets/system.css" data-home>
-<link rel="stylesheet" href="/assets/ui/cards.css" data-home>
-<link rel="stylesheet" href="/assets/motion/motion.css" data-home>
-<link rel="stylesheet" href="/assets/backgrounds/backgrounds.css" data-home>
-<link rel="stylesheet" href="/assets/layout/layout.css" data-home>
-<link rel="stylesheet" href="/assets/icons/icon.css" data-home>
-<style data-home>
+@font-face { font-family: "Boska"; font-style: normal; font-weight: 400; font-display: swap; src: url(/home/fonts/boska-400.woff2) format("woff2"); }
+@font-face { font-family: "Boska"; font-style: italic; font-weight: 400; font-display: swap; src: url(/home/fonts/boska-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Boska"; font-style: normal; font-weight: 500; font-display: swap; src: url(/home/fonts/boska-500.woff2) format("woff2"); }
+
+/* direction: The dark room (seed 1313427775). Green-black and bone, Boska throughout.
+   Idea: the opponent report Till writes before every match, written about Till; his own screens are the lit exhibits. */
 :root {
-  --p-bg: #e6dbc7; --p-surface: #ddd0b9; --p-ink: #062b8a; --p-muted: #3253a4;
-  --p-accent: #062b8a; --p-accent-ink: #e6dbc7; --p-action: #062b8a; --p-action-ink: #e6dbc7;
-  --p-inv-bg: #062b8a; --p-inv-surface: #153a90; --p-inv-ink: #e6dbc7; --p-inv-muted: #aab0bc;
-  --p-inv-accent: #e6dbc7; --p-inv-accent-ink: #062b8a; --p-inv-action: #e6dbc7; --p-inv-action-ink: #062b8a;
-  --font-display: "Hanken Grotesk", system-ui, sans-serif;
-  --font-text: "Hanken Grotesk", system-ui, sans-serif;
-  --display-weight: 400;
-  --display-tracking: -0.03em;
-  --display-tracking-xl: -0.038em;
+  --bg: #161c1a; --surface: #1f2725; --raise: #29332f; --ink: #e3e2da; --muted: #a9afa7;
+  --accent: #9fc7b8; --accent-ink: #161c1a;
+  --font: "Boska", Georgia, "Times New Roman", serif;
+  --step-small: 1rem;
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.05rem + 0.75vw, 1.75rem);
+  --step-head: clamp(2.25rem, 1.3rem + 3.6vw, 4.5rem);
+  --step-display: clamp(6rem, 18vw, 20rem);
+  --step-card: clamp(1.75rem, 2.6vw, 2.5rem);
+  --margin: clamp(1rem, 2.2vw, 2rem);
+  --gutter: clamp(1rem, 2vw, 2rem);
+  --section: clamp(7.5rem, 12vw, 13.75rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-press: 140ms; --t-hover: 180ms; --t-ui: 240ms; --t-reveal: 800ms;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: var(--step-body); line-height: 1.55; letter-spacing: 0.005em; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
+ul[class], ol[class] { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; height: auto; }
+button, input { font: inherit; color: inherit; }
+a { color: inherit; }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+p { text-wrap: pretty; }
+em { font-style: italic; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: var(--margin); top: -4rem; z-index: 50; background: var(--accent); color: var(--accent-ink); padding: .6rem 1rem; text-decoration: none; }
+.skip:focus { top: 1rem; }
+.wrap { padding-inline: var(--margin); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+.muted { color: var(--muted); }
+.small { font-size: var(--step-small); line-height: 1.45; }
+.nums { font-variant-numeric: tabular-nums lining-nums; }
+
+/* controls: one shape (square), one fill */
+.button { display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-height: 3rem; padding: 0 1.5rem; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 500; white-space: nowrap; transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease; }
+.button:active { transform: scale(0.97); }
+.link { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: .06em; text-decoration-color: var(--muted); transition: text-decoration-color var(--t-hover) ease, color var(--t-hover) ease; }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { background: var(--ink); }
+  .link:hover { text-decoration-color: var(--ink); }
+}
+
+/* ---------- hero: card over a dim room ---------- */
+.hero { position: relative; min-height: 100svh; display: grid; place-items: center; padding: var(--margin); overflow: hidden; isolation: isolate; }
+.hero__room { position: absolute; inset: 0; z-index: -1; }
+.hero__room img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; filter: brightness(.34) saturate(.45) contrast(1.05); }
+.card { width: min(100%, 50rem); min-height: 62svh; background: var(--surface); padding: 2rem; display: grid; grid-template-rows: auto 1fr auto; gap: 2.5rem; }
+.card__title { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--step-card); line-height: 1; letter-spacing: -0.02em; font-weight: 500; }
+.card__body { display: grid; gap: 2rem; align-content: start; font-size: var(--step-card); line-height: 1.04; letter-spacing: -0.02em; }
+.card__facts { display: grid; gap: .55em; }
+.card__line { font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; letter-spacing: 0; }
+.card__foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+.card__foot > :last-child { justify-self: end; }
+.card__credit { font-size: var(--step-small); color: var(--muted); }
+
+/* the stub that stays once the card has left the screen */
+.stub { position: fixed; right: var(--margin); bottom: calc(var(--margin) + env(safe-area-inset-bottom, 0px)); z-index: 40; display: flex; align-items: center; gap: 1rem; background: var(--surface); padding: .5rem .5rem .5rem 1rem; transform: translateY(140%); transition: transform var(--t-ui) var(--ease-out); }
+.stub.is-on { transform: none; }
+.stub__name { font-weight: 500; }
+.stub .button { min-height: 2.75rem; padding: 0 1rem; }
+
+/* ---------- proof: recognition as a table ---------- */
+.proof { padding-block: var(--section) calc(var(--section) / 2); }
+.stepped { font-size: var(--step-head); line-height: .98; letter-spacing: -0.025em; grid-column: 1 / 8; }
+.stepped span { display: block; }
+.stepped span + span { padding-left: calc((100% + var(--gutter)) * 2 / 7); }
+.record { width: 100%; border-collapse: collapse; margin-top: 4.5rem; font-size: var(--step-body); }
+.record th { text-align: left; font-weight: 400; color: var(--muted); font-size: var(--step-small); padding: 0 1rem .75rem; }
+.record td { padding: .9rem 1rem; vertical-align: baseline; }
+.record tbody tr:nth-child(odd):not(.gap) td { background: var(--surface); }
+.record .yr { width: 16.66%; }
+.record .ev { width: 33.33%; }
+.record .who { width: 33.33%; color: var(--muted); }
+.record .pl { text-align: right; }
+.record .gap td { padding: .9rem; background: none; }
+
+/* ---------- testimonial: name block, quote block ---------- */
+.voice { display: grid; grid-template-columns: 5fr 7fr; min-height: 70svh; margin-block: calc(var(--section) / 2); }
+.voice__who { background: var(--raise); color: var(--ink); padding: 2rem; display: flex; align-items: flex-end; gap: 1rem; }
+.voice__who img { width: 64px; height: 64px; object-fit: cover; background: var(--raise); }
+.voice__name { display: block; font-size: var(--step-lead); font-weight: 500; line-height: 1.2; }
+.voice__role { display: block; color: var(--muted); }
+.voice__quote { background: var(--surface); padding: 3rem; }
+.voice__quote blockquote { font-size: var(--step-lead); line-height: 1.25; letter-spacing: -0.01em; max-width: 36ch; text-indent: -.42em; }
+
+/* ---------- how it works: one verb at a time ---------- */
+.verbs { margin-top: calc(var(--section) / 2); }
+.verb { position: relative; height: 100svh; overflow: clip; padding-top: calc(50svh - .5em); padding-bottom: calc(var(--margin) + 8rem); font-size: var(--step-display); }
+.verb__pic { position: absolute; inset: 0; display: grid; place-items: center; padding: 8svh var(--margin); }
+.verb__word { position: sticky; top: calc(50svh - .5em); z-index: 2; text-align: center; font-size: 1em; line-height: 1; letter-spacing: -0.04em; font-weight: 500; color: var(--ink); }
+.verb__word i { font-weight: 400; }
+.verb__note { position: absolute; left: var(--margin); bottom: var(--margin); z-index: 3; max-width: 34ch; background: var(--bg); padding: 1rem 1.25rem; font-size: var(--step-body); line-height: 1.45; }
+
+/* interface fragments drawn in HTML: the reports' own grammar (data-ui keeps its rules) */
+.ui { width: min(100%, 72rem); background: var(--surface); color: var(--muted); font-size: var(--step-body); line-height: 1.4; opacity: .5; }
+.ui__bar { display: flex; justify-content: space-between; padding: 1.15rem 1.75rem; background: var(--raise); }
+.ui table { width: 100%; border-collapse: collapse; }
+.ui td, .ui th { padding: 1.15rem 1.75rem; text-align: left; font-weight: 400; white-space: nowrap; }
+.ui tr:nth-child(even) td { background: #1b2321; }
+.ui th { color: var(--ink); }
+.ui .win { color: var(--accent); }
+.ui__bars { display: grid; gap: 1.6rem; padding: 2rem 1.75rem; }
+.ui__bars div { display: grid; grid-template-columns: 7em 1fr 2.5em; gap: 1rem; align-items: center; }
+.ui__bars b { display: block; height: 1.1rem; background: var(--raise); font-weight: 400; }
+.ui__bars b i { display: block; height: 100%; background: var(--muted); }
+
+/* ---------- the live thing: burn the decks ---------- */
+.board { padding-block: var(--section); }
+.board__grid { align-items: start; }
+.board__text { grid-column: 1 / 6; display: grid; gap: 1.5rem; }
+.board__text h2 { font-size: var(--step-head); line-height: 1; letter-spacing: -0.025em; }
+.board__text p { max-width: 40ch; }
+.board__ui { grid-column: 7 / 13; background: var(--surface); padding: 1.5rem; }
+.board__head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 1rem; }
+.board__head strong { font-weight: 500; font-size: var(--step-lead); }
+.decks { display: grid; gap: .5rem; }
+.deck { display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; align-items: center; width: 100%; text-align: left; padding: .9rem 1rem; background: var(--raise); min-height: 3.25rem; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.deck:active { transform: scale(.985); }
+.deck__name { font-size: var(--step-body); }
+.deck__pct { font-variant-numeric: tabular-nums lining-nums; }
+.deck__meter { grid-column: 1 / -1; height: .5rem; background: var(--bg); }
+.deck__meter i { display: block; height: 100%; width: var(--w, 0%); background: var(--accent); transform-origin: left; transition: width var(--t-ui) var(--ease-out); }
+.deck[aria-pressed="true"] { background: var(--bg); }
+.deck[aria-pressed="true"] .deck__name { text-decoration: line-through; color: var(--muted); }
+.deck[aria-pressed="true"] .deck__meter i { width: 0; }
+.deck.is-top .deck__name::after { content: "  most likely next"; font-style: italic; color: var(--accent); }
+.board__note { margin-top: 1rem; }
+.board__reset { margin-top: 1rem; }
+@media (hover: hover) and (pointer: fine) { .deck:hover { background: #33403b; } .deck[aria-pressed="true"]:hover { background: var(--surface); } }
+
+/* ---------- work: big names, fixed preview ---------- */
+.work { padding-block: calc(var(--section) / 2) var(--section); }
+.work__head { grid-column: 1 / 9; font-size: var(--step-lead); margin-bottom: 3rem; }
+.work__list { grid-column: 1 / 9; }
+.work__row { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; padding-block: .625rem; text-decoration: none; color: var(--muted); transition: color var(--t-hover) ease; }
+.work__row.is-on { color: var(--ink); }
+.work__name { font-size: var(--step-head); line-height: 1; letter-spacing: -0.03em; }
+.work__meta { font-size: var(--step-small); white-space: nowrap; text-align: right; }
+.work__pic { display: none; }
+.work__frame { grid-column: 9 / 13; position: sticky; top: 15vh; align-self: start; aspect-ratio: 4 / 5; background: var(--surface); overflow: hidden; }
+.work__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 200ms ease; }
+.work__frame img.is-on { opacity: 1; }
+
+/* ---------- about: side facts, wide paragraph ---------- */
+.about { padding-block: calc(var(--section) / 2); }
+.about__row { display: grid; grid-template-columns: 10rem 1fr; column-gap: calc(34vw - 10rem - var(--margin)); }
+.about__row + .about__row { margin-top: 7.5rem; }
+.facts { display: grid; gap: 1.25rem; align-content: start; font-size: var(--step-small); }
+.facts dt { color: var(--muted); }
+.bio { font-size: var(--step-lead); line-height: 1.35; max-width: 56vw; }
+.bio + .bio { margin-top: 1em; color: var(--muted); }
+.lists { display: flex; flex-wrap: wrap; gap: 2rem 4rem; }
+.lists ul { width: min(100%, 20rem); display: grid; gap: .65rem; font-size: var(--step-body); }
+.lists li { display: flex; justify-content: space-between; gap: 1rem; }
+.lists li span:last-child { color: var(--muted); }
+.lists h3 { font-size: var(--step-small); color: var(--muted); margin-bottom: 1rem; }
+.about__word { font-size: var(--step-small); }
+
+/* ---------- contact: one field ---------- */
+.contact { padding-block: 7.5rem 10rem; }
+.contact__col { margin-left: calc(34vw - var(--margin)); }
+.contact__col > :not(h2) { max-width: 34rem; }
+.contact h2 { font-size: var(--step-head); line-height: 1.02; letter-spacing: -0.025em; }
+.contact h2 span { display: block; color: var(--muted); }
+.field { position: relative; margin-top: 1.75rem; }
+.field input { width: 100%; height: 4rem; border: 0; border-radius: 12px; background: var(--ink); color: var(--bg); padding: 0 4.5rem 0 1.25rem; font-size: var(--step-body); }
+.field input::placeholder { color: #59615c; }
+.field input:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+.field button { position: absolute; right: .5rem; top: 50%; translate: 0 -50%; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--bg); color: var(--ink); display: grid; place-items: center; transition: transform var(--t-press) var(--ease-out); }
+.field button:active { transform: scale(.94); }
+.contact__next { margin-top: 1rem; }
+.reach { margin-top: 4.5rem; display: grid; gap: .75rem; font-size: var(--step-small); }
+.reach div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; }
+.reach dt { color: var(--muted); }
+
+/* ---------- footer: the name returns ---------- */
+.foot { padding-block: 0 calc(2rem + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+.foot__name { font-size: var(--step-display); line-height: .8; letter-spacing: -0.05em; font-weight: 500; margin-left: -.04em; }
+.foot__links { display: flex; flex-wrap: wrap; gap: .75rem 2rem; margin-top: 2.5rem; font-size: var(--step-small); }
+.foot__legal { margin-top: 1.25rem; font-size: var(--step-small); color: var(--muted); max-width: 70ch; }
+
+/* ---------- motion: entrances, the room's drift, reduced motion keeps the finished state ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.mo [data-rise] > * { opacity: 0; transform: translateY(24px); transition: opacity var(--t-reveal) var(--ease-out), transform var(--t-reveal) var(--ease-out); transition-delay: calc(var(--i, 0) * 75ms); }
+  html.mo [data-rise].is-in > *, html.mo-safe [data-rise] > * { opacity: 1; transform: none; }
+  .hero__room img { animation: drift 24s ease-in-out infinite alternate; transform-origin: 30% 40%; }
+  @keyframes drift { from { transform: scale(1.04) translate(0, 0); } to { transform: scale(1.12) translate(-1.5%, -1%); } }
+  .verb__pic .ui { transition: opacity var(--t-reveal) ease, transform 1.2s var(--ease-out); transform: scale(.94); }
+  .verb.is-in .verb__pic .ui { transform: none; }
+}
+
+/* ---------- tablet and phone ---------- */
+@media (max-width: 1023px) {
+  .card { min-height: 0; }
+  .board__text, .board__ui { grid-column: 1 / -1; }
+  .board__ui { margin-top: 2.5rem; }
+  .about__row { grid-template-columns: 1fr; row-gap: 2rem; }
+  .bio { max-width: none; }
+  .contact__col { margin-left: 0; }
+  .work__head, .work__list { grid-column: 1 / -1; }
+  .work__frame { display: none; }
+  .work__row { flex-direction: column; gap: .25rem; color: var(--ink); padding-block: 0 2.5rem; }
+  .work__pic { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; margin-bottom: 1rem; }
+  .work__meta { text-align: left; white-space: normal; }
+}
+@media (max-width: 767px) {
+  .hero { padding: 1rem; }
+  .card { min-height: 70svh; padding: 1.25rem; gap: 1.75rem; }
+  .card__title { display: block; font-size: 9vw; }
+  .card__body { font-size: 6vw; gap: 1.25rem; }
+  .card__foot { grid-template-columns: 1fr 1fr; }
+  .card__foot .button { grid-column: 1 / -1; grid-row: 1; }
+  .card__credit { grid-row: 2; }
+  .stepped { grid-column: 1 / -1; font-size: 11vw; }
+  .record thead { display: none; }
+  .record, .record tbody, .record tr, .record td { display: block; width: auto; }
+  .record tr { padding: .9rem 1rem; }
+  .record tbody tr:nth-child(odd):not(.gap) { background: var(--surface); }
+  .record tbody tr:nth-child(odd):not(.gap) td { background: none; }
+  .record td, .record .yr, .record .ev, .record .who { padding: 0; width: auto; }
+  .record .yr:empty { display: none; }
+  .record .yr { font-size: var(--step-lead); margin-bottom: .5rem; }
+  .record .who, .record .pl { display: inline; text-align: left; color: var(--muted); }
+  .record .pl::before { content: " · "; }
+  .record .gap { padding: .5rem; }
+  .voice { grid-template-columns: 1fr; min-height: 0; }
+  .voice__quote { order: -1; padding: 1.5rem 1.5rem 4rem; }
+  .voice__who { padding: 1.5rem; min-height: 6rem; }
+  .verb { font-size: 24vw; padding-bottom: calc(var(--margin) + 10rem); }
+  .verb__note { right: var(--margin); max-width: none; font-size: 1rem; }
+  .ui { font-size: var(--step-small); }
+  .about__row { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .lists { gap: 2.5rem; }
+  .contact { padding-block: 7.5rem; }
+  .contact h2 { font-size: var(--step-lead); line-height: 1.2; }
+  .reach div { grid-template-columns: 1fr; gap: .1rem; }
+  .stub { display: none; }
 }
 </style>
-<link rel="stylesheet" href="/assets/ui/base.css" data-home>
-<link rel="stylesheet" href="/assets/ui/window/fragment.css" data-home>
-<link rel="stylesheet" href="/assets/ui/doc/fragment.css" data-home>
-<link rel="stylesheet" href="/assets/ui/search/fragment.css" data-home>
-<link rel="stylesheet" href="/assets/ui/stat/fragment.css" data-home>
-<link rel="stylesheet" href="/assets/ui/checklist/fragment.css" data-home>
-<link rel="stylesheet" href="/assets/ui/code/fragment.css" data-home>
-<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
-<script src="/assets/backgrounds/backgrounds.js"></script>
-<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
-<link rel="modulepreload" href="/assets/system.js">
-<link rel="modulepreload" href="/assets/motion/motion.js">
-<link rel="modulepreload" href="/assets/layout/layout.js">
-<link rel="modulepreload" href="/assets/moments/moments.js">
-<link rel="modulepreload" href="/assets/moments/lib.js">
-<link rel="modulepreload" href="/assets/moments/pinned-chapters/moment.js">
-<link rel="modulepreload" href="/assets/moments/word-highlight/moment.js">
-<!-- page CSS: only inside the visuals, and one --p-h per panel group -->
-<style data-home>
-  /* the float card stays inside the hero's window on a phone only by leaving it out there */
-  @media (max-width: 639px) { #hero-ui .ly-float { display: none; } }
-  /* the method's drawn windows sit closer to their frame on a tablet, so the three steps fit one screen */
-  @media (max-width: 1023px) { #method .mo-pc__visual--lit { padding: var(--s-4); } }
-  /* the method at rest (no pinning under 1024px): one screen on a tablet, two on a phone */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    #method:not(.is-live) .mo-pc__steps { gap: var(--s-4); }
-    #method:not(.is-live) .mo-pc__step { padding-top: var(--s-4); }
-    #method:not(.is-live) .mo-pc__visual--lit { aspect-ratio: auto; height: max(190px, calc((100svh - 377px) / 3)); padding: var(--s-3); }
-    #method:not(.is-live) .mo-pc__visual--lit > .ui { zoom: 0.7; }
-  }
-  @media (max-width: 639px) {
-    main > #method[data-moment]:not(.is-live) { min-height: calc(2 * 100vh); min-height: calc(2 * 100lvh); }
-    #method:not(.is-live) .mo-pc__visual--lit { aspect-ratio: auto; height: clamp(237px, calc((200svh - 699px) / 3), 360px); }
-  }
-  /* pinned from 1024 to 1279px: the tablet column would stretch the pinned grid to the whole section */
-  @media (min-width: 640px) and (max-width: 1279px) { main > #method.is-live > .mo-pc__grid { flex: none; } }
-  /* pinned, the method fills its held screen from the heading line down, like every other section */
-  @media (min-width: 1024px) {
-    main > #method.is-live > .mo-pc__grid { align-content: start; padding-top: var(--padt); }
-    #method.is-live .mo-pc__visuals { aspect-ratio: auto; height: calc(100svh - var(--padt) - var(--padb)); }
-    #method.is-live .mo-pc__visual--lit { aspect-ratio: auto; height: 100%; }
-  }
-  /* the results fill their screen: the quote at the foot on a tablet, the list at the foot beside it from 1024px */
-  @media (min-width: 640px) and (max-width: 1023px) { main > #results > .wrap { display: flex; flex-direction: column; } #results .quote { margin-top: auto; } }
-  @media (min-width: 1024px) { main > #results > .wrap { align-content: stretch; } #results .wrap > .span-5 { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; } }
-  /* the projects on a tablet: one screen, the six tiles three across */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    main > #projects.g2 { --h: 1; }
-    main > #projects.g2 > .wrap { display: flex; flex-direction: column; row-gap: var(--card-gap); }
-    #projects .grid > .tile.span-4 { grid-column: auto / span 4; }
-  }
-  /* on a phone: the projects as pictures and names, the results' quote alone on the second screen */
-  @media (max-width: 639px) {
-    #projects .tile > p { display: none; }
-    #projects .grid > .tile:last-child .tile__media { aspect-ratio: 16 / 9; }
-    #results .quote { align-self: end; }
-    #results .quote blockquote { font-size: 36px; line-height: 1.2; }
-    #results .person img { width: 56px; height: 56px; }
-    #contact .closing__links > .grid { row-gap: var(--s-3); }
-    #contact .footer__legal { row-gap: var(--s-2); }
-  }
-</style>
+<script data-home>document.documentElement.classList.add('mo');setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500)</script>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -135,8 +298,8 @@
         ],
         "disambiguatingDescription": "Professional Clash Royale Analyst and Coach. While taking the handle as a nod to the focused 90s basketball perfectionist Kaede Rukawa from Slam Dunk, this professional entity is strictly dedicated to Esports analytics and data-driven Clash Royale coaching, completely distinct from casual ladder players.",
         "url": "https://rukawaanalytics.com/",
-        "jobTitle": "Clash Royale Analyst",
-        "description": "Data-driven Clash Royale analyst focused on Solo CRL player analysis: battle-log profiling, Game 1 tendencies, and remaining-deck decisions.",
+        "jobTitle": "Esports Analyst",
+        "description": "Esports analyst: opponent reports from raw match logs. The Clash Royale players he prepared finished Top 4 and Top 8 at the CRL World Finals 2026.",
         "image": "https://rukawaanalytics.com/og/default.jpg",
         "email": "mailto:to_jacob@me.com",
         "sameAs": [
@@ -163,6 +326,7 @@
           }
         },
         "award": [
+          "Top 4 and Top 8 (as analyst) - CRL World Finals 2026",
           "Top 2, 3 (x2), 4 & Top 12 Finishes - CRL Monthly Finals",
           "Top 6 - Copa América Finish (Supremacy League 2025)",
           "1st Place Champion (as analyst) - Amazon University Esports Masters S4 Germany",
@@ -233,7 +397,7 @@
             "name": "What are the biggest achievements of Rukawa Analyst?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "His achievements include Top 2, 3 (x2) and 4 finishes at the CRL Monthly Finals, as well as a Top 6 finish at the Copa América."
+              "text": "The players he prepared finished Top 4 and Top 8 at the CRL World Finals 2026. His other results include Top 2, 3 (x2) and 4 finishes at the CRL Monthly Finals and a Top 6 finish at the Copa América."
             }
           }
         ]
@@ -243,344 +407,233 @@
 </script>
 </head>
 <body>
-<!-- type: service (Clash Royale player analysis, hired by players, coaches and teams)
-     deal: hero split (--has ui), nav nav-centre, close close-type, footer footer-columns, rhythm dark-band,
-     buttons block, mark arc, grounds none (kind other: flat tokens)
-     palette cobalt-on-sand, pairing hanken (Hanken Grotesk for both)
-     moments: pinned-chapters on #method (the three steps of the method), word-highlight on the statement -->
-<header class="nav nav--centre">
-  <div class="wrap nav__bar">
-    <a class="skip-link" href="#top">Skip to content</a>
-    <a class="nav__logo" href="#top"><span class="mark" data-mark="arc" aria-hidden="true"></span>Rukawa</a>
-    <nav class="nav__links" aria-label="Main">
-      <div class="nav__item"><a class="nav__link" href="#method">Method</a></div>
-      <div class="nav__item"><a class="nav__link" href="#results">Results</a></div>
-      <div class="nav__item"><a class="nav__link" href="#projects">Projects</a></div>
-      <div class="nav__item"><a class="nav__link" href="#experience">Experience</a></div>
-    </nav>
-    <div class="nav__actions">
-      <a class="btn btn--primary" href="https://cal.com/tilloscar" target="_blank" rel="noopener">Book a call</a>
-    </div>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
-  </div>
-</header>
+<a class="skip" href="#proof">Skip to the results</a>
 
 <main id="top">
-  <section class="hero hero--split" data-enter aria-labelledby="hero-h">
-    <div class="wrap"><div class="hero-text grid hero__grid">
-      <div class="hero__text span-5">
-        <p class="hero__kicker"><span class="dot" aria-hidden="true"></span>Taking players for the 2027 CRL season</p>
-        <h1 id="hero-h">Clash Royale player analysis for Solo CRL</h1>
-        <p class="hero__lead">I read your opponents' battle logs before every match: what they open with in Game 1, what they switch to, and which decks they have left once cards are burned.</p>
-        <div class="btn-row"><a class="btn btn--primary" href="https://cal.com/tilloscar" target="_blank" rel="noopener">Book a call</a><a class="btn btn--secondary" href="#method">See the method</a></div>
-      </div>
-      <div class="hero__media span-6 start-7 frame" id="hero-ui">
-        <div class="stage">
-          <div class="at-corner fit" style="--ax: 40px; --ay: 40px; --fit-max: 600px">
-            <div class="ui ui-panel ui-win" data-ui="window">
-              <div class="ui-win__bar">
-                <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span class="ui-win__crumb">Scouting <i>/</i> <b>Next opponent</b></span>
-                <span class="ui-spacer"></span>
-                <span class="ui-win__search" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="ui-win__ph">Find a card</span><span class="ui-kbd">/</span></span>
-              </div>
-              <div class="ui-win__body">
-                <nav class="ui-win__side" aria-hidden="true">
-                  <span class="ui-win__nav is-on"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.5 9h3l1 1.5h3l1-1.5h3"/><path d="M2.5 9 4 3.5h8L13.5 9v3.5h-11z"/></svg>Decks<em>14</em></span>
-                  <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>Battles<em>200</em></span>
-                  <span class="ui-win__nav"><svg class="ui-icon" viewBox="0 0 16 16"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg>Burned</span>
-                  <span class="ui-win__label">Events</span>
-                  <span class="ui-win__nav"><span class="ui-win__hash">#</span>Monthly Final</span>
-                  <span class="ui-win__nav"><span class="ui-win__hash">#</span>Last Chance</span>
-                </nav>
-                <div class="ui-win__main">
-                  <div class="ui-win__cols" aria-hidden="true"><span>Slot</span><span>Deck</span><span>Read</span><span>Seen</span></div>
-                  <ul class="ui-win__rows">
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">G1</span><span class="ui-win__who">Game 1</span><span class="ui-win__sub">Hog EQ</span><span class="ui-win__st is-you" data-st>Opener</span><span class="ui-win__age">31x</span></li>
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="1">G1</span><span class="ui-win__who">Game 1</span><span class="ui-win__sub">LavaLoon</span><span class="ui-win__st" data-st>Backup</span><span class="ui-win__age">9x</span></li>
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">G2</span><span class="ui-win__who">Game 2</span><span class="ui-win__sub">X-Bow</span><span class="ui-win__st" data-st>After a loss</span><span class="ui-win__age">7x</span></li>
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="3">G2</span><span class="ui-win__who">Game 2</span><span class="ui-win__sub">Graveyard</span><span class="ui-win__st" data-st>After a win</span><span class="ui-win__age">12x</span></li>
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">G3</span><span class="ui-win__who">Game 3</span><span class="ui-win__sub">Miner WB</span><span class="ui-win__st is-done" data-st>Left over</span><span class="ui-win__age">5x</span></li>
-                    <li class="ui-win__row" data-row><span class="ui-avatar" data-tone="4">G3</span><span class="ui-win__who">Game 3</span><span class="ui-win__sub">RG Fisherman</span><span class="ui-win__st is-done" data-st>Left over</span><span class="ui-win__age">4x</span></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero__room"><img src="/home/screens/room-stints.jpg" alt="" width="2070" height="820" fetchpriority="high"></div>
+    <article class="card" data-rise>
+      <h1 class="card__title" id="hero-h" style="--i:0"><span>Till</span> <span>Oscar</span> <span>Jacob</span></h1>
+      <div class="card__body" style="--i:1">
+        <div class="card__facts">
+          <p>Esports analyst, known as Rukawa</p>
+          <p>My players at Worlds: Top 4 and Top 8</p>
+          <p>Open for LoL and Brawl Stars in 2027</p>
         </div>
-        <div class="ly-float">
-          <div class="ly-float__row"><span>World Finals 2026</span><span>Shanghai</span></div>
-          <div class="ly-float__title">Morten Top 4, Viiper Top 8</div>
-        </div>
+        <p class="card__line">I turn raw match logs into a plan for the next opponent, before every series.</p>
       </div>
-    </div></div>
+      <div class="card__foot" style="--i:2">
+        <span class="card__credit">Behind: tyre stints from my Race Strategy Lab</span>
+        <a class="button" href="https://cal.com/tilloscar" target="_blank" rel="noopener">Book a call</a>
+        <a class="link" href="#contact">Write to me</a>
+      </div>
+    </article>
   </section>
 
-  <section class="section" id="services" style="--hm: 2" aria-labelledby="services-h">
-    <div class="wrap">
-      <div class="grid grid--top fill">
-        <div class="span-5">
-          <div class="section-head">
-            <h2 id="services-h">Opponent analysis before every match</h2>
-            <p>One report per opponent, for the player and the coach who picks the decks.</p>
-          </div>
-          <ul class="rows">
-            <li><span class="rows__name">Opponent report</span><p>Every deck in their recent battle log, and the cards they never drop.</p><span class="rows__value">per opponent</span></li>
-            <li><span class="rows__name">Game 1 read</span><p>Their opener, and what they switch to after a loss.</p><span class="rows__value">per match</span></li>
-            <li><span class="rows__name">Remaining decks</span><p>What both players still have once cards are burned.</p><span class="rows__value">Bo3 and Bo5</span></li>
-          </ul>
-        </div>
-        <div class="frame frame--fill span-6 start-7" data-visual>
-          <div class="stage stage--fade-b">
-            <div class="at-corner to-edge" style="--ax: 40px; --ay: 40px">
-              <div class="ui ui-doc" data-ui="doc">
-                <article class="ui-doc__page">
-                  <div class="ui-doc__label">Opponent report, Monthly Final</div>
-                  <div class="ui-doc__title">2. Game 1 habits</div>
-                  <div class="ui-doc__text">In Game 1 they open with <mark class="ui-doc__mark is-on">Hog Rider and Earthquake</mark> in 31 of their last 40 matches.</div>
-                  <div class="ui-doc__text">After a loss they move to <mark class="ui-doc__mark" data-kind="Swap" data-msg="X-Bow in 7 of 9 matches after a lost Game 1." data-where="Battle log, September and October">X-Bow</mark>, never to the Lava Hound deck.</div>
-                  <div class="ui-doc__text">Lava Hound comes out only once their Hog Rider cards are burned.</div>
-                  <div class="ui-doc__text">Firecracker is in every deck they have brought this season.</div>
-                </article>
-                <aside class="ui-doc__note ui-panel is-on" aria-live="polite">
-                  <div class="ui-doc__kind"><span class="ui-doc__dot"></span><span data-doc-kind>Habit</span></div>
-                  <div class="ui-doc__msg" data-doc-msg>Same opener in all three Monthly Finals.</div>
-                  <div class="ui-doc__where" data-doc-where>Battle log, last 40 matches</div>
-                </aside>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <section class="proof wrap" id="proof" aria-labelledby="proof-h">
+    <div class="grid" data-rise>
+      <h2 class="stepped" id="proof-h"><span>Results</span> <span>as analyst</span></h2>
+    </div>
+    <div data-rise>
+      <table class="record nums">
+        <caption class="sr-only">Results of the players and teams I prepared</caption>
+        <thead><tr><th class="yr" scope="col">Year</th><th class="ev" scope="col">Event</th><th class="who" scope="col">Player or team</th><th class="pl" scope="col">Place</th></tr></thead>
+        <tbody>
+          <tr><td class="yr">2026</td><td class="ev">CRL World Finals, Shanghai</td><td class="who">Morten, SK Gaming</td><td class="pl">Top 4</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL World Finals, Shanghai</td><td class="who">Viiper, Joblife</td><td class="pl">Top 8</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL Monthly Finals, May</td><td class="who">Morten</td><td class="pl">3rd</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL Monthly Finals, May</td><td class="who">Viiper</td><td class="pl">4th</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL Monthly Finals, June</td><td class="who">Viiper</td><td class="pl">3rd</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL Monthly Finals, July</td><td class="who">Morten</td><td class="pl">8th</td></tr>
+          <tr class="gap" aria-hidden="true"><td colspan="4"></td></tr>
+          <tr><td class="yr">2025</td><td class="ev">Supremacy League Copa América</td><td class="who">Selección Colombia</td><td class="pl">Top 6</td></tr>
+          <tr><td class="yr"></td><td class="ev">CRL Monthly Finals</td><td class="who">A player I prepared</td><td class="pl">Top 2</td></tr>
+          <tr class="gap" aria-hidden="true"><td colspan="4"></td></tr>
+          <tr><td class="yr">Earlier</td><td class="ev">Amazon University Esports Masters S4, Germany</td><td class="who">University team</td><td class="pl">Champion</td></tr>
+          <tr><td class="yr"></td><td class="ev">GGtoor x Haneki Cup, Season 1</td><td class="who">Team</td><td class="pl">4th</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <section class="section ground-inverse" id="method" style="--h: 2" data-moment="pinned-chapters" aria-labelledby="method-h">
-    <div class="wrap mo-pc__grid">
-      <div class="mo-pc__text">
-        <h2 id="method-h">My method, from tag to deck plan</h2>
-        <ol class="mo-pc__steps">
-          <li class="mo-pc__step">
-            <h3>Battle logs from one player tag</h3>
-            <p>Every recent battle on their main and second accounts, ranked and in events.</p>
-            <figure class="mo-pc__visual mo-pc__visual--lit">
-              <div class="ui ui-panel ui-search" data-ui="search">
-                <div class="ui-search__field">
-                  <svg class="ui-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
-                  <span class="ui-search__q"><span data-search-q>battle log</span><i class="ui-search__caret"></i></span>
-                  <kbd class="ui-search__kbd">Ctrl K</kbd>
-                </div>
-                <div class="ui-search__group">Accounts</div>
-                <ul class="ui-search__list" data-search-list>
-                  <li class="ui-search__row is-sel"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/></svg></span><span class="ui-search__t">Main account <b>battle log</b></span><span class="ui-search__m">112</span></li>
-                  <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/></svg></span><span class="ui-search__t">Second account <b>battle log</b></span><span class="ui-search__m">64</span></li>
-                  <li class="ui-search__row"><span class="ui-search__ico"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M2.5 4.5h11v8h-11z"/><path d="m2.5 5 5.5 4 5.5-4"/></svg></span><span class="ui-search__t">Event <b>battle log</b>, CRL qualifiers</span><span class="ui-search__m">24</span></li>
-                </ul>
-                <div class="ui-search__foot"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span></div>
-              </div>
-            </figure>
-          </li>
-          <li class="mo-pc__step">
-            <h3>Sort decks by game slot</h3>
-            <p>Their decks split into Game 1, 2 and 3, after a win and after a loss.</p>
-            <figure class="mo-pc__visual mo-pc__visual--lit">
-              <div class="ui ui-panel ui-stat" data-ui="stat">
-                <div class="ui-stat__head">
-                  <div class="ui-stat__top">
-                    <span class="ui-stat__label">Hog Rider deck in Game 1</span>
-                    <span class="ui-stat__range">40 matches<svg class="ui-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></span>
-                  </div>
-                  <div class="ui-stat__line">
-                    <span class="ui-stat__num" data-stat-num>78%</span>
-                    <span class="ui-chip ui-chip--plain ui-stat__delta"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9.5v-7M3 5.5l3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>12 pts</span>
-                    <span class="ui-stat__sub">vs. the month before</span>
-                  </div>
-                </div>
-                <div class="ui-stat__chart">
-                  <svg class="ui-stat__svg" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
-                    <path class="ui-stat__grid" d="M0 30.5H400M0 60.5H400M0 90.5H400"/>
-                    <path class="ui-stat__cover" fill-rule="evenodd" d=""/>
-                    <g class="ui-stat__bars"><rect rx="3" x="0.00" y="49.04" width="21.14" height="70.96"/><rect rx="3" x="29.14" y="40.86" width="21.14" height="79.14"/><rect rx="3" x="58.29" y="44.95" width="21.14" height="75.05"/><rect rx="3" x="87.43" y="36.76" width="21.14" height="83.24"/><rect rx="3" x="116.57" y="42.22" width="21.14" height="77.78"/><rect rx="3" x="145.71" y="34.04" width="21.14" height="85.96"/><rect rx="3" x="174.86" y="38.13" width="21.14" height="81.87"/><rect rx="3" x="204.00" y="29.94" width="21.14" height="90.06"/><rect rx="3" x="233.14" y="35.40" width="21.14" height="84.60"/><rect rx="3" x="262.29" y="25.85" width="21.14" height="94.15"/><rect rx="3" x="291.43" y="31.31" width="21.14" height="88.69"/><rect rx="3" x="320.57" y="23.12" width="21.14" height="96.88"/><rect rx="3" x="349.71" y="27.21" width="21.14" height="92.79"/><rect rx="3" x="378.86" y="16.30" width="21.14" height="103.70"/></g>
-                  </svg>
-                  <div class="ui-stat__axis" aria-hidden="true"><span>Aug</span><span>Sep</span><span>Oct</span></div>
-                </div>
-              </div>
-            </figure>
-          </li>
-          <li class="mo-pc__step">
-            <h3>Plan the remaining decks</h3>
-            <p>After each game I mark the burned cards and the decks still open to both players.</p>
-            <figure class="mo-pc__visual mo-pc__visual--lit">
-              <div class="ui ui-panel ui-checks" data-ui="checklist">
-                <div class="ui-checks__head">
-                  <div class="ui-title">Their decks after Game 2</div>
-                  <span class="ui-spacer"></span>
-                  <div class="ui-meta" data-checks-count>2 of 5 burned</div>
-                </div>
-                <div class="ui-checks__bar"><i data-checks-bar style="--k:0.4"></i></div>
-                <ul class="ui-checks__list">
-                  <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Hog Rider, Earthquake</span></li>
-                  <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Graveyard, Poison</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">X-Bow, Tesla</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Lava Hound, Balloon</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Miner, Wall Breakers</span></li>
-                </ul>
-              </div>
-            </figure>
-          </li>
-        </ol>
-      </div>
-      <div class="mo-pc__visuals frame"></div>
+  <figure class="voice" aria-label="Viiper on working with me">
+    <figcaption class="voice__who">
+      <img src="/testimonials/viiper.webp" alt="Viiper" width="64" height="64" loading="lazy">
+      <span><span class="voice__name">Viiper</span><span class="voice__role">CRL pro, Joblife Esports</span></span>
+    </figcaption>
+    <div class="voice__quote" data-rise>
+      <blockquote>&ldquo;This season Lorenzo picked our decks based on Rukawa&rsquo;s opponent analysis, so I knew the picks were backed by data.&rdquo;</blockquote>
     </div>
-  </section>
+  </figure>
 
-  <section class="section g2m" id="results" aria-labelledby="results-h">
-    <div class="wrap grid grid--top">
-      <div class="span-5">
-        <div class="section-head">
-          <h2 id="results-h">Results of the players I prepare</h2>
-          <p>Both players I worked with this season reached the World Finals in Shanghai.</p>
+  <div class="verbs" id="method" aria-label="How I prepare a series">
+    <section class="verb" aria-labelledby="v-read">
+      <div class="verb__pic" aria-hidden="true">
+        <div class="ui" data-ui="battle log">
+          <div class="ui__bar"><span>Battle log, their main account</span><span class="nums">112 matches</span></div>
+          <table class="nums">
+            <tr><th>Date</th><th>Event</th><th>Game</th><th>Their deck</th><th>Result</th></tr>
+            <tr><td>2 Oct</td><td>Monthly Final</td><td>1</td><td>Hog Rider, Earthquake</td><td class="win">Win</td></tr>
+            <tr><td>2 Oct</td><td>Monthly Final</td><td>2</td><td>X-Bow, Tesla</td><td>Loss</td></tr>
+            <tr><td>2 Oct</td><td>Monthly Final</td><td>3</td><td>Lava Hound, Balloon</td><td class="win">Win</td></tr>
+            <tr><td>28 Sep</td><td>Ranked</td><td>1</td><td>Hog Rider, Earthquake</td><td class="win">Win</td></tr>
+            <tr><td>28 Sep</td><td>Ranked</td><td>1</td><td>Graveyard, Poison</td><td>Loss</td></tr>
+            <tr><td>27 Sep</td><td>Qualifier</td><td>1</td><td>Hog Rider, Earthquake</td><td class="win">Win</td></tr>
+          </table>
         </div>
-        <ul class="rows">
-          <li><span class="rows__name">CRL World Finals 2026</span><p>Shanghai, 6 to 8 November</p><span class="rows__value">Top 4 and Top 8</span></li>
-          <li><span class="rows__name">CRL Monthly Finals</span><p>Players I prepared, 2025 and 2026</p><span class="rows__value">Top 2, 3, 3 and 4</span></li>
-          <li><span class="rows__name">Copa América 2025</span><p>Supremacy League, Selección Colombia</p><span class="rows__value">Top 6</span></li>
-          <li><span class="rows__name">University Esports Masters</span><p>Amazon UEM Season 4, Germany</p><span class="rows__value">Champion</span></li>
+      </div>
+      <h2 class="verb__word" id="v-read">Read</h2>
+      <p class="verb__note">Every recent match of the opponent, from their main and second accounts, ranked play and events.</p>
+    </section>
+    <section class="verb" aria-labelledby="v-sort">
+      <div class="verb__pic" aria-hidden="true">
+        <div class="ui" data-ui="game slots">
+          <div class="ui__bar"><span>Their Game 1 decks</span><span class="nums">last 40 series</span></div>
+          <div class="ui__bars nums">
+            <div><span>Hog Rider</span><b><i style="width:78%"></i></b><span>31</span></div>
+            <div><span>Graveyard</span><b><i style="width:30%"></i></b><span>12</span></div>
+            <div><span>Lava Hound</span><b><i style="width:22%"></i></b><span>9</span></div>
+            <div><span>X-Bow</span><b><i style="width:18%"></i></b><span>7</span></div>
+            <div><span>Miner</span><b><i style="width:12%"></i></b><span>5</span></div>
+          </div>
+        </div>
+      </div>
+      <h2 class="verb__word" id="v-sort">Sort</h2>
+      <p class="verb__note">Their decks by game slot: what they open with, and what they switch to after a win or a loss.</p>
+    </section>
+    <section class="verb" aria-labelledby="v-plan">
+      <div class="verb__pic" aria-hidden="true">
+        <div class="ui" data-ui="remaining decks">
+          <div class="ui__bar"><span>Their decks after Game 2</span><span class="nums">2 of 5 burned</span></div>
+          <table>
+            <tr><td><s>Hog Rider, Earthquake</s></td><td>played in Game 1</td></tr>
+            <tr><td><s>Graveyard, Poison</s></td><td>played in Game 2</td></tr>
+            <tr><td>X-Bow, Tesla</td><td class="win">still open</td></tr>
+            <tr><td>Lava Hound, Balloon</td><td class="win">still open</td></tr>
+            <tr><td>Miner, Wall Breakers</td><td class="win">still open</td></tr>
+          </table>
+        </div>
+      </div>
+      <h2 class="verb__word" id="v-plan">Plan</h2>
+      <p class="verb__note">After each game, the burned decks come off the board and the plan for the next one is what is left.</p>
+    </section>
+  </div>
+
+  <section class="board wrap" aria-labelledby="board-h" data-nostub>
+    <div class="grid board__grid">
+      <div class="board__text" data-rise>
+        <h2 id="board-h">Burn their decks</h2>
+        <p>In a Bo5, a deck can be used only once. Tap the decks this example opponent has already played and see what is left for the next game.</p>
+        <p class="muted small">Example opponent, numbers made up for this page. In a League of Legends draft or a Brawl Stars map pick the same logic runs on picks and bans.</p>
+      </div>
+      <div class="board__ui" data-board>
+        <div class="board__head"><strong data-board-left>5 decks still open</strong><span class="muted small">share of their last 40 series</span></div>
+        <ul class="decks">
+          <li><button class="deck" type="button" aria-pressed="false" data-n="31"><span class="deck__name">Hog Rider, Earthquake</span><span class="deck__pct">48%</span><span class="deck__meter"><i style="--w:48%"></i></span></button></li>
+          <li><button class="deck" type="button" aria-pressed="false" data-n="12"><span class="deck__name">Graveyard, Poison</span><span class="deck__pct">19%</span><span class="deck__meter"><i style="--w:19%"></i></span></button></li>
+          <li><button class="deck" type="button" aria-pressed="false" data-n="9"><span class="deck__name">Lava Hound, Balloon</span><span class="deck__pct">14%</span><span class="deck__meter"><i style="--w:14%"></i></span></button></li>
+          <li><button class="deck" type="button" aria-pressed="false" data-n="7"><span class="deck__name">X-Bow, Tesla</span><span class="deck__pct">11%</span><span class="deck__meter"><i style="--w:11%"></i></span></button></li>
+          <li><button class="deck" type="button" aria-pressed="false" data-n="5"><span class="deck__name">Miner, Wall Breakers</span><span class="deck__pct">8%</span><span class="deck__meter"><i style="--w:8%"></i></span></button></li>
         </ul>
-      </div>
-      <figure class="quote span-6 start-7">
-        <blockquote>This season Lorenzo picked our decks based on Rukawa's opponent analysis, so I knew the picks were backed by data.</blockquote>
-        <div class="person"><div><span class="person__name">Viiper</span><span class="person__role">CRL pro, Joblife Esports</span></div><img src="/testimonials/viiper.webp" alt="Viiper" width="40" height="40" loading="lazy" data-source="client" data-subject="Viiper, Clash Royale pro"></div>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section g2 g2m" id="projects" aria-labelledby="projects-h">
-    <div class="wrap">
-      <div class="group">
-        <div class="section-head">
-          <h2 id="projects-h">Data projects outside Clash Royale</h2>
-          <p>The same habit on open data: load it every day, clean it in SQL or Python, and publish what it shows.</p>
-        </div>
-        <div class="grid">
-          <a class="tile span-4" href="https://tojacob03.github.io/Prognosebuch/" target="_blank" rel="noopener" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/prognosebuch.jpg" srcset="/home/work/prognosebuch-480.jpg 480w, /home/work/prognosebuch.jpg 960w" sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 420px" alt="Prognosebuch: tomorrow's electricity price forecast with its 80 percent band" width="960" height="640" loading="lazy" data-source="client" data-subject="Prognosebuch, live site"></div>
-            <div class="tile__head"><h3>Forecasts power prices</h3></div>
-            <p>German day-ahead prices for every quarter-hour, published each morning and scored in public.</p>
-          </a>
-          <a class="tile span-4" href="https://tojacob03.github.io/Letzte-Bahn/" target="_blank" rel="noopener" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/letzte-bahn.jpg" srcset="/home/work/letzte-bahn-480.jpg 480w, /home/work/letzte-bahn.jpg 960w" sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 420px" alt="Letzte Bahn: a map of Saarland coloured by travel time by bus and train" width="960" height="640" loading="lazy" data-source="client" data-subject="Letzte Bahn, live site"></div>
-            <div class="tile__head"><h3>Maps bus and train access</h3></div>
-            <p>Travel time to the GP or the station for every 500 m square, piloted in Saarland.</p>
-          </a>
-          <a class="tile span-4" href="https://themenkompass.to-jacob.workers.dev" target="_blank" rel="noopener" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/themenkompass.jpg" srcset="/home/work/themenkompass-480.jpg 480w, /home/work/themenkompass.jpg 960w" sizes="(max-width: 639px) 90vw, (max-width: 1023px) 30vw, 420px" alt="Themenkompass: the research topics of the University of Oldenburg" width="960" height="640" loading="lazy" data-source="client" data-subject="Themenkompass, live site"></div>
-            <div class="tile__head"><h3>Maps a university's research</h3></div>
-            <p>Topics, researchers and co-author networks from OpenAlex, 18,278 works for Oldenburg.</p>
-          </a>
-        </div>
-      </div>
-      <div class="grid">
-        <a class="tile span-4" href="/race-strategy" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/race-strategy.jpg" srcset="/home/work/race-strategy-480.jpg 480w, /home/work/race-strategy.jpg 960w" sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 420px" alt="Race Strategy Lab: tyre stints and lap times for a Grand Prix" width="960" height="640" loading="lazy" data-source="client" data-subject="Race Strategy Lab, live page"></div>
-            <div class="tile__head"><h3>Reads Formula 1 tyre strategy</h3></div>
-            <p>Tyre wear and race pace for each Grand Prix from 2023 on, fitted in SQL per stint.</p>
-          </a>
-        <a class="tile span-4" href="/strompreis" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/strompreis.jpg" srcset="/home/work/strompreis-480.jpg 480w, /home/work/strompreis.jpg 960w" sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 420px" alt="Strompreis-Kompass: exchange prices across the day with wind and solar" width="960" height="640" loading="lazy" data-source="client" data-subject="Strompreis-Kompass, live page"></div>
-            <div class="tile__head"><h3>Tracks cheap power hours</h3></div>
-            <p>When wind and solar push exchange prices down, on Bundesnetzagentur data every 3 hours.</p>
-          </a>
-        <a class="tile span-4" href="/arc/" style="--tile-ratio: 3 / 2">
-            <div class="tile__media"><img src="/home/work/waza-arc.jpg" srcset="/home/work/waza-arc-480.jpg 480w, /home/work/waza-arc.jpg 960w" sizes="(max-width: 639px) 90vw, (max-width: 1023px) 30vw, 420px" alt="Waza Arc: a jiu-jitsu training log with a skill branch per technique" width="960" height="640" loading="lazy" data-source="client" data-subject="Waza Arc, live app"></div>
-            <div class="tile__head"><h3>Logs jiu-jitsu training</h3></div>
-            <p>A session in about 30 seconds, turned into progress per technique and a 3D fighter.</p>
-          </a>
+        <p class="board__note small muted" aria-live="polite" data-board-note>Nothing burned yet: they open with Hog Rider almost half the time.</p>
+        <button class="link board__reset small" type="button" data-board-reset>Start the series again</button>
       </div>
     </div>
   </section>
 
-  <section class="section statement" data-moment="word-highlight" aria-label="How I work">
-    <div class="wrap">
-      <p class="t-label">How I work</p>
-      <p class="mo-wh__text">Analysis only counts when it changes <strong>the next game</strong>: a deck to bring, a card to hold back, a swap to expect before it happens.</p>
+  <section class="work wrap" id="projects" aria-labelledby="work-h">
+    <div class="grid">
+      <h2 class="work__head" id="work-h">Tools I built</h2>
+      <ul class="work__list" data-index>
+        <li><a class="work__row is-on" href="https://tojacob03.github.io/crl26-world-finals-hub/" target="_blank" rel="noopener" data-pic="0"><img class="work__pic" src="/home/screens/crl-hub.jpg" alt="CRL World Finals Hub: sixteen players, bracket and countdown for Shanghai" width="912" height="1140" loading="lazy"><span class="work__name">World Finals Hub</span><span class="work__meta">Esports, in four languages</span></a></li>
+        <li><a class="work__row" href="https://tojacob03.github.io/Prognosebuch/en/" target="_blank" rel="noopener" data-pic="1"><img class="work__pic" src="/home/screens/prognosebuch.jpg" alt="Prognosebuch: tomorrow's German power prices with an 80 percent band" width="912" height="1140" loading="lazy"><span class="work__name">Prognosebuch</span><span class="work__meta">Forecasts, scored in public</span></a></li>
+        <li><a class="work__row" href="/race-strategy" data-pic="2"><img class="work__pic" src="/home/screens/race-strategy.jpg" alt="Race Strategy Lab: tyre stints of every driver in a Grand Prix" width="912" height="1140" loading="lazy"><span class="work__name">Race Strategy Lab</span><span class="work__meta">Formula 1, since 2023</span></a></li>
+        <li><a class="work__row" href="https://themenkompass.to-jacob.workers.dev" target="_blank" rel="noopener" data-pic="3"><img class="work__pic" src="/home/screens/themenkompass.jpg" alt="Themenkompass: search who at the University of Oldenburg works on a topic" width="912" height="1140" loading="lazy"><span class="work__name">Themenkompass</span><span class="work__meta">Research map, OpenAlex</span></a></li>
+        <li><a class="work__row" href="https://tojacob03.github.io/Letzte-Bahn/" target="_blank" rel="noopener" data-pic="4"><img class="work__pic" src="/home/screens/letzte-bahn.jpg" alt="Letzte Bahn: Saarland coloured by travel time by bus and train" width="912" height="1140" loading="lazy"><span class="work__name">Letzte Bahn</span><span class="work__meta">Transit access, 500 m squares</span></a></li>
+        <li><a class="work__row" href="/strompreis" data-pic="5"><img class="work__pic" src="/home/screens/strompreis.jpg" alt="Strompreis-Kompass: the cheapest two hours of power today" width="912" height="1140" loading="lazy"><span class="work__name">Strompreis-Kompass</span><span class="work__meta">Power prices, every 3 hours</span></a></li>
+        <li><a class="work__row" href="/arc/" data-pic="6"><img class="work__pic" src="/home/screens/waza-arc.jpg" alt="Waza Arc: a jiu-jitsu training log" width="912" height="1140" loading="lazy"><span class="work__name">Waza Arc</span><span class="work__meta">Training log, 3D fighter</span></a></li>
+      </ul>
+      <div class="work__frame" aria-hidden="true" data-frame>
+        <img class="is-on" src="/home/screens/crl-hub.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/prognosebuch.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/race-strategy.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/themenkompass.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/letzte-bahn.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/strompreis.jpg" alt="" width="912" height="1140" loading="lazy">
+        <img src="/home/screens/waza-arc.jpg" alt="" width="912" height="1140" loading="lazy">
+      </div>
     </div>
   </section>
 
-  <section class="section" id="experience" style="--hm: 2" aria-labelledby="experience-h">
-    <div class="wrap">
-      <div class="grid grid--top fill">
-        <div class="span-5">
-          <div class="section-head">
-            <h2 id="experience-h">Experience with teams since 2019</h2>
-            <p>I write the code in Python and SQL with AI assistance and check every number against the raw battle log.</p>
-          </div>
-          <ul class="rows">
-            <li><span class="rows__name">Morten and Viiper</span><p>Freelance data analyst, CRL 2026</p></li>
-            <li><span class="rows__name">Selección Colombia</span><p>Analyst at the Supremacy League Copa América 2025</p></li>
-            <li><span class="rows__name">Odyssey</span><p>Analyst and coach from March to October 2025</p></li>
-            <li><span class="rows__name">The Dark Empire</span><p>Analyst from 2019 to 2021</p></li>
+  <section class="about wrap" id="experience" aria-label="About me">
+    <div class="about__row" data-rise>
+      <dl class="facts">
+        <div><dt>Based in</dt><dd>Germany</dd></div>
+        <div><dt>Analyst since</dt><dd>2019</dd></div>
+        <div><dt>Works in</dt><dd>Python and SQL</dd></div>
+      </dl>
+      <div>
+        <p class="bio">I am Till Oscar Jacob, known as Rukawa. I have analysed Clash Royale for teams since 2019, and in 2026 I prepared Morten and Viiper for every match of their CRL season.</p>
+        <p class="bio">I write my own tools in Python and SQL, with AI assistance, and check every number against the raw match log. For 2027 I am looking for an analyst role with a League of Legends or Brawl Stars team.</p>
+      </div>
+    </div>
+    <div class="about__row" data-rise>
+      <p class="about__word">Record</p>
+      <div class="lists">
+        <div><h3>Teams and players</h3>
+          <ul>
+            <li><span>Morten and Viiper</span><span class="nums">2026</span></li>
+            <li><span>Selección Colombia</span><span class="nums">2025</span></li>
+            <li><span>Odyssey</span><span class="nums">2025</span></li>
+            <li><span>The Dark Empire</span><span class="nums">2019 to 2021</span></li>
           </ul>
         </div>
-        <div class="frame frame--fill span-6 start-7" data-visual>
-          <div class="stage stage--fade-b">
-            <div class="at-corner to-edge fit" style="--ax: 40px; --ay: 40px; --fit-max: 400px">
-              <div class="ui ui-panel ui-code" data-ui="code">
-                <div class="ui-code__tabs">
-                  <span class="ui-code__tab is-on"><i class="ui-code__lang">PY</i>decks.py</span>
-                  <span class="ui-code__tab"><i class="ui-code__lang">PY</i>report.py</span>
-                  <span class="ui-spacer"></span>
-                  <span class="ui-chip ui-chip--plain ui-code__chip" data-code-chip>1 check</span>
-                </div>
-                <pre class="ui-code__pre"><code><span class="ui-code__ln" data-n="12"><span class="k">def</span> <span class="f">game1_decks</span>(tag):</span>
-<span class="ui-code__ln" data-n="13">    log = <span class="f">battle_log</span>(tag)</span>
-<span class="ui-code__ln" data-n="14" data-note="Keeps Game 1 of every match.">    g1 = log[log.game == <span class="n">1</span>]</span>
-<span class="ui-code__ln is-mark" data-n="15">    top = g1.deck.<span class="f">value_counts</span>()</span>
-<span class="ui-code__ln" data-n="16">    <span class="c"># must match the raw log</span></span>
-<span class="ui-code__ln" data-n="17" data-note="Checks the count against the raw log.">    <span class="k">assert</span> top.<span class="f">sum</span>() == <span class="f">len</span>(g1)</span>
-<span class="ui-code__ln" data-n="18">    <span class="k">return</span> top.<span class="f">head</span>(<span class="n">3</span>)</span></code></pre>
-                <div class="ui-code__hint" data-code-hint><span class="ui-dot"></span><span data-code-text>Counts their Game 1 decks by card set.</span></div>
-              </div>
-            </div>
-          </div>
+        <div><h3>Tools</h3>
+          <ul>
+            <li><span>Python, pandas</span><span>analysis</span></li>
+            <li><span>SQL, DuckDB, dbt</span><span>data</span></li>
+            <li><span>Postgres, Supabase</span><span>storage</span></li>
+            <li><span>React, TypeScript</span><span>reports</span></li>
+          </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="contact wrap" id="contact" aria-labelledby="contact-h" data-nostub>
+    <div class="contact__col" data-rise>
+      <h2 id="contact-h"><span>Hiring an analyst for 2027?</span> Tell me your team and game.</h2>
+      <form class="field" action="mailto:to_jacob@me.com" method="get" data-mail>
+        <label class="sr-only" for="team">Your team and game</label>
+        <input id="team" name="body" type="text" placeholder="For example: our Brawl Stars team, EMEA" autocomplete="organization" required>
+        <input type="hidden" name="subject" value="Analyst for 2027">
+        <button type="submit" aria-label="Write the email"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg></button>
+      </form>
+      <p class="contact__next small muted">This opens an email to me with your answer already in it.</p>
+      <dl class="reach">
+        <div><dt>Email</dt><dd><a class="link" href="mailto:to_jacob@me.com">to_jacob@me.com</a></dd></div>
+        <div><dt>Call</dt><dd><a class="link" href="https://cal.com/tilloscar" target="_blank" rel="noopener">cal.com/tilloscar</a></dd></div>
+        <div><dt>Elsewhere</dt><dd><a class="link" href="https://twitter.com/RukawaAnalyst" target="_blank" rel="noopener">X</a>, <a class="link" href="https://www.linkedin.com/in/till-oscar-jacob-846403358" target="_blank" rel="noopener">LinkedIn</a></dd></div>
+      </dl>
     </div>
   </section>
 </main>
 
-<footer class="footer closing g2m" id="contact" aria-labelledby="close-h">
-  <div class="wrap">
-    <div class="closing__cta close--type">
-      <div class="section-head">
-        <h2 id="close-h">Book a call about next season</h2>
-        <p>Tell me who you play and when. I send a sample report before we talk about prices.</p>
-      </div>
-      <a class="btn btn--primary btn--xl btn--wide" href="https://cal.com/tilloscar" target="_blank" rel="noopener">Book a call<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-    </div>
-    <div class="closing__links">
-      <div class="grid">
-        <div class="span-4 stack-4">
-          <a class="nav__logo" href="#top"><span class="mark" data-mark="arc" aria-hidden="true"></span>Rukawa</a>
-          <p class="footer__lede">Opponent reports for Clash Royale League players.</p>
-        </div>
-        <div class="span-2 footer__col"><h3>Method</h3><ul><li><a href="#services">Reports</a></li><li><a href="#method">The three steps</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Results</h3><ul><li><a href="#results">World Finals 2026</a></li><li><a href="/work">Case studies</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Projects</h3><ul><li><a href="#projects">Data projects</a></li><li><a href="/off-the-clock">Off the clock</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Experience</h3><ul><li><a href="#experience">Teams and tools</a></li><li><a href="mailto:to_jacob@me.com">Email Rukawa</a></li></ul></div>
-      </div>
-      <div class="footer__legal">
-        <span>&copy; 2026 Rukawa &nbsp; <a href="/impressum">Impressum</a> &nbsp; <a href="/datenschutz">Datenschutz</a></span>
-        <div class="socials"><a href="https://twitter.com/RukawaAnalyst" target="_blank" rel="noopener" aria-label="Rukawa on X"><svg aria-hidden="true" class="ic ic-svg ic-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></a><a href="https://www.linkedin.com/in/till-oscar-jacob-846403358" target="_blank" rel="noopener" aria-label="Till Oscar Jacob on LinkedIn"><svg aria-hidden="true" class="ic ic-svg ic-24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g> <path d="M218.123122,218.127392 L180.191928,218.127392 L180.191928,158.724263 C180.191928,144.559023 179.939053,126.323993 160.463756,126.323993 C140.707926,126.323993 137.685284,141.757585 137.685284,157.692986 L137.685284,218.123441 L99.7540894,218.123441 L99.7540894,95.9665207 L136.168036,95.9665207 L136.168036,112.660562 L136.677736,112.660562 C144.102746,99.9650027 157.908637,92.3824528 172.605689,92.9280076 C211.050535,92.9280076 218.138927,118.216023 218.138927,151.114151 L218.123122,218.127392 Z M56.9550587,79.2685282 C44.7981969,79.2707099 34.9413443,69.4171797 34.9391618,57.260052 C34.93698,45.1029244 44.7902948,35.2458562 56.9471566,35.2436736 C69.1040185,35.2414916 78.9608713,45.0950217 78.963054,57.2521493 C78.9641017,63.090208 76.6459976,68.6895714 72.5186979,72.8184433 C68.3913982,76.9473153 62.7929898,79.26748 56.9550587,79.2685282 M75.9206558,218.127392 L37.94995,218.127392 L37.94995,95.9665207 L75.9206558,95.9665207 L75.9206558,218.127392 Z M237.033403,0.0182577091 L18.8895249,0.0182577091 C8.57959469,-0.0980923971 0.124827038,8.16056231 -0.001,18.4706066 L-0.001,237.524091 C0.120519052,247.839103 8.57460631,256.105934 18.8895249,255.9977 L237.033403,255.9977 C247.368728,256.125818 255.855922,247.859464 255.999,237.524091 L255.999,18.4548016 C255.851624,8.12438979 247.363742,-0.133792868 237.033403,0.000790807055" fill="currentColor"></path> </g></svg></a></div>
-        <span class="credits">Unofficial, not endorsed by Supercell. See <a href="https://www.supercell.com/fan-content-policy" target="_blank" rel="noopener">Supercell's Fan Content Policy</a>. Product names and logos are trademarks of their owners.</span>
-      </div>
-    </div>
-  </div>
+<footer class="foot wrap" data-nostub>
+  <p class="foot__name" aria-hidden="true">Rukawa</p>
+  <nav class="foot__links" aria-label="More">
+    <a class="link" href="/work">Case studies</a>
+    <a class="link" href="/off-the-clock">Off the clock</a>
+    <a class="link" href="/impressum">Impressum</a>
+    <a class="link" href="/datenschutz">Datenschutz</a>
+  </nav>
+  <p class="foot__legal">&copy; 2026 Till Oscar Jacob. Unofficial, not endorsed by Supercell. See <a class="link" href="https://www.supercell.com/fan-content-policy" target="_blank" rel="noopener">Supercell&rsquo;s Fan Content Policy</a>. Product names and logos are trademarks of their owners. All pictures are screenshots of my own projects; the photograph of Viiper is used with his permission.</p>
 </footer>
 
-<nav class="actionbar" aria-label="Quick actions">
-  <a class="btn btn--primary" href="https://cal.com/tilloscar" target="_blank" rel="noopener">Book a call</a>
-</nav>
+<div class="stub" data-stub aria-hidden="true">
+  <span class="stub__name">Rukawa</span>
+  <a class="button" href="https://cal.com/tilloscar" target="_blank" rel="noopener" tabindex="-1">Book a call</a>
+</div>
 
 <script type="module" src="/src/boot.ts"></script>
 </body>

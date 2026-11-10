@@ -3,7 +3,7 @@
 // path reaches this file through the host's SPA fallback: there it removes the
 // home page and starts the React app, whose code and styles load only then.
 
-const HOME_SCRIPTS = ["/assets/system.js", "/assets/motion/motion.js", "/assets/layout/layout.js"];
+const HOME_SCRIPTS = ["/home/home.js"];
 
 async function startHome() {
   for (const src of HOME_SCRIPTS) await import(/* @vite-ignore */ src);
