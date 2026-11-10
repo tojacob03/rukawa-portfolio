@@ -8,11 +8,22 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import SmoothScroll from "@/components/SmoothScroll";
 import { resetScroll } from "@/lib/smoothScroll";
-import Index from "./pages/Index";
 
-// Only the homepage ships in the main bundle. Every other page is its own
-// chunk, loaded when it is opened - first-time visitors shouldn't download
-// the client portal, the admin panel or the dashboards' chart library.
+// The homepage is the static index.html (src/boot.ts): a link to / from inside
+// the app loads it in full, keeping the hash (/#contact). The URL is already
+// / here, and a replace to that same URL with a hash would only scroll, so the
+// entry is moved off it first.
+const HomeRedirect = () => {
+  useEffect(() => {
+    const { hash } = window.location;
+    window.history.replaceState(null, "", "/index.html");
+    window.location.replace(`/${hash}`);
+  }, []);
+  return null;
+};
+
+// Every page is its own chunk, loaded when it is opened - visitors shouldn't
+// download the client portal, the admin panel or the dashboards' chart library.
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ClientPortal = lazy(() => import("./pages/ClientPortal"));
 const AdminPanel = lazy(() => import("./pages/AdminPanel"));
@@ -55,15 +66,7 @@ const AnimatedRoutes = () => {
     // so the two pages never overlap mid-transition.
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
-        {/*
-          The homepage is deliberately NOT wrapped in PageTransition (and
-          not lazy-loaded). Its sticky scroll story relies on
-          `position: sticky` resolving against the viewport, and any
-          wrapper framer-motion animates (with the compositing hints it
-          leaves behind) can re-root that. Scroll integrity on the main
-          page beats a fade on it.
-        */}
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<HomeRedirect />} />
         <Route
           path="/work"
           element={

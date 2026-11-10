@@ -26,6 +26,13 @@ export default defineConfig(({ mode }) => ({
     // Vietnamese) would ride along in the main stylesheet for every visitor,
     // although a browser only fetches the subsets a page actually uses.
     assetsInlineLimit: (filePath: string) => (/\.woff2?$/.test(filePath) ? false : undefined),
+    // The home page is static (src/boot.ts): it starts the React app
+    // (src/main.tsx, chunk main-*.js) only on other paths, so its entry lists
+    // none of the app's chunks for preloading.
+    modulePreload: {
+      resolveDependencies: (file: string, deps: string[], { hostType }: { hostType: "html" | "js" }) =>
+        hostType === "js" && /(^|\/)main-[\w-]+\.js$/.test(file) ? [] : deps,
+    },
     rollupOptions: {
       // Two entry points: the portfolio and Waza Arc (/arc/), a separate
       // app with its own bundle, styles and head. See docs/waza-arc/.

@@ -1,0 +1,7 @@
+[
+  {
+    "check": "effect-kind",
+    "target": "(the page)",
+    "reason": "Lenis sits in the React app chunk, which src/boot.ts imports only on paths other than /. The static scan follows that import(), but on / the browser loads only the 765-byte boot entry: checked in Chrome on the built page, no Lenis or app chunk request and window.lenis undefined."
+  }
+]

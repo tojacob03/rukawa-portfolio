@@ -25,3 +25,9 @@ dist-ssr
 
 # Blender build script caches
 __pycache__/
+
+# tasteskill: local Chrome profiles, check output and screenshots (the deal history and waivers stay)
+.taste-skill/chrome-*
+.taste-skill/*.txt
+shots/
+.taste-skill/gate/

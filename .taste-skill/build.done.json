@@ -1,0 +1,11 @@
+{
+ "page": "dist/index.html",
+ "url": null,
+ "root": "dist",
+ "kind": "service",
+ "category": "Clash Royale player analysis",
+ "primary": "Book a call",
+ "rounds": 3,
+ "start": "2026-11-08T09:58:37.110Z",
+ "by": "gate.mjs --start"
+}
