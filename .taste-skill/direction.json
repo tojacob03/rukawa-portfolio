@@ -1,0 +1,564 @@
+{
+ "version": 1,
+ "at": "2026-11-10T08:40:24.888Z",
+ "seed": 1313427775,
+ "redraws": 3,
+ "input": {
+  "brief": "Esports analyst who writes opponent reports from raw match logs; prepared two Clash Royale pros to World Finals Top 4 and Top 8; seeks an analyst role with LoL or Brawl Stars orgs for 2027; builds his own data tools",
+  "sector": "personal-portfolio",
+  "tone": null,
+  "have": [
+   "product-ui"
+  ],
+  "keep": [],
+  "avoid": [],
+  "sections": [
+   "proof",
+   "how-it-works",
+   "work",
+   "about",
+   "contact"
+  ],
+  "direction": "dark-room"
+ },
+ "imagery": "atmosphere",
+ "allow": [],
+ "direction": {
+  "id": "dark-room",
+  "name": "The dark room",
+  "sectors": [
+   "hospitality",
+   "restaurant",
+   "music",
+   "fashion",
+   "physical-product",
+   "finance",
+   "architecture",
+   "studio-portfolio",
+   "ai-product",
+   "personal-portfolio"
+  ],
+  "tones": [
+   "quiet",
+   "luxury"
+  ],
+  "needs": [],
+  "idea": "One dark field from top to bottom, and in it, lit things. Photographs and objects appear like exhibits in a dim gallery: each with space around it, each the brightest thing on its screen. Type is light, small and sparse. The darkness is not a theme switch; it is a room, and the page is a slow walk through it. It suits subjects sold on atmosphere and material: an evening restaurant, a metal card, a record, a house at dusk.",
+  "composition": "A single near-black or deep-toned ground runs the full page with no section bands. First screen: either the name at full width in a light weight along the bottom edge with one dim photograph above it, or one object or photograph centred at 40–50% of the viewport with a line of text beneath at 16–18px. Each later screen holds one or two lit items at a generous size (the main one 40–60% of the screen width) with its text set beside it at full reading size; the darkness frames the items, it does not replace content. Images vary in size but all share the same darkness at their edges so they sit in the ground without frames. Practical details come last in a simple two-column text block. The only solid light element on the page is the single primary action.",
+  "typography": "Light or regular weights; they glow on dark. Avoid heavy bold, which looks cheap on black. Headings 4–7vw at most; text 16–18px with leading 1.6 and a slightly lifted ink (not pure white).",
+  "typeClasses": [
+   "grotesk-light",
+   "serif-light-large",
+   "serif-display",
+   "extended-heavy"
+  ],
+  "colour": "A dark ground with a tint (blue-black, green-black, brown-black), a soft light ink, a dimmer ink for secondary text, and one warm or bright accent used once per screen at most.",
+  "paletteTags": [
+   "dark-neutral"
+  ],
+  "imagery": "Low-key photographs: dark backgrounds, one light source, subjects emerging from shadow. Their dark edges should blend into the page ground.",
+  "photoTreatment": "If a photograph's background is lighter than the page, darken the image slightly (`filter: brightness(0.85) contrast(1.05)`) rather than adding a frame.",
+  "sectionTags": [
+   "photo-led",
+   "quiet",
+   "object-led"
+  ],
+  "motion": "slow-crossfade",
+  "richness": "Light against dark, and the slow pacing.",
+  "pitfalls": "Grey text on black fails contrast quickly: check it. No glow effects, no neon accent, no coloured light blobs. A dark page with a bright busy photograph is not this direction; choose low-key images. Dark does not mean empty: every screen still carries its content at a readable size, and running text is a light ink at 7:1 or more, not a dim grey.",
+  "seenIn": [
+   "opl-kereliott",
+   "aww-moto-finance",
+   "aww-izanami",
+   "aww-cipher",
+   "opl-deeo-studio-2"
+  ],
+  "allow": [],
+  "photoTone": "dark"
+ },
+ "hero": {
+  "id": "card-over-dim-room",
+  "name": "Card over a dim room",
+  "archetype": "artefact",
+  "directions": [
+   "page-is-the-object",
+   "pinned-poster",
+   "dark-room"
+  ],
+  "needs": [],
+  "blueprint": "A full-bleed, low-key photograph of the room fills the viewport, darkened with `filter: brightness(0.7)` so it reads as atmosphere. Centred over it is one square-cornered panel in a flat warm tone taken from the photograph: columns 4–10, about 55% of the width and 62% of the height, a filled programme card with 32px padding. Along its top edge the three words of the title are spread to the left, centre and right in bold condensed capitals at clamp(28px, 2.5vw, 38px); that line is the headline. Under it sit two left-aligned blocks in the same face and size, line-height 1.0: the facts (date, time, place) as three short lines, then one supporting sentence held to 30ch. Along the card's bottom edge: a credit at left in 14px, the single action as a solid rectangular button in the centre, one text link at right. There is no navigation outside the card. The card is `position: sticky`: as the page scrolls it shrinks with `transform: scale` toward the bottom-left corner and stays there as a ticket-sized stub while photographs of differing sizes pass on a flat ground.",
+  "mobile": "The photograph fills 100svh and the card sits centred at full width minus 16px margins, 70svh tall. The title words stack as a two-line heading at 9vw at the card's top-left. The facts and the supporting sentence follow at 5.2vw in the condensed face. The action button spans the card's bottom edge. On scroll the card shrinks to a 120px stub pinned bottom-left.",
+  "headline": "The event or venue name, three words at most and up to about 8 characters each, spread across the card's top edge; two lines on a phone.",
+  "motion": "pinned-story",
+  "seenIn": [
+   "opl-the-deep-end"
+  ]
+ },
+ "type": {
+  "id": "boska-roman-italic",
+  "name": "Boska",
+  "class": "serif-display",
+  "display": {
+   "family": "Boska",
+   "source": "fontshare",
+   "slug": "boska",
+   "weights": [
+    400
+   ],
+   "italic": true,
+   "settings": "weight 400 · tracking -0.02em · leading 0.95 · roman capitals for the main words with lowercase italic for the connecting words at the same size, or sentence case throughout; centred lines work",
+   "css": "<link rel=\"preconnect\" href=\"https://api.fontshare.com\">\n<link rel=\"preconnect\" href=\"https://cdn.fontshare.com\" crossorigin>\n<link href=\"https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap\" rel=\"stylesheet\">"
+  },
+  "text": {
+   "family": "Boska",
+   "source": "fontshare",
+   "slug": "boska",
+   "weights": [
+    400,
+    500
+   ],
+   "italic": true,
+   "settings": "400 for body, 500 for emphasis · leading 1.5 · tracking 0.005em",
+   "css": "<link rel=\"preconnect\" href=\"https://api.fontshare.com\">\n<link rel=\"preconnect\" href=\"https://cdn.fontshare.com\" crossorigin>\n<link href=\"https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap\" rel=\"stylesheet\">"
+  },
+  "standsInFor": [
+   "Louize Display",
+   "PP Pangaia"
+  ],
+  "note": "A high-contrast serif with pointed serifs and a lively italic, used roman and italic together at one size. Suits perfume, jewellery, lodges, weddings and other occasions for ceremony.",
+  "seenIn": [
+   "aww-vero-new-york",
+   "opl-eagles-nest",
+   "opl-sarah-matt-wedding"
+  ],
+  "links": [
+   "https://api.fontshare.com/v2/css?f[]=boska@400,500&display=swap"
+  ],
+  "scale": {
+   "step-small": "clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem)",
+   "step-body": "clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)",
+   "step-lead": "clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem)",
+   "step-head": "clamp(2rem, 1.3rem + 3.2vw, 4rem)"
+  }
+ },
+ "palette": {
+  "id": "green-black-bone",
+  "name": "Green-black and bone",
+  "tags": [
+   "dark-neutral",
+   "earth"
+  ],
+  "bg": "#161c1a",
+  "surface": "#1f2725",
+  "ink": "#e3e2da",
+  "muted": "#8e948d",
+  "accent": "#9fc7b8",
+  "accentInk": "#161c1a",
+  "note": "Bone type on green-black from top to bottom, with panels and drawn details barely lighter than the ground so photographs supply the colour. Pale jade is for the booking or contact button alone.",
+  "seenIn": [
+   "opl-kereliott",
+   "aww-lama-lama-2"
+  ]
+ },
+ "photos": {
+  "set": "architecture",
+  "title": "Architecture",
+  "note": "structure, lines, bridges, facades and building interiors",
+  "treatment": "If a photograph's background is lighter than the page, darken the image slightly (`filter: brightness(0.85) contrast(1.05)`) rather than adding a frame.",
+  "others": [
+   "object-still",
+   "sky-and-space",
+   "people",
+   "city-day"
+  ],
+  "photos": [
+   {
+    "id": 942,
+    "alt": "White angular concrete building against a black sky",
+    "tone": "dark",
+    "colours": [
+     "black",
+     "white",
+     "pale grey"
+    ],
+    "mono": true,
+    "calm": "top",
+    "quality": 5,
+    "ratio": 1.5,
+    "by": "Carl Nenzen Loven",
+    "page": "https://unsplash.com/photos/busqfOj6i80"
+   },
+   {
+    "id": 101,
+    "alt": "Concrete bunker-like building against a pale teal sky",
+    "tone": "mid",
+    "colours": [
+     "pale teal",
+     "concrete grey"
+    ],
+    "mono": false,
+    "calm": "top",
+    "quality": 4,
+    "ratio": 1.5,
+    "by": "Christian Bardenhorst",
+    "page": "https://unsplash.com/photos/8lMhzUjD1Wk"
+   },
+   {
+    "id": 520,
+    "alt": "Suspension bridge tower framed between red brick buildings",
+    "tone": "mid",
+    "colours": [
+     "brick red",
+     "sky blue",
+     "steel grey"
+    ],
+    "mono": false,
+    "calm": "none",
+    "quality": 4,
+    "ratio": 0.67,
+    "by": "Dorothee Hübner",
+    "page": "https://unsplash.com/photos/4vPPtrfLRcs"
+   },
+   {
+    "id": 893,
+    "alt": "Curved latticed building facade forming sweeping lines, black and white",
+    "tone": "dark",
+    "colours": [
+     "black",
+     "white",
+     "grey"
+    ],
+    "mono": true,
+    "calm": "none",
+    "quality": 4,
+    "ratio": 1.5,
+    "by": "Samuel Zeller",
+    "page": "https://unsplash.com/photos/j0g8taxHZa0"
+   },
+   {
+    "id": 859,
+    "alt": "Red brick building with a cream door, red shutters and a parked bicycle",
+    "tone": "mid",
+    "colours": [
+     "brick red",
+     "cream"
+    ],
+    "mono": false,
+    "calm": "none",
+    "quality": 4,
+    "ratio": 1,
+    "by": "Brennan Ehrhardt",
+    "page": "https://unsplash.com/photos/HALe2SmkWAI"
+   },
+   {
+    "id": 743,
+    "alt": "Narrow wedge-shaped building corner seen from below against a teal sky",
+    "tone": "mid",
+    "colours": [
+     "teal blue",
+     "sandstone",
+     "warm brown"
+    ],
+    "mono": false,
+    "calm": "left",
+    "quality": 4,
+    "ratio": 1.5,
+    "by": "Anthony DELANOIX",
+    "page": "https://unsplash.com/photos/Aa8_X_YgrO4"
+   },
+   {
+    "id": 315,
+    "alt": "View straight up a dark building lightwell to bright sky",
+    "tone": "dark",
+    "colours": [
+     "dark brown",
+     "white",
+     "olive"
+    ],
+    "mono": false,
+    "calm": "none",
+    "quality": 4,
+    "ratio": 1.4,
+    "by": "Liam Andrew",
+    "page": "https://unsplash.com/photos/W7CopGaHkEM"
+   },
+   {
+    "id": 193,
+    "alt": "Gothic stone college building facing a striped green lawn",
+    "tone": "mid",
+    "colours": [
+     "lawn green",
+     "sandstone",
+     "sky blue"
+    ],
+    "mono": false,
+    "calm": "bottom",
+    "quality": 4,
+    "ratio": 1.46,
+    "by": "Vadim Sherbakov",
+    "page": "https://unsplash.com/photos/d6ebY-faOO0"
+   }
+  ]
+ },
+ "motion": {
+  "id": "pinned-story",
+  "name": "Pinned story",
+  "description": "One element holds its place with `position: sticky` (a title, a frame, a product fragment) while the items that belong to it scroll past or swap inside it. The page's ordinary scrolling does the work; nothing is hijacked. Keep the pinned run under six screens. Recipe: 'Pinned story' in references/motion.md."
+ },
+ "sections": [
+  {
+   "id": "proof-recognition-table",
+   "role": "proof",
+   "name": "Recognition as a table",
+   "shape": "table",
+   "tags": [
+    "type-led",
+    "dense"
+   ],
+   "directions": [
+    "editorial-report",
+    "type-only-statement",
+    "contact-sheet",
+    "borrowed-category",
+    "name-as-monument",
+    "quiet-instrument"
+   ],
+   "needs": [],
+   "blueprint": "Awards, press mentions or credits set as a four-column table with no lines. The heading is two or three words at about 5vw, stepped over two lines with the second line indented by two columns, and occupies columns 1–7. The table begins 72px below and spans columns 1–12 on a fixed grid: year in columns 1–2, project or title in 3–6, awarding body or publication in 7–10, the award itself in 11–12, right-aligned. Rows are set at 16–17px with 14px of padding above and below; every second row carries a background tone one step from the ground, running the full table width, which replaces rules. Year groups are separated by one blank row, and the year is printed only on the first row of its group. Use a real `<table>` with `border-collapse: collapse` and no borders.",
+   "mobile": "The heading drops to 11vw. Each table row becomes a two-line block: title on the first line in the full ink, then body and award on the second in the softer ink. The year stands once as a 22px figure above its group. Alternate blocks keep the background tone.",
+   "seenIn": [
+    "aww-bleibtgleich26"
+   ]
+  },
+  {
+   "id": "how-it-works-one-verb-at-a-time",
+   "role": "how-it-works",
+   "name": "One verb at a time",
+   "shape": "full-bleed",
+   "tags": [
+    "photo-led",
+    "poster"
+   ],
+   "directions": [
+    "pinned-poster",
+    "loud-flat-poster",
+    "dark-room",
+    "hero-object",
+    "sentence-as-layout",
+    "place-carries-it"
+   ],
+   "needs": [],
+   "blueprint": "Three to five full-bleed panels, each 100svh tall, stacked with no gap; each is one stage and holds one photograph covering it. In every panel a single word, the verb for that stage ('Cut', 'Fold', 'Stitch', 'Press'), is set at clamp(96px, 17vw, 300px), heavy and centred, inside a wrapper that is position: sticky; top: 50% and shifted up by half its own height. Because each word is sticky only within its own panel, it holds the centre of the screen while its photograph passes behind it, and is then pushed out by the next panel's verb. Use mix-blend-mode: difference in white, or one solid colour tested on every image. One sentence at 18px sits in the bottom-left corner of each panel over a neutral scrim limited to that corner. There is no separate heading: the verbs, read in order, are both the heading and the sequence.",
+   "mobile": "Panels stay 100svh, each photograph cropped to a vertical slice. The verb is 24vw, still sticky at the centre. The sentence sits along the bottom over a scrim at 16px, full width with 16px margins.",
+   "seenIn": [
+    "opl-eagles-nest",
+    "aww-seasats",
+    "aww-vero-new-york"
+   ]
+  },
+  {
+   "id": "work-big-names-fixed-preview",
+   "role": "work",
+   "name": "Big names, fixed preview",
+   "shape": "index",
+   "tags": [
+    "type-led",
+    "photo-led"
+   ],
+   "directions": [
+    "name-as-monument",
+    "borrowed-category",
+    "loud-flat-poster",
+    "dark-room",
+    "split-stage"
+   ],
+   "needs": [],
+   "blueprint": "Project names are the index. In columns 1–8, five to nine names stack one per line at clamp(44px, 5.4vw, 80px), leading 1.0, each row a link with 10px of vertical padding. All names rest in the ink at 35% opacity except the active one, which is full ink; the first is active by default, and hover or keyboard focus moves the state. To the right of each name, on its baseline at 14px: the discipline and the year. In columns 9–12 a `position: sticky; top: 15vh` frame, 4:5 and 26vw wide with square corners, shows the active project's photograph; all images are stacked in the frame and swapped by opacity over 200ms. A two-word heading at 28px sits top-left, 48px above the first name. Nothing is drawn between rows: the size of the type and the dimming do the separating.",
+   "mobile": "Names at 9.5vw, all in full ink, one per line; discipline and year sit beneath each name at 13px. There is no sticky frame: each name is preceded by its own photograph at 16:10, full width, so the list becomes image then name, repeated, with 40px between projects.",
+   "seenIn": [
+    "opl-belen-jones",
+    "opl-specia1ne",
+    "aww-artem-shcherbakov",
+    "opl-neuropelvic-surgery"
+   ]
+  },
+  {
+   "id": "about-side-facts-wide-paragraph",
+   "role": "about",
+   "name": "Side facts, wide paragraph",
+   "shape": "table",
+   "tags": [
+    "type-led",
+    "quiet"
+   ],
+   "directions": [
+    "editorial-report",
+    "name-as-monument",
+    "type-only-statement",
+    "quiet-instrument",
+    "contact-sheet"
+   ],
+   "needs": [],
+   "blueprint": "Two rows share one vertical line at 34% of the viewport width. Row one: in a 160px column at the left margin, three label and value pairs stack with 20px between them, each a label in the soft ink with its value beneath in full ink, all at 13px (founded, based in, team size). From the 34% line a five-line paragraph at clamp(20px, 1.7vw, 26px), leading 1.35, runs to 90% of the width. Row two starts 120px lower and repeats the logic for the record of the practice: one plain word at 13px at the far left (awards, press, clients), then from the 34% line two list columns, each 260px wide with a 64px gutter, at 13px with 10px between lines: name at the left, year at the right in the soft ink. No heading; the paragraph opens the section. Each list comfortably holds 6–12 lines. No photographs are needed.",
+   "mobile": "Everything aligns to the left margin. The paragraph comes first at 19px. The three label and value pairs follow as a two-column grid at 14px. The two record lists stack with 40px between them, each opened by its plain word in full ink.",
+   "seenIn": [
+    "aww-kononenko-architectural-bureau",
+    "opl-brikkenco"
+   ]
+  },
+  {
+   "id": "contact-single-field",
+   "role": "contact",
+   "name": "One field, nothing else",
+   "shape": "stack",
+   "tags": [
+    "quiet",
+    "ui-led"
+   ],
+   "directions": [
+    "quiet-instrument",
+    "product-performs",
+    "hero-object",
+    "dark-room",
+    "split-stage",
+    "type-only-statement"
+   ],
+   "needs": [],
+   "blueprint": "The whole section is one prompt and one field in a column 520px wide, on the page's text column line or centred, with 200px of empty ground above and 160px below. The prompt is two lines at one size, 24–28px in medium weight: the first line in the soft ink, the second in full ink. 28px below, a single input 520px wide and 64px tall with a 12px radius, filled with the lightest tone on the page so it is the only bright surface in view; no outline at rest and a 2px inner ring in the accent on focus. Inside the right end of the field, 8px from its edge, a round submit button 44px across with an arrow and an accessible name. 16px below the field, one line at 13px says what happens next. 72px lower, three label and value rows at 14px: email, phone, address.",
+   "mobile": "The column fills the width with 20px margins. Prompt at 22px. The field stays one row, 60px tall, with the arrow button inside its right end. The three label and value rows stack with the label above each value and 20px between them.",
+   "seenIn": [
+    "opl-archiv",
+    "opl-ayush-halder-portfolio",
+    "opl-medium-rare"
+   ]
+  }
+ ],
+ "references": [
+  {
+   "id": "aww-izanami",
+   "name": "IZANAMI",
+   "url": "https://izanami-official.com/",
+   "source": "Awwwards Site of the Day",
+   "kind": "architecture",
+   "score": 7,
+   "idea": "Silence as design: one small sentence in fog, then a slow descent from mist into a dark glass pavilion.",
+   "mood": [
+    "meditative",
+    "dark",
+    "misty",
+    "ceremonial",
+    "quiet"
+   ],
+   "archetype": "fullbleed-media-overlay",
+   "hero": "After a warm-black loader showing only one 18px serif sentence and a small counter, the hero is a full-bleed, desaturated grey-green image of pine forest dissolving into fog. The same sentence stays at 18px in white, left-aligned on a line about 17% from the left edge and exactly at vertical centre; it is the only text in the picture area. A small white seal-style logo sits top-left; a language switch and menu label in tiny tracked capitals sit top-right, each with a dot above. Along the bottom edge: copyright, two live city clocks, and a scroll cue at far right, all near 10px.",
+   "type": "Playfair Display regular for the few headings, only 18 to 45px (3.1vw at most); Shippori Mincho for body at 14px; Cinzel capitals with wide tracking for nav, clocks and footer. Nothing is large: hierarchy comes from isolation rather than size.",
+   "colour": "#0a0801 #6f7a70 #b7b5a6 #d9d2c3 #4b5b39 — Warm near-black panels and grey-green fog imagery with off-white text at reduced opacity. Moss green and sand from the small garden photos are the only colour; there is no accent.",
+   "imagery": "Fog-bound forest, a black-framed glass pavilion seen in one-point perspective, and small crops of incense smoke, a bamboo water spout and raked gravel. Small images are square-cornered, portrait or square, overlapping one another and the dark ceiling plane.",
+   "layout": "Wide margins, with text hung on an inner line about 17% across instead of the page edge. Most screens hold one image and one short text; small photos are placed asymmetrically near corners and overlap. A rotated section label runs down the left edge.",
+   "sections": [
+    {
+     "role": "intro",
+     "description": "Over the black ceiling of the pavilion image, a three-line serif heading at about 3vw sits left of centre, each line indented further than the one above. Faint body text follows below it. A small square photo sits top-left under the logo; at right, three portrait photos overlap in a cluster, two beige garden shots behind and a narrower green water-ripple image in front and raised higher, running off the bottom edge."
+    },
+    {
+     "role": "other",
+     "description": "Full-bleed one-point-perspective view down a glass corridor, its ceiling filling the upper half as near-black. A text link with a short leading rule sits top-left on the inner line; a landscape photo of raked gravel is tucked against the top edge right of centre; a three-line heading fades in low and left of centre over the glass. A section name rotated ninety degrees runs down the far left."
+    },
+    {
+     "role": "footer",
+     "description": "Near-black and almost empty. One section name in serif at about 24px, preceded by a long thin rule, sits at mid-height left of centre. Lower down, tiny tracked-capital columns: a nav list, two office addresses side by side, and social links pushed to the far right. The bottom edge repeats the copyright and the two city clocks."
+    }
+   ],
+   "steal": [
+    "Place a single 18px sentence at vertical centre on an offset left line over full-bleed fog, and let the absence of a headline be the statement.",
+    "Stair-step a three-line heading by indenting each line further than the one above it.",
+    "Run two live city clocks with time-zone labels along the bottom edge as quiet proof of where the firm operates."
+   ]
+  },
+  {
+   "id": "opl-kereliott",
+   "name": "Kereliott",
+   "url": "https://kereliott.com/",
+   "source": "One Page Love",
+   "kind": "hospitality",
+   "score": 7.3,
+   "idea": "A quiet house gets a quiet page: one dark field, one typeface, the name set as wide as the screen and photographs left to drift in generous darkness.",
+   "mood": [
+    "calm",
+    "understated",
+    "nocturnal",
+    "refined"
+   ],
+   "archetype": "giant-wordmark",
+   "hero": "Very dark green-black field with cream type. A two-line introductory sentence at about 30px sits top-left inside 30px margins; a small cream rectangular button sits top-right. The upper half is otherwise empty. The house name fills the full content width in a flared humanist sans, mixed case, with capitals about 19vw tall, its baseline at roughly 87% of the viewport height. Immediately beneath, separated by a gap of a few pixels, the top sliver of a full-width landscape photograph enters from the bottom edge.",
+   "type": "A single face, Trust, in regular weight: a humanist sans with flared terminals and old-style figures. The wordmark is an oversized graphic; all other text is one size of about 20-30px plus tiny 10px photo captions. Hierarchy is position, not weight.",
+   "colour": "#161c1a #eae8dc #222926 #1f2926 — Cream on green-black from top to bottom with no accent colour. The map is drawn in a tone barely lighter than the ground, so photographs supply all the colour.",
+   "imagery": "Natural-light photos of a stone cottage, garden and deck with square corners, in mixed portrait and landscape crops at differing sizes. One full-width opener, then small images placed singly with tiny captions under the left corner.",
+   "layout": "30px margins, text held to the left 60% in one size. Photographs are staggered left and right at different widths with large dark gaps between, like pictures passed on a wall. The name and a booking button stay fixed in the top corners.",
+   "sections": [
+    {
+     "role": "intro",
+     "description": "A full-width landscape photograph runs margin to margin directly under the wordmark, followed after a gap by a four-line paragraph in the single text size, left-aligned and spanning about 85% of the width. There is no heading or label; the text simply continues the sentence begun at the top of the page."
+    },
+    {
+     "role": "other",
+     "description": "After a left-aligned paragraph, a silhouette map of the region sits centre-left, about half the viewport wide, filled in a green only a few percent lighter than the background. Five towns are marked with small ring dots and tiny labels; only the house's town has a solid cream dot. No border, legend or frame."
+    },
+    {
+     "role": "gallery",
+     "description": "Photographs are placed one or two per screen in a stagger: a portrait image about 30% wide against the left margin, a larger near-square one starting lower against the right margin, later a landscape image top-right of centre and a smaller one bottom-left. Each has a 10px caption under its left corner. More than half of every screen is empty dark ground."
+    },
+    {
+     "role": "contact",
+     "description": "Two short left-aligned sentences in the standard text size with underlined inline links to booking platforms and an email address, then a small cream certification badge. The footer is a single line at the very bottom: social link left, copyright centre, three underlined utility links right, with a tall empty gap above."
+    }
+   ],
+   "steal": [
+    "Size the wordmark to fill the content width exactly and let the first photograph tuck directly under its baseline.",
+    "Draw a location map as a tone-on-tone silhouette with one filled dot among ring dots.",
+    "Use a single typeface in one weight and essentially one text size, creating hierarchy through placement and emptiness."
+   ]
+  },
+  {
+   "id": "aww-artem-shcherbakov",
+   "name": "Artem Shcherbakov",
+   "url": "https://artemartemartem.com/",
+   "source": "Awwwards Site of the Day",
+   "kind": "personal-portfolio",
+   "score": 7.4,
+   "idea": "A director's reel hides behind a small pill-shaped window that scrolls open to fill the screen, while neon-green marker scribbles deface the polite typography.",
+   "mood": [
+    "irreverent",
+    "raw",
+    "playful",
+    "lo-fi",
+    "energetic"
+   ],
+   "archetype": "other: three-part-row-with-video-portal",
+   "hero": "White page. Three nav words are pinned to the very top: one hard left, the name centred, one hard right, in bold condensed lowercase about 28px, touching the edges. The content is a single horizontal row at mid-height in three equal parts. Left: a two-line greeting in an ultra-heavy rounded sans at about 6vw, with a neon-green hand-scrawled word and underline drawn over it. Centre: a vertical rounded-rectangle window about 180 by 300px showing zoomed, pixelated video. Right: a green doodle face above a centred six-line bio at about 22px. A tiny grey scroll cue sits bottom-centre. More than 60% is white.",
+   "type": "EaseDouble at weight 900 with -0.08em tracking, letters nearly fused, for display; plain Arial Narrow for nav and body, bold in the nav. About 88px display against roughly 22px body. Display type melts into soft blobs between states.",
+   "colour": "#ffffff #0e0e0e #17e84a #ff2ecb — Black on white, inverting to white on near-black for the footer. One neon green is reserved for hand-drawn scribbles and doodles, with a single touch of magenta.",
+   "imagery": "CG character footage treated with scanlines, colour fringing and heavy pixelation, shown first inside a small pill mask and then full-bleed. Crude marker doodles (faces, robot, clapperboard) in green outline are scattered around it.",
+   "layout": "A short single-scroll sequence: three-part intro row, full-bleed video with a stacked project list, a centred paragraph in display type, a dark contact panel. Nav words stay in the top corners throughout. No grid lines, no cards, no section headings.",
+   "sections": [
+    {
+     "role": "work",
+     "description": "The video fills the viewport edge to edge. Project names are stacked bottom-left in the heavy rounded face at about 5vw, lowercase with tight leading, in translucent white so footage shows through; the active name turns solid white and gets a green scribble across it. The list runs off the bottom edge. In a later state the video shrinks to a rounded rectangle about two-thirds of the viewport wide."
+    },
+    {
+     "role": "intro",
+     "description": "A centred five-line paragraph set entirely in the 900-weight rounded display face at about 4.5vw on white, tracked so tightly the letters touch. The last line is caught mid-reveal as soft black blobs, showing that each line condenses from a blurred, gooey state into legible type."
+    },
+    {
+     "role": "contact",
+     "description": "Near-black panel. A two-line centred heading in white display type sits at the top with green and magenta scribbles over a few letters. Below, a narrow centred column lists contact details in small plain sans, each preceded by a tiny grey label. Five or six green line doodles are scattered around the edges, some cropped by the viewport."
+    }
+   ],
+   "steal": [
+    "Start the showreel as a small pill-shaped mask in the hero and let scrolling grow it to full-bleed.",
+    "Overdraw clean display type with a single-colour hand scribble to add personality without a second typeface.",
+    "Pair one extravagant display face with a deliberately default system face (Arial Narrow) for everything functional."
+   ]
+  }
+ ]
+}
