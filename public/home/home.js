@@ -22,9 +22,38 @@ const lit = new IntersectionObserver((entries) => {
 }, { threshold: [0, 0.35, 0.7] });
 document.querySelectorAll(".verb").forEach((el) => lit.observe(el));
 
-// The stub: once the hero card leaves the screen, the name and the call button stay at the bottom left.
+// My local time, in the hero and in the stub, so a team in another time zone sees when I am awake.
+const clocks = document.querySelectorAll("[data-clock]");
+const tick = () => {
+  const t = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Berlin", hour: "2-digit", minute: "2-digit", timeZoneName: "short" }).format(new Date());
+  clocks.forEach((c) => { c.textContent = t; });
+};
+tick();
+setInterval(tick, 30000);
+
+// The running name: it drifts left and turns round when the reader scrolls back up.
+const track = document.querySelector("[data-marquee]");
+if (track && !reduce) {
+  let x = 0, dir = 1, lastY = scrollY, lastT = performance.now();
+  addEventListener("scroll", () => {
+    if (scrollY !== lastY) dir = scrollY > lastY ? 1 : -1;
+    lastY = scrollY;
+  }, { passive: true });
+  const step = (t) => {
+    const half = track.scrollWidth / 3; // three copies of the name; one copy is the loop
+    x -= dir * (t - lastT) * 0.06; // px per ms
+    if (x <= -half) x += half;
+    if (x > 0) x -= half;
+    track.style.transform = `translate3d(${x}px, 0, 0)`;
+    lastT = t;
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// The stub: once the hero leaves the screen, the name, my time and the call button stay at the bottom right.
 const stub = document.querySelector("[data-stub]");
-const card = document.querySelector(".card");
+const card = document.querySelector(".hero");
 if (stub && card) {
   const button = stub.querySelector("a");
   let past = false;
@@ -47,11 +76,21 @@ if (stub && card) {
 // Work index: hover or focus a name to show its screen in the fixed frame.
 const frame = document.querySelector("[data-frame]");
 if (frame) {
-  const pics = [...frame.querySelectorAll("img")];
+  const pics = [...frame.querySelectorAll("img, video")];
   const rows = [...document.querySelectorAll("[data-index] .work__row")];
+  // The Race Strategy Lab recording plays only while it is the picture on show and the frame is on screen.
+  const video = frame.querySelector("video");
+  let seen = false;
+  const play = () => {
+    if (!video || reduce) return;
+    if (seen && video.classList.contains("is-on")) video.play().catch(() => {});
+    else video.pause();
+  };
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; play(); }).observe(frame);
   const show = (row) => {
     rows.forEach((r) => r.classList.toggle("is-on", r === row));
     pics.forEach((p, i) => p.classList.toggle("is-on", String(i) === row.dataset.pic));
+    play();
   };
   rows.forEach((row) => {
     row.addEventListener("mouseenter", () => show(row));

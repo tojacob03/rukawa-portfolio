@@ -7,44 +7,50 @@
 All colors MUST be HSL.
 */
 
+/* Boska, the home page's display face, carries the headings here too.
+   The 500 face also answers 600-700, so Tailwind's font-semibold and
+   font-bold don't get a synthesized bold. */
+@font-face { font-family: "Boska"; font-style: normal; font-weight: 400; font-display: swap; src: url(/home/fonts/boska-400.woff2) format("woff2"); }
+@font-face { font-family: "Boska"; font-style: normal; font-weight: 500 700; font-display: swap; src: url(/home/fonts/boska-500.woff2) format("woff2"); }
+
 @layer base {
   :root {
-    /* Dark Clash Royale inspired theme */
-    --background: 220 25% 8%;
-    --foreground: 210 40% 98%;
+    /* The home page's dark room: green-black ground, bone ink, mint accent. */
+    --background: 160 12% 10%;
+    --foreground: 53 14% 87%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 165 11% 14%;
+    --card-foreground: 53 14% 87%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 165 11% 12%;
+    --popover-foreground: 53 14% 87%;
 
     /* Primary = light on dark. The old purple gradient is gone; gold
        (--accent / --clash-gold) is the only accent colour. */
-    --primary: 210 40% 98%;
-    --primary-foreground: 220 25% 8%;
-    --primary-glow: 210 40% 98%;
+    --primary: 53 14% 87%;
+    --primary-foreground: 160 12% 10%;
+    --primary-glow: 53 14% 87%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 156 11% 18%;
+    --secondary-foreground: 53 14% 87%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 165 11% 14%;
+    --muted-foreground: 105 5% 67%;
 
-    --accent: 45 100% 60%;
-    --accent-foreground: 220 25% 8%;
+    --accent: 158 26% 70%;
+    --accent-foreground: 160 12% 10%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 45 100% 60%;
+    --border: 156 11% 18%;
+    --input: 156 11% 18%;
+    --ring: 158 26% 70%;
 
     --radius: 0.75rem;
 
     /* Custom Clash Royale colors */
-    --clash-gold: 45 100% 60%;
+    --clash-gold: 158 26% 70%;
     --clash-purple: 250 45% 72%;
     --clash-blue: 220 85% 65%;
     --clash-silver: 210 10% 70%;
@@ -58,12 +64,12 @@ All colors MUST be HSL.
     /* Kept as tokens so existing classes keep working, but flat: no purple. */
     --gradient-primary: linear-gradient(hsl(var(--primary)), hsl(var(--primary)));
     --gradient-hero: linear-gradient(hsl(var(--background)), hsl(var(--background)));
-    --gradient-card: linear-gradient(145deg, hsl(220 20% 12%), hsl(220 15% 15%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--clash-gold)), hsl(45 90% 55%));
+    --gradient-card: linear-gradient(145deg, hsl(165 11% 14%), hsl(156 11% 18%));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--clash-gold)), hsl(158 26% 64%));
 
     /* Shadows */
-    --shadow-glow: 0 0 0 1px hsl(var(--border)), 0 8px 24px hsl(220 25% 4% / 0.5);
-    --shadow-card: 0 8px 32px hsl(220 25% 8% / 0.5);
+    --shadow-glow: 0 0 0 1px hsl(var(--border)), 0 8px 24px hsl(160 12% 4% / 0.5);
+    --shadow-card: 0 8px 32px hsl(160 12% 8% / 0.5);
     --shadow-accent: 0 4px 20px hsl(var(--clash-gold) / 0.4);
 
     /* Animations */
@@ -503,4 +509,8 @@ html.lenis body {
 
 .prose [align="center"] {
   text-align: center;
+}
+
+@layer base {
+  h1, h2 { font-family: "Boska", Georgia, serif; }
 }
