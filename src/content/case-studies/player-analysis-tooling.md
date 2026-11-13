@@ -27,3 +27,7 @@ A player’s strategy changes depending on the state of the set. To capture this
 ## Predicting the remaining board
 
 The ultimate goal of tracking Game 1 and Game 2 habits is anticipating Game 3. The platform feeds all these historical slot tendencies into a "Remaining Advisor" dashboard. As a live set unfolds, the system automatically removes used cards from the opponent's historical pool and calculates the statistical probability of what they will play next based on their past duels. What used to be a frantic, memory-based guessing game is now a structured, repeatable pipeline—delivering actionable remaining-deck predictions before the final pick phase even begins.
+
+## How often it is right
+
+I later tested these predictions against 5,334 duels: in deciding third games, the exact deck played was in the top three 63 % of the time. The method, the comparisons and one setting I had wrong are in [How Often My Deck Predictions Are Right](/work/deck-prediction-backtest).
