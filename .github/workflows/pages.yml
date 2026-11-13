@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+# Every push to main (also the ones Lovable makes) builds the site and
+# publishes it on GitHub Pages under rukawaanalytics.com. Free, no badge.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # npm install, not npm ci: see ci.yml (package-lock.json lags behind
+      # package.json because Lovable only updates bun.lockb).
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build
+        run: npm run build
+
+      # GitHub Pages has no SPA fallback. Routes without their own page get a
+      # copy of index.html (so they answer 200), and 404.html covers the rest;
+      # src/boot.ts starts the React app on every path except /.
+      - name: Pages for the app routes
+        run: |
+          for route in portal admin impressum datenschutz off-the-clock/log; do
+            if [ ! -f "dist/$route/index.html" ]; then
+              mkdir -p "dist/$route"
+              cp dist/index.html "dist/$route/index.html"
+            fi
+          done
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

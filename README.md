@@ -26,7 +26,7 @@ Data case study (German): [Wann Strom am günstigsten ist](src/content/case-stud
 
 ```mermaid
 flowchart LR
-    V[Visitor] --> S[React app<br/>hosted via Lovable]
+    V[Visitor] --> S[React app<br/>on GitHub Pages]
     S -->|contact form| DB[(Supabase Postgres<br/>EU · Frankfurt)]
     S -->|public stats| P[Analysis pipeline<br/>Supabase Edge Functions]
     P -->|battle logs| API[Clash Royale API]
@@ -46,6 +46,10 @@ flowchart LR
 ## How it was built
 
 I designed the product, data model and analysis logic. The code is written by coding agents: the first versions in [Lovable](https://lovable.dev), most changes today with Claude Code. I review every change, and CI runs lint, typecheck and build on every push (`.github/workflows/ci.yml`). I operate and maintain the system myself. Changes made in Lovable are still committed to this repo automatically.
+
+### Hosting
+
+The site is a static build on **GitHub Pages** (free, no badge). Every push to `main`, including the commits Lovable makes, runs `.github/workflows/pages.yml`: build, a copy of `index.html` for each app route without its own page plus `404.html` (Pages has no SPA fallback; `src/boot.ts` starts the React app on every path except `/`), then deploy. The custom domain `rukawaanalytics.com` is set under *Settings → Pages*; DNS stays at IONOS (A records to GitHub Pages, `www` as CNAME to `tojacob03.github.io`, mail records untouched).
 
 ### Run locally
 
