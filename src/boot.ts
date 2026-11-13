@@ -6,7 +6,18 @@
 const HOME_SCRIPTS = ["/home/home.js"];
 
 async function startHome() {
-  for (const src of HOME_SCRIPTS) await import(/* @vite-ignore */ src);
+  // Public files are served unchanged. A module script loads them directly;
+  // import() makes Vite request a source transform that public files cannot use.
+  for (const src of HOME_SCRIPTS) {
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load home script: ${src}`));
+      document.body.appendChild(script);
+    });
+  }
 }
 
 async function startApp() {
