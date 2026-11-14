@@ -7,6 +7,7 @@ date: 2026-11-13
 metric: 25
 metricLabel: games the official battle log keeps per player; Draft Room stores every sync
 stats: 27 : 1 | weight of a game between two teams against a ranked game; 20 | games a map record needs before it outweighs the prior; 78 | automated tests, from the model to the sync
+ogImage: /og/draft-room.png
 role: Design, build & analysis
 stack: TypeScript, React, TanStack Start, Postgres, Brawl Stars API
 ctaLabel: Ask me for a walkthrough →
