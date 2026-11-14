@@ -7,6 +7,7 @@ date: 2026-11-12
 metric: 5–7
 metricLabel: Riot IDs per opponent become one printable page for the coach
 stats: 30 days | of ranked games per player by default, up to 90; 4 | kinds of early deaths told apart; 0 | pick or ban recommendations
+ogImage: /og/scout-hq.png
 role: Design, build & analysis
 stack: TypeScript, React, Supabase, Postgres, Riot API, Leaguepedia
 ---

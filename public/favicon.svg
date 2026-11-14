@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#0f172a" />
-  <path d="M12 44 L26 30 L38 38 L52 18" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.3" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="38" fill="#ffffff">R</text>
-  <circle cx="50" cy="18" r="4" fill="#3b82f6" />
+  <rect width="64" height="64" rx="14" fill="#161c1a"/>
+  <path transform="translate(14.99 51.00) scale(0.05315 -0.05315)" fill="#e3e2da" d="M32 707V715H271Q388 715 446.5 666.5Q505 618 505 538Q505 462 458.5 415.5Q412 369 340 359Q382 349 408.5 324.0Q435 299 454 243L494 130Q520 53 542.0 31.0Q564 9 608 8V0H549Q489 0 455.0 22.0Q421 44 399 106L346 268Q330 311 308.5 331.5Q287 352 246 352V357H276Q342 357 373.5 405.5Q405 454 405 534Q405 571 400.0 599.0Q395 627 381.0 653.0Q367 679 339.5 692.5Q312 706 271 706H206V8H282V0H32V8H108V707Z"/>
+  <circle cx="51" cy="49" r="4" fill="#9fc7b8"/>
 </svg>
